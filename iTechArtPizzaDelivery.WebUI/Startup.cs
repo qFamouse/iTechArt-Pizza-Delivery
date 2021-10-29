@@ -10,6 +10,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using iTechArtPizzaDelivery.Domain.Interfaces.Repositories;
+using iTechArtPizzaDelivery.Domain.Services;
+using iTechArtPizzaDelivery.Infrastructure.Repositories.Fakes;
 
 namespace iTechArtPizzaDelivery.WebUI
 {
@@ -25,7 +28,12 @@ namespace iTechArtPizzaDelivery.WebUI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Domain
+            services.AddScoped<IPizzasSizesRepository, PizzasSizesFakeRepository>();
+            services.AddScoped<PizzaSizesService>();
+            // Infrastructure
 
+            // WebUI
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
