@@ -29,7 +29,7 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.Fakes
             new Size() {Id = 3, Name = "Large", Diameter = 35}
         };
 
-        private List<PizzaSize> _pizzas = new List<PizzaSize>()
+        private readonly List<PizzaSize> _pizzas = new List<PizzaSize>()
         {
             new PizzaSize
             {
@@ -65,9 +65,9 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.Fakes
             }
         };
 
-        public List<Pizza> GetAll()
+        public List<PizzaSize> GetAll()
         {
-            throw new NotImplementedException();
+            return _pizzas;
         }
     }
 }

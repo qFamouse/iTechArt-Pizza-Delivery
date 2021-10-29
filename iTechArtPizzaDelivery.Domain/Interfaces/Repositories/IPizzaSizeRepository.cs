@@ -9,6 +9,6 @@ namespace iTechArtPizzaDelivery.Domain.Interfaces.Repositories
 {
     public interface IPizzasSizesRepository
     {
-        public List<Pizza> GetAll();
+        public List<PizzaSize> GetAll();
     }
 }
