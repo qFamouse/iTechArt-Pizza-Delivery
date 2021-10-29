@@ -26,5 +26,11 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         {
             return _pizzaSizesService.GetAll();
         }
+
+        [HttpGet("{id}")]
+        public PizzaSize GetById(int id)
+        {
+            return _pizzaSizesService.GetById(id);
+        }
     }
 }

@@ -33,5 +33,10 @@ namespace iTechArtPizzaDelivery.Domain.Services
         {
             return _pizzasSizesRepository.GetAll();
         }
+
+        public PizzaSize GetById(int id)
+        {
+            return _pizzasSizesRepository.GetById(id);
+        }
     }
 }

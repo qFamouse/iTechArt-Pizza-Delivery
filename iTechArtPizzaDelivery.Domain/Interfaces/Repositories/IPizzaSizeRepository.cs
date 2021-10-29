@@ -10,5 +10,7 @@ namespace iTechArtPizzaDelivery.Domain.Interfaces.Repositories
     public interface IPizzasSizesRepository
     {
         public List<PizzaSize> GetAll();
+
+        public PizzaSize GetById(int id);
     }
 }

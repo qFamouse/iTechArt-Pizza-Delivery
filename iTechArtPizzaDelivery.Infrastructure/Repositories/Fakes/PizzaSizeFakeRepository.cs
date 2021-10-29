@@ -41,7 +41,7 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.Fakes
             },
             new PizzaSize
             {
-                Id = 1,
+                Id = 2,
                 Pizza = new Pizza {Id = 1, Image = "", Name = "Pepperoni", Description = "Wonderful pizza for all family"},
                 Size = _sizes[(int)eSize.Medium],
                 Price = 8,
@@ -49,7 +49,7 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.Fakes
             },
             new PizzaSize
             {
-                Id = 2,
+                Id = 3,
                 Pizza = new Pizza {Id = 1, Image = "", Name = "Pepperoni", Description = "Wonderful pizza for all family"},
                 Size = _sizes[(int)eSize.Medium],
                 Price = 12,
@@ -57,7 +57,7 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.Fakes
             },
             new PizzaSize
             {
-                Id = 2,
+                Id = 4,
                 Pizza = new Pizza {Id = 1, Image = "", Name = "Capricious", Description = "Popular Italian pizza"},
                 Size = _sizes[(int)eSize.Small],
                 Price = 6,
@@ -68,6 +68,11 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.Fakes
         public List<PizzaSize> GetAll()
         {
             return _pizzas;
+        }
+
+        public PizzaSize GetById(int id)
+        {
+            return _pizzas.Find(pizzaSize => pizzaSize.Id == id);
         }
     }
 }
