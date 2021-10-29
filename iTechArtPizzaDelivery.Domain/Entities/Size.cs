@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace iTechArtPizzaDelivery.Domain.Entities
 {
-    class Size
+    public class Size
     {
         public int Id { get; set; }
-        public int Name { get; set; }
+        public string Name { get; set; }
         public short Diameter { get; set; }
     }
 }

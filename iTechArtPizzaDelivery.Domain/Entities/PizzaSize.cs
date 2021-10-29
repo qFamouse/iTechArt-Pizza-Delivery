@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace iTechArtPizzaDelivery.Domain.Entities
 {
-    class PizzaSize
+    public class PizzaSize
     {
         public int Id { get; set; }
         public Pizza Pizza { get; set; }
