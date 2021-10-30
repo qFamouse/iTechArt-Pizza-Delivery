@@ -9,7 +9,7 @@ using iTechArtPizzaDelivery.Infrastructure.Repositories.Context;
 
 namespace iTechArtPizzaDelivery.Infrastructure.Migrations
 {
-    [DbContext(typeof(PizzaSizeContext))]
+    [DbContext(typeof(PizzaDeliveryContext))]
     [Migration("20211030092102_Init")]
     partial class Init
     {

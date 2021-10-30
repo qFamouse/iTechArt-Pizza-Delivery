@@ -12,9 +12,9 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
 {
     public class PizzaSizeEFRepository : IPizzasSizesRepository
     {
-        private readonly PizzaSizeContext _context;
+        private readonly PizzaDeliveryContext _context;
 
-        public PizzaSizeEFRepository(PizzaSizeContext context)
+        public PizzaSizeEFRepository(PizzaDeliveryContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context), "Context is null");
         }

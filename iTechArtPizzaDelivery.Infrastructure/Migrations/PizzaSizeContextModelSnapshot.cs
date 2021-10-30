@@ -8,7 +8,7 @@ using iTechArtPizzaDelivery.Infrastructure.Repositories.Context;
 
 namespace iTechArtPizzaDelivery.Infrastructure.Migrations
 {
-    [DbContext(typeof(PizzaSizeContext))]
+    [DbContext(typeof(PizzaDeliveryContext))]
     partial class PizzaSizeContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

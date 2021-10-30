@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace iTechArtPizzaDelivery.Infrastructure.Repositories.Context
 {
-    public class PizzaSizeContext : DbContext
+    public class PizzaDeliveryContext : DbContext
     {
         public DbSet<PizzaSize> PizzasSizes { get; set; }
 

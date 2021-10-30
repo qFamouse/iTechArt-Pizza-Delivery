@@ -34,7 +34,7 @@ namespace iTechArtPizzaDelivery.WebUI
             services.AddScoped<IPizzasSizesRepository, PizzaSizeEFRepository>();
             services.AddScoped<PizzaSizesService>();
             // Infrastructure
-            services.AddDbContext<PizzaSizeContext>();
+            services.AddDbContext<PizzaDeliveryContext>();
             // WebUI
             services.AddControllers();
             services.AddSwaggerGen(c =>
