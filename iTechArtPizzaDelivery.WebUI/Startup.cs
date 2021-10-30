@@ -12,6 +12,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using iTechArtPizzaDelivery.Domain.Interfaces.Repositories;
 using iTechArtPizzaDelivery.Domain.Services;
+using iTechArtPizzaDelivery.Infrastructure.Repositories.Context;
+using iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework;
 using iTechArtPizzaDelivery.Infrastructure.Repositories.Fakes;
 
 namespace iTechArtPizzaDelivery.WebUI
@@ -29,10 +31,10 @@ namespace iTechArtPizzaDelivery.WebUI
         public void ConfigureServices(IServiceCollection services)
         {
             // Domain
-            services.AddScoped<IPizzasSizesRepository, PizzasSizesFakeRepository>();
+            services.AddScoped<IPizzasSizesRepository, PizzaSizeEFRepository>();
             services.AddScoped<PizzaSizesService>();
             // Infrastructure
-
+            services.AddDbContext<PizzaSizeContext>();
             // WebUI
             services.AddControllers();
             services.AddSwaggerGen(c =>
