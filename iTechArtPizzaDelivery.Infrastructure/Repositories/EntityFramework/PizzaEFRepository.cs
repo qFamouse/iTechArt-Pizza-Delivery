@@ -34,8 +34,6 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
 
         public List<Pizza> GetAll()
         {
-            var kek = _dbContext.Pizzas.ToList();
-
             return _dbContext.Pizzas.ToList();
 
         }
