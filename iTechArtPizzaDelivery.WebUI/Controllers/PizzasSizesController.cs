@@ -13,9 +13,9 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
     [ApiController] // Define that is controller class 
     public class PizzasSizesController : ControllerBase
     {
-        private readonly PizzaSizesService _pizzaSizesService;
+        private readonly PizzasSizesService _pizzaSizesService;
 
-        public PizzasSizesController(PizzaSizesService pizzaSizesService)
+        public PizzasSizesController(PizzasSizesService pizzaSizesService)
         {
             _pizzaSizesService = pizzaSizesService ?? // If pizzasSizesRepository is null
                                  throw new ArgumentNullException(nameof(pizzaSizesService), "Service pizzaSizesService is null");

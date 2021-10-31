@@ -32,7 +32,7 @@ namespace iTechArtPizzaDelivery.WebUI
         {
             // Domain
             services.AddScoped<IPizzasSizesRepository, PizzaSizeEFRepository>();
-            services.AddScoped<PizzaSizesService>();
+            services.AddScoped<PizzasSizesService>();
 
             services.AddScoped<IPizzaRepository, PizzaEFRepository>();
             services.AddScoped<PizzasService>();

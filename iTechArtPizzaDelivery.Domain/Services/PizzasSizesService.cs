@@ -9,7 +9,7 @@ using iTechArtPizzaDelivery.Domain.Interfaces.Services;
 
 namespace iTechArtPizzaDelivery.Domain.Services
 {
-    public class PizzaSizesService : IPizzasSizesService
+    public class PizzasSizesService : IPizzasSizesService
     {
         /// <summary>
         /// Encapsulated interface which we get when we init instance of class
@@ -19,7 +19,7 @@ namespace iTechArtPizzaDelivery.Domain.Services
         /// Constructor from which we encapsulate interface
         /// </summary>
         /// <param name="pizzasSizesRepository">_pizzasSizesRepository</param>
-        public PizzaSizesService(IPizzasSizesRepository pizzasSizesRepository)
+        public PizzasSizesService(IPizzasSizesRepository pizzasSizesRepository)
         {
             
             _pizzasSizesRepository = pizzasSizesRepository ?? // If pizzasSizesRepository is null
