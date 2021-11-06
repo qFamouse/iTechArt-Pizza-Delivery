@@ -13,6 +13,7 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.Context
         public DbSet<PizzaSize> PizzasSizes { get; set; }
         public DbSet<Pizza> Pizzas { get; set; }
         public DbSet<Size> Sizes { get; set; }
+        public DbSet<Ingredient> Ingredients { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
