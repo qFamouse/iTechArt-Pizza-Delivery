@@ -42,6 +42,9 @@ namespace iTechArtPizzaDelivery.WebUI
 
             services.AddScoped<IIngredientRepository, IngredientEFRepository>();
             services.AddScoped<IngredientsService>();
+
+            services.AddScoped<IPizzaIngredientRepository, PizzaIngredientEFRepository>();
+            services.AddScoped<PizzaIngredientsService>();
             // Infrastructure
             services.AddDbContext<PizzaDeliveryContext>();
             // WebUI
