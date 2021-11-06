@@ -22,19 +22,19 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllAsync()
+        public async Task<ActionResult> GetAllAsync()
         {
             return Ok(await _sizesService.GetAllAsync());
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetByIdAsync(int id)
+        public async Task<ActionResult> GetByIdAsync(int id)
         {
             return Ok(await _sizesService.GetByIdAsync(id));
         }
 
         [HttpPost("Add")]
-        public async Task<IActionResult> AddAsync([FromBody] Size size)
+        public async Task<ActionResult> AddAsync([FromBody] Size size)
         {
             return Ok(await _sizesService.AddAsync(size));
         }
