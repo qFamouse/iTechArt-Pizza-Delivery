@@ -11,6 +11,6 @@ namespace iTechArtPizzaDelivery.Domain.Interfaces.Services
     {
         public List<Pizza> GetAll();
         public Pizza GetById(int id);
-        public bool Add(Pizza pizza);
+        public Pizza Add(Pizza pizza);
     }
 }

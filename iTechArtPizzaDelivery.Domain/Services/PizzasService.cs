@@ -29,7 +29,7 @@ namespace iTechArtPizzaDelivery.Domain.Services
             return _pizzaRepository.GetById(id);
         }
 
-        public bool Add(Pizza pizza)
+        public Pizza Add(Pizza pizza)
         {
             return _pizzaRepository.Add(pizza);
         }

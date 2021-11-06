@@ -11,6 +11,6 @@ namespace iTechArtPizzaDelivery.Domain.Interfaces.Repositories
     {
         public List<Size> GetAll();
         public Size GetById(int id);
-        public bool Add(Size size);
+        public Size Add(Size size);
     }
 }

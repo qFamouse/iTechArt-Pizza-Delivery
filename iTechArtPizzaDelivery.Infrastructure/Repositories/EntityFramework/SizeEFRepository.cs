@@ -25,11 +25,11 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
 
         #endregion
 
-        public bool Add(Size size)
+        public Size Add(Size size)
         {
             _dbContext.Sizes.Add(size);
             _dbContext.SaveChanges();
-            return true;
+            return size;
         }
 
         public List<Size> GetAll()

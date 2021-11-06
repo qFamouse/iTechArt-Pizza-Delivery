@@ -25,11 +25,11 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
 
         #endregion
 
-        public bool Add(Pizza pizza)
+        public Pizza Add(Pizza pizza)
         {
             _dbContext.Pizzas.Add(pizza);
             _dbContext.SaveChanges();
-            return true;
+            return pizza;
         }
 
         public List<Pizza> GetAll()

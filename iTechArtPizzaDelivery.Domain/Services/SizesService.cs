@@ -20,7 +20,7 @@ namespace iTechArtPizzaDelivery.Domain.Services
                               throw new ArgumentNullException(nameof(sizeRepository), "Interface is null");
         }
 
-        public bool Add(Size size)
+        public Size Add(Size size)
         {
             return _sizeRepository.Add(size);
         }
