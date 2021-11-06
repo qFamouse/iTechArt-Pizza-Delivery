@@ -29,14 +29,14 @@ namespace iTechArtPizzaDelivery.Domain.Services
         /// Call from init interface method GetAll
         /// </summary>
         /// <returns>All initialized PizzaSize</returns>
-        public List<PizzaSize> GetAll()
+        public async Task<List<PizzaSize>> GetAllAsync()
         {
-            return _pizzasSizesRepository.GetAll();
+            return await _pizzasSizesRepository.GetAllAsync();
         }
 
-        public PizzaSize GetById(int id)
+        public async Task<PizzaSize> GetByIdAsync(int id)
         {
-            return _pizzasSizesRepository.GetById(id);
+            return await _pizzasSizesRepository.GetByIdAsync(id);
         }
     }
 }

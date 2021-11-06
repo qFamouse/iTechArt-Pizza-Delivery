@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using iTechArtPizzaDelivery.Domain.Entities;
 using iTechArtPizzaDelivery.Domain.Interfaces.Repositories;
 using iTechArtPizzaDelivery.Infrastructure.Repositories.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
 {
@@ -25,21 +26,21 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
 
         #endregion
 
-        public Size Add(Size size)
+        public async Task<Size> AddAsync(Size size)
         {
-            _dbContext.Sizes.Add(size);
-            _dbContext.SaveChanges();
+            await _dbContext.Sizes.AddAsync(size);
+            await _dbContext.SaveChangesAsync();
             return size;
         }
 
-        public List<Size> GetAll()
+        public async Task<List<Size>> GetAllAsync()
         {
-            return _dbContext.Sizes.ToList();
+            return await _dbContext.Sizes.ToListAsync();
         }
 
-        public Size GetById(int id)
+        public async Task<Size> GetByIdAsync(int id)
         {
-            return _dbContext.Sizes.FirstOrDefault(p => p.Id == id);
+            return await _dbContext.Sizes.FirstOrDefaultAsync(p => p.Id == id);
         }
     }
 }

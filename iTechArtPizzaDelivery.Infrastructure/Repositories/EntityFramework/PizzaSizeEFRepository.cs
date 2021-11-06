@@ -26,20 +26,20 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
 
         #endregion
 
-        public List<PizzaSize> GetAll()
+        public async Task<List<PizzaSize>> GetAllAsync()
         {
-            return _dbContext.PizzasSizes
+            return await _dbContext.PizzasSizes
                 .Include(p => p.Pizza)
                 .Include(s => s.Size)
-                .ToList();
+                .ToListAsync();
         }
 
-        public PizzaSize GetById(int id)
+        public async Task<PizzaSize> GetByIdAsync(int id)
         {
-            return _dbContext.PizzasSizes
+            return await _dbContext.PizzasSizes
                 .Include(p => p.Pizza)
                 .Include(s => s.Size)
-                .FirstOrDefault(ps => ps.Id == id);
+                .FirstOrDefaultAsync(ps => ps.Id == id);
         }
     }
 }

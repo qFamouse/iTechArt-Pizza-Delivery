@@ -19,19 +19,19 @@ namespace iTechArtPizzaDelivery.Domain.Services
                                throw new ArgumentNullException(nameof(pizzaRepository), "Interface is null");
         }
 
-        public List<Pizza> GetAll()
+        public async Task<List<Pizza>> GetAllAsync()
         {
-            return _pizzaRepository.GetAll();
+            return await _pizzaRepository.GetAllAsync();
         }
 
-        public Pizza GetById(int id)
+        public async Task<Pizza> GetByIdAsync(int id)
         {
-            return _pizzaRepository.GetById(id);
+            return await _pizzaRepository.GetByIdAsync(id);
         }
 
-        public Pizza Add(Pizza pizza)
+        public async Task<Pizza> AddAsync(Pizza pizza)
         {
-            return _pizzaRepository.Add(pizza);
+            return await _pizzaRepository.AddAsync(pizza);
         }
     }
 }

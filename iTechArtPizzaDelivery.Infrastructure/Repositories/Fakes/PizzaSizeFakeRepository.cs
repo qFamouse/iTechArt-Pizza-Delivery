@@ -65,14 +65,14 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.Fakes
             }
         };
 
-        public List<PizzaSize> GetAll()
+        public Task<List<PizzaSize>> GetAllAsync()
         {
-            return _pizzas;
+            throw new NotImplementedException();
         }
 
-        public PizzaSize GetById(int id)
+        public Task<PizzaSize> GetByIdAsync(int id)
         {
-            return _pizzas.Find(pizzaSize => pizzaSize.Id == id);
+            throw new NotImplementedException();
         }
     }
 }
