@@ -23,7 +23,7 @@ namespace iTechArtPizzaDelivery.Domain.Services
         {
             
             _pizzasSizesRepository = pizzasSizesRepository ?? // If pizzasSizesRepository is null
-                                     throw new ArgumentNullException(nameof(pizzasSizesRepository), "Interface pizzasSizesRepository is null");
+                                     throw new ArgumentNullException(nameof(pizzasSizesRepository), "Interface is null");
         }
         /// <summary>
         /// Call from init interface method GetAll

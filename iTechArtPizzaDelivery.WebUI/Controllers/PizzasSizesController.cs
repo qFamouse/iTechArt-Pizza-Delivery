@@ -18,7 +18,7 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         public PizzasSizesController(PizzasSizesService pizzaSizesService)
         {
             _pizzaSizesService = pizzaSizesService ?? // If pizzasSizesRepository is null
-                                 throw new ArgumentNullException(nameof(pizzaSizesService), "Service pizzaSizesService is null");
+                                 throw new ArgumentNullException(nameof(pizzaSizesService), "Service is null");
         }
 
         [HttpGet]
