@@ -12,5 +12,6 @@ namespace iTechArtPizzaDelivery.Domain.Interfaces.Services
         public Task<List<Size>> GetAllAsync();
         public Task<Size> GetByIdAsync(int id);
         public Task<Size> AddAsync(Size size);
+        public Task DeleteAsync(int id);
     }
 }

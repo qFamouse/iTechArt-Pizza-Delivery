@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using iTechArtPizzaDelivery.Domain.Entities;
 using iTechArtPizzaDelivery.Domain.Services;
@@ -37,6 +38,13 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         public async Task<ActionResult> AddAsync([FromBody] Size size)
         {
             return Ok(await _sizesService.AddAsync(size));
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            await _sizesService.DeleteAsync(id);
+            return Ok();
         }
     }
 }
