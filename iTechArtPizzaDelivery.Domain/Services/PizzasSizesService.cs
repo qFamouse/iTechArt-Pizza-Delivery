@@ -38,5 +38,10 @@ namespace iTechArtPizzaDelivery.Domain.Services
         {
             return await _pizzasSizesRepository.GetByIdAsync(id);
         }
+
+        public async Task DeleteAsync(int id)
+        {
+            await _pizzasSizesRepository.DeleteAsync(id);
+        }
     }
 }

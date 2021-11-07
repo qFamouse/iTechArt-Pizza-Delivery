@@ -41,5 +41,12 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
                 .Include(s => s.Size)
                 .FirstOrDefaultAsync(ps => ps.Id == id);
         }
+
+        public async Task DeleteAsync(int id)
+        {
+            var pizza = await _dbContext.PizzasSizes.FirstOrDefaultAsync(ps => ps.Id == id);
+            _dbContext.PizzasSizes.Remove(pizza);
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }

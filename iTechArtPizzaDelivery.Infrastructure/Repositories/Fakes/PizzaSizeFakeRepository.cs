@@ -74,5 +74,10 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.Fakes
         {
             throw new NotImplementedException();
         }
+
+        public Task DeleteAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
