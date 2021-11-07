@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using iTechArtPizzaDelivery.Domain.Entities;
+using iTechArtPizzaDelivery.Domain.Requests;
 using iTechArtPizzaDelivery.Domain.Services;
 using iTechArtPizzaDelivery.Infrastructure.Repositories.Fakes;
 using Microsoft.AspNetCore.Mvc;
@@ -31,6 +32,12 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         public async Task<ActionResult> GetByIdAsync(int id)
         {
             return Ok(await _pizzaSizesService.GetByIdAsync(id));
+        }
+
+        [HttpPost("Add")]
+        public async Task<ActionResult> AddAsync([FromBody] PizzaSizeAddRequest pizzaSizeAddRequest)
+        {
+            return Ok(await _pizzaSizesService.AddAsync(pizzaSizeAddRequest));
         }
 
         [HttpDelete("{id}")]

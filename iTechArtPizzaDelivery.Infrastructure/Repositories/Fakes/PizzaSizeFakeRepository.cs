@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using iTechArtPizzaDelivery.Domain.Entities;
 using iTechArtPizzaDelivery.Domain.Interfaces.Repositories;
+using iTechArtPizzaDelivery.Domain.Requests;
 
 namespace iTechArtPizzaDelivery.Infrastructure.Repositories.Fakes
 {
@@ -76,6 +77,11 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.Fakes
         }
 
         public Task DeleteAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<PizzaSize> AddAsync(PizzaSizeAddRequest pizzaSizeAddRequest)
         {
             throw new NotImplementedException();
         }
