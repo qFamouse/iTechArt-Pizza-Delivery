@@ -38,5 +38,12 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         {
             return Ok(await _pizzasService.AddAsync(pizza));
         }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            await _pizzasService.DeleteAsync(id);
+            return Ok();
+        }
     }
 }
