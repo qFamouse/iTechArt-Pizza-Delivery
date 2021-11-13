@@ -30,6 +30,7 @@ namespace iTechArtPizzaDelivery.WebUI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper(typeof(Startup));
             // Domain
             services.AddScoped<IPizzasSizesRepository, PizzaSizeEFRepository>();
             services.AddScoped<PizzasSizesService>();
@@ -44,7 +45,7 @@ namespace iTechArtPizzaDelivery.WebUI
             services.AddScoped<IngredientsService>();
 
             services.AddScoped<IPizzaIngredientRepository, PizzaIngredientEFRepository>();
-            services.AddScoped<PizzaIngredientsService>();
+            services.AddScoped<PizzasIngredientsService>();
             // Infrastructure
             services.AddDbContext<PizzaDeliveryContext>();
             // WebUI
