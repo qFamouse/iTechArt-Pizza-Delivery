@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using iTechArtPizzaDelivery.Domain.Entities;
+using iTechArtPizzaDelivery.Domain.Requests.Ingredient;
 
 namespace iTechArtPizzaDelivery.Domain.Interfaces.Repositories
 {
@@ -11,6 +12,6 @@ namespace iTechArtPizzaDelivery.Domain.Interfaces.Repositories
     {
         public Task<List<Ingredient>> GetAllAsync();
         public Task<Ingredient> GetByIdAsync(int id);
-        public Task<Ingredient> AddAsync(Ingredient ingredient);
+        public Task<Ingredient> AddAsync(IngredientAddRequest iAddRequest);
     }
 }

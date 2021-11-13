@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using iTechArtPizzaDelivery.Domain.Entities;
 using iTechArtPizzaDelivery.Domain.Interfaces.Repositories;
 using iTechArtPizzaDelivery.Domain.Interfaces.Services;
+using iTechArtPizzaDelivery.Domain.Requests.Ingredient;
 
 namespace iTechArtPizzaDelivery.Domain.Services
 {
@@ -19,9 +20,9 @@ namespace iTechArtPizzaDelivery.Domain.Services
                                     throw new ArgumentNullException(nameof(ingredientRepository), "Interface is null");
         }
 
-        public async Task<Ingredient> AddAsync(Ingredient ingredient)
+        public async Task<Ingredient> AddAsync(IngredientAddRequest iAddRequest)
         {
-            return await _ingredientRepository.AddAsync(ingredient);
+            return await _ingredientRepository.AddAsync(iAddRequest);
         }
 
         public async Task<List<Ingredient>> GetAllAsync()
