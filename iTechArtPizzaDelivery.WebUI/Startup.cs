@@ -14,7 +14,6 @@ using iTechArtPizzaDelivery.Domain.Interfaces.Repositories;
 using iTechArtPizzaDelivery.Domain.Services;
 using iTechArtPizzaDelivery.Infrastructure.Repositories.Context;
 using iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework;
-using iTechArtPizzaDelivery.Infrastructure.Repositories.Fakes;
 
 namespace iTechArtPizzaDelivery.WebUI
 {
