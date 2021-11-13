@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using iTechArtPizzaDelivery.Domain.Entities;
 using iTechArtPizzaDelivery.Domain.Requests;
+using iTechArtPizzaDelivery.Domain.Requests.PizzaSize;
 
 namespace iTechArtPizzaDelivery.Domain.Interfaces.Repositories
 {
@@ -13,6 +14,6 @@ namespace iTechArtPizzaDelivery.Domain.Interfaces.Repositories
         public Task<List<PizzaSize>> GetAllAsync();
         public Task<PizzaSize> GetByIdAsync(int id);
         public Task DeleteAsync(int id);
-        public Task<PizzaSize> AddAsync(PizzaSizeAddRequest pizzaSizeAddRequest);
+        public Task<PizzaSize> AddAsync(PizzaSizeAddRequest psAddRequest);
     }
 }

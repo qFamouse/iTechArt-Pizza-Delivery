@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using iTechArtPizzaDelivery.Domain.Entities;
 
-namespace iTechArtPizzaDelivery.Domain.Requests
+namespace iTechArtPizzaDelivery.Domain.Requests.PizzaSize
 {
     public class PizzaSizeAddRequest
     {

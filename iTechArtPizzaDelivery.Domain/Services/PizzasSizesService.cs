@@ -7,6 +7,7 @@ using iTechArtPizzaDelivery.Domain.Entities;
 using iTechArtPizzaDelivery.Domain.Interfaces.Repositories;
 using iTechArtPizzaDelivery.Domain.Interfaces.Services;
 using iTechArtPizzaDelivery.Domain.Requests;
+using iTechArtPizzaDelivery.Domain.Requests.PizzaSize;
 
 namespace iTechArtPizzaDelivery.Domain.Services
 {
@@ -45,9 +46,9 @@ namespace iTechArtPizzaDelivery.Domain.Services
             await _pizzasSizesRepository.DeleteAsync(id);
         }
 
-        public async Task<PizzaSize> AddAsync(PizzaSizeAddRequest pizzaSizeAddRequest)
+        public async Task<PizzaSize> AddAsync(PizzaSizeAddRequest psAddRequest)
         {
-            return await _pizzasSizesRepository.AddAsync(pizzaSizeAddRequest);
+            return await _pizzasSizesRepository.AddAsync(psAddRequest);
         }
     }
 }
