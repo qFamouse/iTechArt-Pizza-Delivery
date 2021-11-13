@@ -13,5 +13,7 @@ namespace iTechArtPizzaDelivery.Domain.Entities
         public Size Size { get; set; }
         public double Price { get; set; }
         public float Weight { get; set; }
+
+        public List<PizzaIngredient> PizzaIngredients { get; set; }
     }
 }
