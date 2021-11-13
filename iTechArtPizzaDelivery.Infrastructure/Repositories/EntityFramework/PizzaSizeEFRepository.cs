@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using iTechArtPizzaDelivery.Domain.Entities;
 using iTechArtPizzaDelivery.Domain.Interfaces.Repositories;
 using iTechArtPizzaDelivery.Domain.Requests;
+using iTechArtPizzaDelivery.Domain.Requests.PizzaSize;
 using iTechArtPizzaDelivery.Infrastructure.Repositories.Context;
 using iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework.Base;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +16,11 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
 {
     public class PizzaSizeEFRepository : BaseEFRepository, IPizzasSizesRepository
     {
-        public PizzaSizeEFRepository(PizzaDeliveryContext context) : base(context) { }
+        private IMapper _mapper;
+        public PizzaSizeEFRepository(PizzaDeliveryContext context, IMapper mapper) : base(context)
+        {
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper), "Mapper is null");
+        }
 
         public async Task<List<PizzaSize>> GetAllAsync()
         {
@@ -39,15 +45,13 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<PizzaSize> AddAsync(PizzaSizeAddRequest pizzaSizeAddRequest)
+        public async Task<PizzaSize> AddAsync(PizzaSizeAddRequest psAddRequest)
         {
-            var pizzaSize = new PizzaSize()
-            {
-                Pizza = await _dbContext.Pizzas.FirstOrDefaultAsync(p => p.Id == pizzaSizeAddRequest.PizzaId),
-                Size = await _dbContext.Sizes.FirstOrDefaultAsync(s => s.Id == pizzaSizeAddRequest.SizeId),
-                Price = pizzaSizeAddRequest.Price,
-                Weight = pizzaSizeAddRequest.Weight
-            };
+            // Mapping
+            var pizzaSize = _mapper.Map<PizzaSize>(psAddRequest);
+            pizzaSize.Pizza = await _dbContext.Pizzas.SingleAsync(p => p.Id == psAddRequest.PizzaId);
+            pizzaSize.Size = await _dbContext.Sizes.SingleAsync(s => s.Id == psAddRequest.SizeId);
+            // Adding
             await _dbContext.PizzasSizes.AddAsync(pizzaSize);
             await _dbContext.SaveChangesAsync();
             return pizzaSize;
