@@ -9,11 +9,13 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using iTechArtPizzaDelivery.Domain.Interfaces.Repositories;
 using iTechArtPizzaDelivery.Domain.Services;
 using iTechArtPizzaDelivery.Infrastructure.Repositories.Context;
 using iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework;
+using iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework.Profiles;
 
 namespace iTechArtPizzaDelivery.WebUI
 {
@@ -29,6 +31,10 @@ namespace iTechArtPizzaDelivery.WebUI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // AutoMapper
+            services.AddAutoMapper(Assembly.GetAssembly(typeof(PizzaSizeProfile))); // Get Assembly by some class from this assembly
+            // Other method using hard brute force
+            //services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies().Single(x => x.FullName.StartsWith("iTechArtPizzaDelivery.Infrastructure")));
             services.AddAutoMapper(typeof(Startup));
             // Domain
             services.AddScoped<IPizzasSizesRepository, PizzaSizeEFRepository>();
