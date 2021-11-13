@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using iTechArtPizzaDelivery.Infrastructure.Repositories.Context;
 
 namespace iTechArtPizzaDelivery.Infrastructure.Migrations
 {
     [DbContext(typeof(PizzaDeliveryContext))]
-    partial class PizzaSizeContextModelSnapshot : ModelSnapshot
+    [Migration("20211113103922_AddNavigationProperty")]
+    partial class AddNavigationProperty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
