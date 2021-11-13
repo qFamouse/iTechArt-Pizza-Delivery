@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using iTechArtPizzaDelivery.Domain.Requests.Order;
 using iTechArtPizzaDelivery.Domain.Services;
 
 namespace iTechArtPizzaDelivery.WebUI.Controllers
@@ -24,6 +25,13 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         public async Task<ActionResult> GetAllAsync()
         {
             return Ok(await _orderService.GetAllAsync());
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> AddPromocode(OrderAddPromocodeRequest oAddPromocodeRequest)
+        {
+            await _orderService.AddPromocode(oAddPromocodeRequest);
+            return Ok();
         }
     }
 }

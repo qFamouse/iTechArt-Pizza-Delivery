@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using iTechArtPizzaDelivery.Infrastructure.Repositories.Context;
 
 namespace iTechArtPizzaDelivery.Infrastructure.Migrations
 {
     [DbContext(typeof(PizzaDeliveryContext))]
-    partial class PizzaSizeContextModelSnapshot : ModelSnapshot
+    [Migration("20211113150826_AddPromocodePropertyToOrder")]
+    partial class AddPromocodePropertyToOrder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -146,9 +148,6 @@ namespace iTechArtPizzaDelivery.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Discount")
                         .HasColumnType("float");

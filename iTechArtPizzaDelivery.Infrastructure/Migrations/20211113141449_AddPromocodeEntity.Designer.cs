@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using iTechArtPizzaDelivery.Infrastructure.Repositories.Context;
 
 namespace iTechArtPizzaDelivery.Infrastructure.Migrations
 {
     [DbContext(typeof(PizzaDeliveryContext))]
-    partial class PizzaSizeContextModelSnapshot : ModelSnapshot
+    [Migration("20211113141449_AddPromocodeEntity")]
+    partial class AddPromocodeEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,15 +55,10 @@ namespace iTechArtPizzaDelivery.Infrastructure.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.Property<int?>("PromocodeId")
-                        .HasColumnType("int");
-
                     b.Property<short>("Status")
                         .HasColumnType("smallint");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PromocodeId");
 
                     b.ToTable("Orders");
                 });
@@ -147,9 +144,6 @@ namespace iTechArtPizzaDelivery.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<double>("Discount")
                         .HasColumnType("float");
 
@@ -183,15 +177,6 @@ namespace iTechArtPizzaDelivery.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Sizes");
-                });
-
-            modelBuilder.Entity("iTechArtPizzaDelivery.Domain.Entities.Order", b =>
-                {
-                    b.HasOne("iTechArtPizzaDelivery.Domain.Entities.Promocode", "Promocode")
-                        .WithMany()
-                        .HasForeignKey("PromocodeId");
-
-                    b.Navigation("Promocode");
                 });
 
             modelBuilder.Entity("iTechArtPizzaDelivery.Domain.Entities.PizzaIngredient", b =>

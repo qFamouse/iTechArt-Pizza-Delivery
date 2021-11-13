@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using iTechArtPizzaDelivery.Domain.Entities;
 using iTechArtPizzaDelivery.Domain.Interfaces.Repositories;
 using iTechArtPizzaDelivery.Domain.Interfaces.Services;
+using iTechArtPizzaDelivery.Domain.Requests.Order;
 
 namespace iTechArtPizzaDelivery.Domain.Services
 {
@@ -22,6 +23,11 @@ namespace iTechArtPizzaDelivery.Domain.Services
         public async Task<List<Order>> GetAllAsync()
         {
             return await _orderRepository.GetAllAsync();
+        }
+
+        public async Task AddPromocode(OrderAddPromocodeRequest oAddPromocodeRequest)
+        {
+            await _orderRepository.AddPromocode(oAddPromocodeRequest);
         }
     }
 }

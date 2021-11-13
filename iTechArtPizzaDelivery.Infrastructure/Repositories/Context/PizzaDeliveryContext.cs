@@ -17,6 +17,7 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.Context
         public DbSet<PizzaIngredient> PizzaIngredients { get; set; }
 
         public DbSet<Order> Orders { get; set; }
+        public DbSet<Promocode> Promocodes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
