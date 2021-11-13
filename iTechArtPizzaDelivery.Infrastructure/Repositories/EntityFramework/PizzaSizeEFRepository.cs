@@ -7,25 +7,14 @@ using iTechArtPizzaDelivery.Domain.Entities;
 using iTechArtPizzaDelivery.Domain.Interfaces.Repositories;
 using iTechArtPizzaDelivery.Domain.Requests;
 using iTechArtPizzaDelivery.Infrastructure.Repositories.Context;
+using iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework.Base;
 using Microsoft.EntityFrameworkCore;
 
 namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
 {
-    public class PizzaSizeEFRepository : IPizzasSizesRepository
+    public class PizzaSizeEFRepository : BaseEFRepository, IPizzasSizesRepository
     {
-        #region Private Fields
-
-        private readonly PizzaDeliveryContext _dbContext;
-
-        #endregion
-
-        #region Constructors
-        public PizzaSizeEFRepository(PizzaDeliveryContext context)
-        {
-            _dbContext = context ?? throw new ArgumentNullException(nameof(context), "Context is null");
-        }
-
-        #endregion
+        public PizzaSizeEFRepository(PizzaDeliveryContext context) : base(context) { }
 
         public async Task<List<PizzaSize>> GetAllAsync()
         {

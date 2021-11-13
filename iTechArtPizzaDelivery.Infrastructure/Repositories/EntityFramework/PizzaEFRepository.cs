@@ -6,25 +6,14 @@ using System.Threading.Tasks;
 using iTechArtPizzaDelivery.Domain.Entities;
 using iTechArtPizzaDelivery.Domain.Interfaces.Repositories;
 using iTechArtPizzaDelivery.Infrastructure.Repositories.Context;
+using iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework.Base;
 using Microsoft.EntityFrameworkCore;
 
 namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
 {
-    public class PizzaEFRepository : IPizzaRepository
+    public class PizzaEFRepository : BaseEFRepository, IPizzaRepository
     {
-        #region Private Fields
-
-        private readonly PizzaDeliveryContext _dbContext;
-
-        #endregion
-
-        #region Constructors
-        public PizzaEFRepository(PizzaDeliveryContext context)
-        {
-            _dbContext = context ?? throw new ArgumentNullException(nameof(context), "Context is null");
-        }
-
-        #endregion
+        public PizzaEFRepository(PizzaDeliveryContext context) : base(context) { }
 
         public async Task<Pizza> AddAsync(Pizza pizza)
         {

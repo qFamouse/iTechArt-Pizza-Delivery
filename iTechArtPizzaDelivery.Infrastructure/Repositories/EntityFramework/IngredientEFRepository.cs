@@ -6,25 +6,15 @@ using System.Threading.Tasks;
 using iTechArtPizzaDelivery.Domain.Entities;
 using iTechArtPizzaDelivery.Domain.Interfaces.Repositories;
 using iTechArtPizzaDelivery.Infrastructure.Repositories.Context;
+using iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework.Base;
 using Microsoft.EntityFrameworkCore;
 
 namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
 {
-    public class IngredientEFRepository : IIngredientRepository
+    public class IngredientEFRepository : BaseEFRepository, IIngredientRepository
     {
-        #region Private Fields
+        public IngredientEFRepository(PizzaDeliveryContext context) : base(context) { }
 
-        private readonly PizzaDeliveryContext _dbContext;
-
-        #endregion
-
-        #region Constructors
-        public IngredientEFRepository(PizzaDeliveryContext context)
-        {
-            _dbContext = context ?? throw new ArgumentNullException(nameof(context), "Context is null");
-        }
-
-        #endregion
         public async Task<Ingredient> AddAsync(Ingredient ingredient)
         {
             await _dbContext.Ingredients.AddAsync(ingredient);
