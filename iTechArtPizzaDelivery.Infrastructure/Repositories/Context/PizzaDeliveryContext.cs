@@ -16,6 +16,8 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.Context
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<PizzaIngredient> PizzaIngredients { get; set; }
 
+        public DbSet<Order> Orders { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=PizzaDelivery;Trusted_Connection=True;");
