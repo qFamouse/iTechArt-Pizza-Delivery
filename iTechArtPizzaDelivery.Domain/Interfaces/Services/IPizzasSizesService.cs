@@ -11,7 +11,7 @@ namespace iTechArtPizzaDelivery.Domain.Interfaces.Services
     interface IPizzasSizesService
     {
         public Task<List<PizzaSize>> GetAllAsync();
-        public Task<PizzaSize> GetByIdAsync(int id);
+        public Task<PizzaSize> GetDetailByIdAsync(int id);
         public Task DeleteAsync(int id);
         public Task<PizzaSize> AddAsync(PizzaSizeAddRequest psAddRequest);
     }

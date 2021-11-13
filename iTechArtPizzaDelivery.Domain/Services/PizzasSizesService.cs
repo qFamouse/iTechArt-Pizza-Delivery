@@ -36,9 +36,9 @@ namespace iTechArtPizzaDelivery.Domain.Services
             return await _pizzasSizesRepository.GetAllAsync();
         }
 
-        public async Task<PizzaSize> GetByIdAsync(int id)
+        public async Task<PizzaSize> GetDetailByIdAsync(int id)
         {
-            return await _pizzasSizesRepository.GetByIdAsync(id);
+            return await _pizzasSizesRepository.GetDetailByIdAsync(id);
         }
 
         public async Task DeleteAsync(int id)
