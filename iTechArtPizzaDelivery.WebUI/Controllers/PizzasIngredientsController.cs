@@ -24,7 +24,7 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
             _pizzaIngredientsService = pizzaIngredientsService ??
                                        throw new ArgumentNullException(nameof(pizzaIngredientsService), "Service is null");
 
-            _mapper = mapper;
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper), "Mapper is null");
         }
 
         [HttpGet]
