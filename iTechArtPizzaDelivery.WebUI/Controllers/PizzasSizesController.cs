@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using iTechArtPizzaDelivery.Domain.Entities;
 using iTechArtPizzaDelivery.Domain.Requests;
 using iTechArtPizzaDelivery.Domain.Requests.PizzaSize;
 using iTechArtPizzaDelivery.Domain.Services;
+using iTechArtPizzaDelivery.WebUI.Views;
 using Microsoft.AspNetCore.Mvc;
 
 namespace iTechArtPizzaDelivery.WebUI.Controllers
@@ -15,11 +17,13 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
     public class PizzasSizesController : ControllerBase
     {
         private readonly PizzasSizesService _pizzaSizesService;
+        private readonly IMapper _mapper;
 
-        public PizzasSizesController(PizzasSizesService pizzaSizesService)
+        public PizzasSizesController(PizzasSizesService pizzaSizesService, IMapper mapper)
         {
             _pizzaSizesService = pizzaSizesService ?? // If pizzasSizesRepository is null
                                  throw new ArgumentNullException(nameof(pizzaSizesService), "Service is null");
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper), "Mapper is null");
         }
 
         [HttpGet]
@@ -29,9 +33,11 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetByIdAsync(int id)
+        public async Task<ActionResult> GetDetailByIdAsync(int id)
         {
-            return Ok(await _pizzaSizesService.GetByIdAsync(id));
+            var pizzaSize = await _pizzaSizesService.GetDetailByIdAsync(id);
+            var pizzaSizeView = _mapper.Map<PizzaSizesView>(pizzaSize);
+            return Ok(pizzaSizeView);
         }
 
         [HttpPost("Add")]

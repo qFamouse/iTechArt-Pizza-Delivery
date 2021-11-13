@@ -8,13 +8,11 @@ using iTechArtPizzaDelivery.WebUI.Views;
 
 namespace iTechArtPizzaDelivery.WebUI.Profiles
 {
-    public class PizzaIngredientProfile : Profile
+    public class PizzaSizesProfile : Profile
     {
-        public PizzaIngredientProfile()
+        public PizzaSizesProfile()
         {
-            CreateMap<PizzaIngredient, PizzaIngredientView>();
-
-            CreateMap<PizzaIngredient, PizzaIngredientDetailsView>();
+            CreateMap<PizzaSize, PizzaSizesView>();
         }
     }
 }
