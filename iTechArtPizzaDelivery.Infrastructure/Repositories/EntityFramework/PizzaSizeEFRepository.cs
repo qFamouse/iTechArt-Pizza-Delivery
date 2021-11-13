@@ -16,11 +16,7 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
 {
     public class PizzaSizeEFRepository : BaseEFRepository, IPizzasSizesRepository
     {
-        private IMapper _mapper;
-        public PizzaSizeEFRepository(PizzaDeliveryContext context, IMapper mapper) : base(context)
-        {
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper), "Mapper is null");
-        }
+        public PizzaSizeEFRepository(PizzaDeliveryContext context, IMapper mapper) : base(context, mapper) { }
 
         public async Task<List<PizzaSize>> GetAllAsync()
         {

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using iTechArtPizzaDelivery.Domain.Entities;
+using iTechArtPizzaDelivery.Domain.Requests.Size;
 using iTechArtPizzaDelivery.Domain.Services;
 
 namespace iTechArtPizzaDelivery.WebUI.Controllers
@@ -35,9 +36,9 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         }
 
         [HttpPost("Add")]
-        public async Task<ActionResult> AddAsync([FromBody] Size size)
+        public async Task<ActionResult> AddAsync([FromBody] SizeAddRequest sAddRequest)
         {
-            return Ok(await _sizesService.AddAsync(size));
+            return Ok(await _sizesService.AddAsync(sAddRequest));
         }
 
         [HttpDelete("{id}")]

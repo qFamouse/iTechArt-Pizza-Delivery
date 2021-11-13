@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using iTechArtPizzaDelivery.Domain.Entities;
+using iTechArtPizzaDelivery.Domain.Requests.Pizza;
 using iTechArtPizzaDelivery.Domain.Services;
 
 namespace iTechArtPizzaDelivery.WebUI.Controllers
@@ -34,9 +35,9 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         }
 
         [HttpPost("Add")]
-        public async Task<ActionResult> AddAsync([FromBody] Pizza pizza)
+        public async Task<ActionResult> AddAsync([FromBody] PizzaAddRequest pAddRequest)
         {
-            return Ok(await _pizzasService.AddAsync(pizza));
+            return Ok(await _pizzasService.AddAsync(pAddRequest));
         }
 
         [HttpDelete("{id}")]

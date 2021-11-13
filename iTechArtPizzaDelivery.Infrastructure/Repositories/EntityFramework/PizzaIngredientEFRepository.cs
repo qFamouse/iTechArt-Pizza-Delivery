@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using iTechArtPizzaDelivery.Domain.Entities;
 using iTechArtPizzaDelivery.Domain.Interfaces.Repositories;
 using iTechArtPizzaDelivery.Domain.Requests.PizzaIngredient;
@@ -14,20 +15,17 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
 {
     public class PizzaIngredientEFRepository : BaseEFRepository, IPizzaIngredientRepository
     {
-        public PizzaIngredientEFRepository(PizzaDeliveryContext context) : base(context) { }
+        public PizzaIngredientEFRepository(PizzaDeliveryContext context, IMapper mapper) : base(context, mapper) { }
 
         public async Task<PizzaIngredient> AddAsync(PizzaIngredientAddRequest pizzaIngredientAddRequest)
         {
-            var pizzaIngredient = new PizzaIngredient
-            {
-                Weight = pizzaIngredientAddRequest.Weight
-            };
-
+            // Mapping
+            var pizzaIngredient = _mapper.Map<PizzaIngredient>(pizzaIngredientAddRequest);
             pizzaIngredient.Ingredient =
                 await _dbContext.Ingredients.SingleAsync(i => i.Id == pizzaIngredientAddRequest.IngredientId);
             pizzaIngredient.PizzaSize =
                 await _dbContext.PizzasSizes.SingleAsync(i => i.Id == pizzaIngredientAddRequest.PizzaSizeId);
-
+            // Adding
             await _dbContext.PizzaIngredients.AddAsync(pizzaIngredient);
             await _dbContext.SaveChangesAsync();
             return pizzaIngredient;

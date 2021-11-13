@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using iTechArtPizzaDelivery.Domain.Entities;
 using iTechArtPizzaDelivery.Domain.Interfaces.Repositories;
+using iTechArtPizzaDelivery.Domain.Requests.Size;
 using iTechArtPizzaDelivery.Infrastructure.Repositories.Context;
 using iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework.Base;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +15,11 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
 {
     public class SizeEFRepository : BaseEFRepository, ISizeRepository
     {
-        public SizeEFRepository(PizzaDeliveryContext context) : base(context) { }
+        public SizeEFRepository(PizzaDeliveryContext context, IMapper mapper) : base(context, mapper) { }
 
-        public async Task<Size> AddAsync(Size size)
+        public async Task<Size> AddAsync(SizeAddRequest sAddRequest)
         {
+            var size = _mapper.Map<Size>(sAddRequest);
             await _dbContext.Sizes.AddAsync(size);
             await _dbContext.SaveChangesAsync();
             return size;

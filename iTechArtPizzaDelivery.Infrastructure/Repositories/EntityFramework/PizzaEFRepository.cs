@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using iTechArtPizzaDelivery.Domain.Entities;
 using iTechArtPizzaDelivery.Domain.Interfaces.Repositories;
+using iTechArtPizzaDelivery.Domain.Requests.Pizza;
 using iTechArtPizzaDelivery.Infrastructure.Repositories.Context;
 using iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework.Base;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +15,11 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
 {
     public class PizzaEFRepository : BaseEFRepository, IPizzaRepository
     {
-        public PizzaEFRepository(PizzaDeliveryContext context) : base(context) { }
+        public PizzaEFRepository(PizzaDeliveryContext context, IMapper mapper) : base(context, mapper) { }
 
-        public async Task<Pizza> AddAsync(Pizza pizza)
+        public async Task<Pizza> AddAsync(PizzaAddRequest pAddRequest)
         {
+            var pizza = _mapper.Map<Pizza>(pAddRequest);
             await _dbContext.Pizzas.AddAsync(pizza);
             await _dbContext.SaveChangesAsync();
             return pizza;
