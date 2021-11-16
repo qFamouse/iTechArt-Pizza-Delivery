@@ -25,9 +25,31 @@ namespace iTechArtPizzaDelivery.Domain.Services
             return await _orderRepository.GetAllAsync();
         }
 
-        public async Task AddPromocode(OrderAddPromocodeRequest oAddPromocodeRequest)
+        public async Task AddPromocode(OrderAddPromocodeRequest request)
         {
-            await _orderRepository.AddPromocode(oAddPromocodeRequest);
+            var order = await _orderRepository.GetOrderById(request.OrderId);
+            var promocode = await _orderRepository.GetPromocodeByCode(request.Code);
+
+            if (order.Promocode is not null)
+            {
+                throw new ArgumentException("The order already has an active promo code", nameof(order.Promocode));
+            }
+
+            switch ((MeasureType)promocode.Measure)
+            {
+                case MeasureType.Percent:
+                    order.Price *= promocode.Discount;
+                    break;
+                case MeasureType.Money:
+                    order.Price -= promocode.Discount;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(promocode.Measure), "Invalid measure value");
+            }
+
+            order.Promocode = promocode;
+
+            await _orderRepository.SaveChangesAsync();
         }
     }
 }

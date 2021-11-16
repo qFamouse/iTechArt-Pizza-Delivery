@@ -11,6 +11,6 @@ namespace iTechArtPizzaDelivery.Domain.Interfaces.Services
     interface IOrderService
     {
         public Task<List<Order>> GetAllAsync();
-        public Task AddPromocode(OrderAddPromocodeRequest oAddPromocodeRequest);
+        public Task AddPromocode(OrderAddPromocodeRequest request);
     }
 }

@@ -13,6 +13,7 @@ namespace iTechArtPizzaDelivery.Domain.Entities
         // User
         // Payment
         // Delivery
+        public int? PromocodeId { get; set; }
         public Promocode Promocode { get; set; }
         public short Status { get; set; } // 0 .. 3
         public double Price { get; set; }
