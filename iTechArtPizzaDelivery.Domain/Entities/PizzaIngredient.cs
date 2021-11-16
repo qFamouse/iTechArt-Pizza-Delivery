@@ -9,8 +9,12 @@ namespace iTechArtPizzaDelivery.Domain.Entities
     public class PizzaIngredient
     {
         public int Id { get; set; }
-        public PizzaSize PizzaSize { get; set; }
-        public Ingredient Ingredient { get; set; }
         public float Weight { get; set; }
+
+        public int PizzaSizeId { get; set; }
+        public PizzaSize PizzaSize { get; set; }
+
+        public int IngredientId { get; set; }
+        public Ingredient Ingredient { get; set; }
     }
 }
