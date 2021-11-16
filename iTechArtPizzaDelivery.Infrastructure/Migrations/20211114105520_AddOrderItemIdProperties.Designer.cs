@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using iTechArtPizzaDelivery.Infrastructure.Repositories.Context;
 
 namespace iTechArtPizzaDelivery.Infrastructure.Migrations
 {
     [DbContext(typeof(PizzaDeliveryContext))]
-    partial class PizzaSizeContextModelSnapshot : ModelSnapshot
+    [Migration("20211114105520_AddOrderItemIdProperties")]
+    partial class AddOrderItemIdProperties
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,9 +89,6 @@ namespace iTechArtPizzaDelivery.Infrastructure.Migrations
 
                     b.Property<short>("Quantity")
                         .HasColumnType("smallint");
-
-                    b.Property<double>("Weight")
-                        .HasColumnType("float");
 
                     b.HasKey("Id");
 

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using iTechArtPizzaDelivery.Infrastructure.Repositories.Context;
 
 namespace iTechArtPizzaDelivery.Infrastructure.Migrations
 {
     [DbContext(typeof(PizzaDeliveryContext))]
-    partial class PizzaSizeContextModelSnapshot : ModelSnapshot
+    [Migration("20211113182236_AddOrderItemEntity")]
+    partial class AddOrderItemEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,10 +78,10 @@ namespace iTechArtPizzaDelivery.Infrastructure.Migrations
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("OrderId")
+                    b.Property<int?>("OrderId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PizzaSizeId")
+                    b.Property<int?>("PizzaSizeId")
                         .HasColumnType("int");
 
                     b.Property<double>("Price")
@@ -87,9 +89,6 @@ namespace iTechArtPizzaDelivery.Infrastructure.Migrations
 
                     b.Property<short>("Quantity")
                         .HasColumnType("smallint");
-
-                    b.Property<double>("Weight")
-                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -128,10 +127,10 @@ namespace iTechArtPizzaDelivery.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("IngredientId")
+                    b.Property<int?>("IngredientId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PizzaSizeId")
+                    b.Property<int?>("PizzaSizeId")
                         .HasColumnType("int");
 
                     b.Property<float>("Weight")
@@ -232,15 +231,11 @@ namespace iTechArtPizzaDelivery.Infrastructure.Migrations
                 {
                     b.HasOne("iTechArtPizzaDelivery.Domain.Entities.Order", "Order")
                         .WithMany()
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OrderId");
 
                     b.HasOne("iTechArtPizzaDelivery.Domain.Entities.PizzaSize", "PizzaSize")
                         .WithMany()
-                        .HasForeignKey("PizzaSizeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PizzaSizeId");
 
                     b.Navigation("Order");
 
@@ -251,15 +246,11 @@ namespace iTechArtPizzaDelivery.Infrastructure.Migrations
                 {
                     b.HasOne("iTechArtPizzaDelivery.Domain.Entities.Ingredient", "Ingredient")
                         .WithMany()
-                        .HasForeignKey("IngredientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IngredientId");
 
                     b.HasOne("iTechArtPizzaDelivery.Domain.Entities.PizzaSize", "PizzaSize")
                         .WithMany("PizzaIngredients")
-                        .HasForeignKey("PizzaSizeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PizzaSizeId");
 
                     b.Navigation("Ingredient");
 
