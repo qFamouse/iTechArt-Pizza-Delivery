@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -19,6 +20,12 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
         public async Task<List<Promocode>> GetAllAsync()
         {
             return await _dbContext.Promocodes.ToListAsync();
+        }
+
+        public async Task<Promocode> GetByCode(string code)
+        {
+            return await _dbContext.Promocodes
+                .SingleAsync(p => p.Code == code);
         }
     }
 }

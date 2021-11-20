@@ -9,7 +9,12 @@ namespace iTechArtPizzaDelivery.Domain.Interfaces.Repositories
 {
     public interface IPromocodeRepository
     {
+        #region Getters
+
         public Task<List<Promocode>> GetAllAsync();
+        public Task<Promocode> GetByCode(string code);
+
+        #endregion
 
     }
 }

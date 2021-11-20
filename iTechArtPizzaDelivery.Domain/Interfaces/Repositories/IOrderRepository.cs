@@ -10,9 +10,14 @@ namespace iTechArtPizzaDelivery.Domain.Interfaces.Repositories
 {
     public interface IOrderRepository
     {
+        #region Getters
+
         public Task<List<Order>> GetAllAsync();
+        public Task<Order> GetByIdAsync(int id);
+
+        #endregion
+
+
         public Task SaveChangesAsync();
-        public Task<Order> GetOrderById(int id);
-        public Task<Promocode> GetPromocodeByCode(string code);
     }
 }

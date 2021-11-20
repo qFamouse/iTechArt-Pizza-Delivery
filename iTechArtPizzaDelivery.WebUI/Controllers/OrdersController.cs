@@ -27,10 +27,10 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
             return Ok(await _orderService.GetAllAsync());
         }
 
-        [HttpPut("AddPromocode")]
-        public async Task<ActionResult> AddPromocode(OrderAddPromocodeRequest request)
+        [HttpPut("BindPromocode")]
+        public async Task<ActionResult> BindPromocode(OrderBindPromocodeRequest request)
         {
-            await _orderService.AddPromocode(request);
+            await _orderService.BindPromocode(request);
             return Ok();
         }
     }

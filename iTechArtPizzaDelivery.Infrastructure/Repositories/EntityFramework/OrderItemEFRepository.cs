@@ -17,11 +17,6 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
     {
         public OrderItemEFRepository(PizzaDeliveryContext context, IMapper mapper) : base(context, mapper) { }
 
-        public async Task<OrderItem> AddFirstItem(OrderItem request)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task DeleteById(int id)
         {
             _dbContext.Remove(await _dbContext.OrderItems.
@@ -29,7 +24,7 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<List<OrderItem>> GetItemsByOrderIdAsync(int id)
+        public async Task<List<OrderItem>> GetAllByOrderIdAsync(int id)
         {
             return await _dbContext.OrderItems
                 .Include(oi => oi.PizzaSize)
@@ -43,7 +38,7 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
                 .ToListAsync();
         }
 
-        public async Task<OrderItem> GetOrderItemByIdAsync(int id)
+        public async Task<OrderItem> GetByIdAsync(int id)
         {
             return await _dbContext.OrderItems
                 .Include(oi => oi.PizzaSize)

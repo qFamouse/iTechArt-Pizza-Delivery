@@ -10,9 +10,17 @@ namespace iTechArtPizzaDelivery.Domain.Interfaces.Services
 {
     interface IOrderItemService
     {
+        #region Getters
+
         public Task<List<OrderItem>> GetItemsByOrderIdAsync(int id);
+
+        #endregion
+
+        #region Setters
+
         public Task<OrderItem> EditItemByIdAsync(OrderItemEditRequest request);
         public Task DeleteItemByIdAsync(int id);
-        public void RecalculateItem(OrderItem orderItem);
+
+        #endregion
     }
 }

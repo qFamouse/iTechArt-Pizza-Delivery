@@ -10,7 +10,16 @@ namespace iTechArtPizzaDelivery.Domain.Interfaces.Services
 {
     interface IOrderService
     {
+        #region Getters
+
         public Task<List<Order>> GetAllAsync();
-        public Task AddPromocode(OrderAddPromocodeRequest request);
+
+        #endregion
+
+        #region Setters
+
+        public Task BindPromocode(OrderBindPromocodeRequest request);
+
+        #endregion
     }
 }

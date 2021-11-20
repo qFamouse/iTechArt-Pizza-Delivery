@@ -20,6 +20,19 @@ namespace iTechArtPizzaDelivery.Domain.Services
                                    throw new ArgumentNullException(nameof(orderItemRepository), "Interface is null");
         }
 
+        #region Public Methods
+
+        #region Getters
+
+        public async Task<List<OrderItem>> GetItemsByOrderIdAsync(int id)
+        {
+            return await _orderItemRepository.GetAllByOrderIdAsync(id);
+        }
+
+        #endregion
+
+        #region Setters
+
         public async Task DeleteItemByIdAsync(int id)
         {
             await _orderItemRepository.SaveChangesAsync();
@@ -27,7 +40,7 @@ namespace iTechArtPizzaDelivery.Domain.Services
 
         public async Task<OrderItem> EditItemByIdAsync(OrderItemEditRequest request)
         {
-            var orderItem = await _orderItemRepository.GetOrderItemByIdAsync(request.OrderItemId);
+            var orderItem = await _orderItemRepository.GetByIdAsync(request.OrderItemId);
 
             orderItem.Quantity = request.Quantity;
 
@@ -37,12 +50,13 @@ namespace iTechArtPizzaDelivery.Domain.Services
             return orderItem;
         }
 
-        public async Task<List<OrderItem>> GetItemsByOrderIdAsync(int id)
-        {
-            return await _orderItemRepository.GetItemsByOrderIdAsync(id);
-        }
+        #endregion
 
-        public void RecalculateItem(OrderItem orderItem)
+        #endregion
+
+        #region Private Methods
+
+        private void RecalculateItem(OrderItem orderItem)
         {
             double weight = orderItem.PizzaSize.Weight;
             double price = orderItem.PizzaSize.Price * orderItem.Quantity;
@@ -55,7 +69,8 @@ namespace iTechArtPizzaDelivery.Domain.Services
 
             orderItem.Weight = weight;
             orderItem.Price = price;
-
         }
+
+        #endregion
     }
 }

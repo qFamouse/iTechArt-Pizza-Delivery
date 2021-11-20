@@ -24,21 +24,16 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
                 .ToListAsync();
         }
 
-        public async Task SaveChangesAsync()
-        {
-            await _dbContext.SaveChangesAsync();
-        }
-
-        public async Task<Order> GetOrderById(int id)
+        public async Task<Order> GetByIdAsync(int id)
         {
             return await _dbContext.Orders
                 .SingleAsync(o => o.Id == id);
         }
 
-        public async Task<Promocode> GetPromocodeByCode(string code)
+        public async Task SaveChangesAsync()
         {
-            return await _dbContext.Promocodes
-                .SingleAsync(p => p.Code == code);
+            await _dbContext.SaveChangesAsync();
         }
+
     }
 }

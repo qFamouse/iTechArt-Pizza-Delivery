@@ -13,11 +13,15 @@ namespace iTechArtPizzaDelivery.Domain.Services
     public class OrderService : IOrderService
     {
         private readonly IOrderRepository _orderRepository;
+        private readonly IPromocodeRepository _promocodeRepository;
 
-        public OrderService(IOrderRepository orderRepository)
+        public OrderService(IOrderRepository orderRepository, IPromocodeRepository promocodeRepository)
         {
             _orderRepository = orderRepository ??
                                throw new ArgumentNullException(nameof(orderRepository), "Interface is null");
+
+            _promocodeRepository = promocodeRepository ??
+                                   throw new ArgumentNullException(nameof(promocodeRepository), "Interface is null");
         }
 
         public async Task<List<Order>> GetAllAsync()
@@ -25,10 +29,10 @@ namespace iTechArtPizzaDelivery.Domain.Services
             return await _orderRepository.GetAllAsync();
         }
 
-        public async Task AddPromocode(OrderAddPromocodeRequest request)
+        public async Task BindPromocode(OrderBindPromocodeRequest request)
         {
-            var order = await _orderRepository.GetOrderById(request.OrderId);
-            var promocode = await _orderRepository.GetPromocodeByCode(request.Code);
+            var order = await _orderRepository.GetByIdAsync(request.OrderId);
+            var promocode = await _promocodeRepository.GetByCode(request.Code);
 
             if (order.Promocode is not null)
             {
