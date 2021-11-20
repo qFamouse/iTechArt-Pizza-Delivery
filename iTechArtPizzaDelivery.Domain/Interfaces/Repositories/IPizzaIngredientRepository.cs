@@ -10,7 +10,12 @@ namespace iTechArtPizzaDelivery.Domain.Interfaces.Repositories
 {
     public interface IPizzaIngredientRepository
     {
+        #region Getters
+
         public Task<List<PizzaIngredient>> GetAllAsync();
-        public Task<PizzaIngredient> AddAsync(PizzaIngredientAddRequest pizzaIngredientAddRequest);
+
+        #endregion
+
+        public Task<PizzaIngredient> AddAsync(PizzaIngredientBindRequest pizzaIngredientAddRequest);
     }
 }

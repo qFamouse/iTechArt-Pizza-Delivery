@@ -13,7 +13,7 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework.Prof
     {
         public PizzaIngredientProfile()
         {
-            CreateMap<PizzaIngredientAddRequest, PizzaIngredient>();
+            CreateMap<PizzaIngredientBindRequest, PizzaIngredient>();
         }
     }
 }

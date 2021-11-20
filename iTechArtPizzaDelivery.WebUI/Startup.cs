@@ -37,9 +37,6 @@ namespace iTechArtPizzaDelivery.WebUI
             //services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies().Single(x => x.FullName.StartsWith("iTechArtPizzaDelivery.Infrastructure")));
             services.AddAutoMapper(typeof(Startup));
             // Domain
-            services.AddScoped<IPizzasSizesRepository, PizzaSizeEFRepository>();
-            services.AddScoped<PizzasSizesService>();
-
             services.AddScoped<IPizzaRepository, PizzaEFRepository>();
             services.AddScoped<PizzasService>();
 
@@ -49,8 +46,7 @@ namespace iTechArtPizzaDelivery.WebUI
             services.AddScoped<IIngredientRepository, IngredientEFRepository>();
             services.AddScoped<IngredientsService>();
 
-            services.AddScoped<IPizzaIngredientRepository, PizzaIngredientEFRepository>();
-            services.AddScoped<PizzasIngredientsService>();
+            
 
             services.AddScoped<IOrderRepository, OrderEFRepository>();
             services.AddScoped<OrderService>();
@@ -60,6 +56,10 @@ namespace iTechArtPizzaDelivery.WebUI
 
             services.AddScoped<IOrderItemRepository, OrderItemEFRepository>();
             services.AddScoped<OrdersItemsService>();
+
+            services.AddScoped<IPizzaSizeRepository, PizzaSizeEFRepository>();
+            services.AddScoped<IPizzaIngredientRepository, PizzaIngredientEFRepository>();
+            services.AddScoped<PizzasCartService>();
             // Infrastructure
             services.AddDbContext<PizzaDeliveryContext>();
             // WebUI

@@ -17,7 +17,7 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
     {
         public PizzaIngredientEFRepository(PizzaDeliveryContext context, IMapper mapper) : base(context, mapper) { }
 
-        public async Task<PizzaIngredient> AddAsync(PizzaIngredientAddRequest pizzaIngredientAddRequest)
+        public async Task<PizzaIngredient> AddAsync(PizzaIngredientBindRequest pizzaIngredientAddRequest)
         {
             // Mapping
             var pizzaIngredient = _mapper.Map<PizzaIngredient>(pizzaIngredientAddRequest);

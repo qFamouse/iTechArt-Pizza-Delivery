@@ -14,7 +14,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
 {
-    public class PizzaSizeEFRepository : BaseEFRepository, IPizzasSizesRepository
+    public class PizzaSizeEFRepository : BaseEFRepository, IPizzaSizeRepository
     {
         public PizzaSizeEFRepository(PizzaDeliveryContext context, IMapper mapper) : base(context, mapper) { }
 
@@ -23,6 +23,8 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
             return await _dbContext.PizzasSizes
                 .Include(p => p.Pizza)
                 .Include(s => s.Size)
+                .Include(ps => ps.PizzaIngredients)
+                .ThenInclude(pi => pi.Ingredient)
                 .ToListAsync();
         }
 
