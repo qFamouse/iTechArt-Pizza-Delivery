@@ -11,12 +11,12 @@ using iTechArtPizzaDelivery.Domain.Requests.PizzaSize;
 
 namespace iTechArtPizzaDelivery.Domain.Services
 {
-    public class PizzasCartService : IPizzasCartService
+    public class PizzaConstructionService : IPizzaConstructionService
     {
         private readonly IPizzaSizeRepository _pizzaSizeRepository;
         private readonly IPizzaIngredientRepository _pizzaIngredientRepository;
 
-        public PizzasCartService(IPizzaSizeRepository pizzaSizeRepository,
+        public PizzaConstructionService(IPizzaSizeRepository pizzaSizeRepository,
             IPizzaIngredientRepository pizzaIngredientRepository)
         {
             _pizzaSizeRepository = pizzaSizeRepository ??

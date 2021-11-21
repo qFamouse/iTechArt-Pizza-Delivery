@@ -9,7 +9,7 @@ using iTechArtPizzaDelivery.Domain.Requests.PizzaSize;
 
 namespace iTechArtPizzaDelivery.Domain.Interfaces.Services
 {
-    interface IPizzasCartService
+    interface IPizzaConstructionService
     {
         #region Getters
 
