@@ -29,7 +29,7 @@ namespace iTechArtPizzaDelivery.Domain.Services
             return await _orderRepository.GetAllAsync();
         }
 
-        public async Task BindPromocode(OrderBindPromocodeRequest request)
+        public async Task AttachPromocode(OrderAttachPromocodeRequest request)
         {
             var order = await _orderRepository.GetByIdAsync(request.OrderId);
             var promocode = await _promocodeRepository.GetByCode(request.Code);

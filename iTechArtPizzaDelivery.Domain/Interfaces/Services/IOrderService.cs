@@ -18,7 +18,7 @@ namespace iTechArtPizzaDelivery.Domain.Interfaces.Services
 
         #region Setters
 
-        public Task BindPromocode(OrderBindPromocodeRequest request);
+        public Task AttachPromocode(OrderAttachPromocodeRequest request);
 
         #endregion
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace iTechArtPizzaDelivery.Domain.Requests.Order
 {
-    public class OrderBindPromocodeRequest
+    public class OrderAttachPromocodeRequest
     {
         public int OrderId { get; set; }
         public string Code { get; set; }
