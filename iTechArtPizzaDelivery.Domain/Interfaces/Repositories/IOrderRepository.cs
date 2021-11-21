@@ -17,10 +17,11 @@ namespace iTechArtPizzaDelivery.Domain.Interfaces.Repositories
         public Task<Order> GetByIdAsync(int id);
         public Task<Order> GetDetailByIdAsync(int id);
         public Task<List<Order>> GetDetailedOrdersAsync(OrderQuery query);
+        public Task<Order> GetDetailedOrderAsync(OrderQuery query);
 
         #endregion
 
-
+        public Task<Order> Add(Order order);
         public Task SaveChangesAsync();
     }
 }
