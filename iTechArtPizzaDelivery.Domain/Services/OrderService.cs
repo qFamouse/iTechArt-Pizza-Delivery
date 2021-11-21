@@ -44,28 +44,24 @@ namespace iTechArtPizzaDelivery.Domain.Services
 
         public async Task AttachPromocode(OrderAttachPromocodeRequest request)
         {
-            var order = await _orderRepository.GetByIdAsync(request.OrderId);
-            var promocode = await _promocodeRepository.GetByCode(request.Code);
-
+            // Get Initial Data //
+            Order order = await _orderRepository.GetDetailByIdAsync(request.OrderId);
+            Promocode promocode = await _promocodeRepository.GetByCode(request.Code);
+            
+            // Check Order to existing promocode //
             if (order.Promocode is not null)
             {
                 throw new ArgumentException("The order already has an active promo code", nameof(order.Promocode));
             }
 
-            switch ((MeasureType)promocode.Measure)
-            {
-                case MeasureType.Percent:
-                    order.Price *= promocode.Discount;
-                    break;
-                case MeasureType.Money:
-                    order.Price -= promocode.Discount;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(promocode.Measure), "Invalid measure value");
-            }
-
+            // Attach Promocode to Order //
             order.Promocode = promocode;
+            order.PromocodeId = promocode.Id;
 
+            // Recalculate Order //
+            RecalculateOrder(order);
+
+            // Save changes //
             await _orderRepository.SaveChangesAsync();
         }
 
@@ -77,9 +73,37 @@ namespace iTechArtPizzaDelivery.Domain.Services
 
         private void RecalculateOrder(Order order)
         {
-            double price;
+            // Initial Data //
+            Promocode promocode = order.Promocode;
+            double price = 0;
+            
+            // Add Item Prices //
+            foreach (var orderItem in order.OrderItems)
+            {
+                price += orderItem.Price;
+            }
+            
+            // If Promocode is exists, then include discount //
+            if (promocode is not null)
+            {
+                switch ((MeasureType) promocode.Measure)
+                {
+                    case MeasureType.Percent:
+                        price *= order.Promocode.Discount / 100;
+                        break;
+                    case MeasureType.Money:
+                        price -= order.Promocode.Discount;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(order.Promocode.Measure), "Invalid measure value");
+                }
+            }
 
+            // If Price is Negative Value, then it free //
+            if (price < 0) { price = 0; }
 
+            // Save price //
+            order.Price = price;
         }
 
         #endregion
