@@ -7,6 +7,14 @@ using System.Threading.Tasks;
 
 namespace iTechArtPizzaDelivery.Domain.Entities
 {
+    public enum Status : short
+    {
+        Cancelled,          // 0 C
+        InProgress,         // 1 N
+        WaitingDelivery,    // 2 W
+        Delivered           // 3 D
+    }
+
     public class Order
     {
         public int Id { get; set; }
