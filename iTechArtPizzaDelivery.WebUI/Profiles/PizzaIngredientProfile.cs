@@ -14,7 +14,7 @@ namespace iTechArtPizzaDelivery.WebUI.Profiles
         {
             CreateMap<PizzaIngredient, PizzaIngredientView>();
 
-            CreateMap<PizzaIngredient, PizzaIngredientDetailsView>();
+            CreateMap<PizzaIngredient, PizzaIngredientDetailView>();
         }
     }
 }

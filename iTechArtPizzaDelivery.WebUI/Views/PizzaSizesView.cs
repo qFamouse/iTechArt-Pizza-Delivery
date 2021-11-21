@@ -14,6 +14,6 @@ namespace iTechArtPizzaDelivery.WebUI.Views
         public double Price { get; set; }
         public float Weight { get; set; }
 
-        public List<PizzaIngredientDetailsView> PizzaIngredients { get; set; }
+        public List<PizzaIngredientDetailView> PizzaIngredients { get; set; }
     }
 }
