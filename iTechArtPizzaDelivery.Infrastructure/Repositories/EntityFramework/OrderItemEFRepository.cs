@@ -17,6 +17,12 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
     {
         public OrderItemEFRepository(PizzaDeliveryContext context, IMapper mapper) : base(context, mapper) { }
 
+        public async Task<OrderItem> Add(OrderItem orderItem)
+        {
+            await _dbContext.OrderItems.AddAsync(orderItem);
+            await _dbContext.SaveChangesAsync();
+            return orderItem;
+        }
         public async Task DeleteById(int id)
         {
             _dbContext.Remove(await _dbContext.OrderItems.

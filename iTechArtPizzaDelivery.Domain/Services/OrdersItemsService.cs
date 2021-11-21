@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using iTechArtPizzaDelivery.Domain.Entities;
 using iTechArtPizzaDelivery.Domain.Interfaces.Repositories;
 using iTechArtPizzaDelivery.Domain.Interfaces.Services;
+using iTechArtPizzaDelivery.Domain.Queries;
 using iTechArtPizzaDelivery.Domain.Requests.OrderItem;
 
 namespace iTechArtPizzaDelivery.Domain.Services
@@ -14,14 +15,18 @@ namespace iTechArtPizzaDelivery.Domain.Services
     {
         private readonly IOrderItemRepository _orderItemRepository;
         private readonly IOrderRepository _orderRepository;
+        private readonly IPizzaSizeRepository _pizzaSizeRepository;
 
-        public OrdersItemsService(IOrderItemRepository orderItemRepository, IOrderRepository orderRepository)
+        public OrdersItemsService(IOrderItemRepository orderItemRepository, IOrderRepository orderRepository, IPizzaSizeRepository pizzaSizeRepository)
         {
             _orderItemRepository = orderItemRepository ??
                                    throw new ArgumentNullException(nameof(orderItemRepository), "Interface is null");
 
             _orderRepository = orderRepository ??
                                throw new ArgumentNullException(nameof(orderRepository), "Interface is null");
+
+            _pizzaSizeRepository = pizzaSizeRepository ??
+                                   throw new ArgumentNullException(nameof(pizzaSizeRepository), "Interface is null");
         }
 
         #region Public Methods
@@ -80,9 +85,50 @@ namespace iTechArtPizzaDelivery.Domain.Services
             int UserId = 1; // Coming Soon (Identity)
 
 
+            PizzaSize pizzaSize = await _pizzaSizeRepository.GetDetailByIdAsync(request.PizzaSizesId);
 
+            var query = new OrderQuery() // Coming Soon (Change to Constructor)
+            {
+                UserId = UserId,
+                Status = (short) Status.InProgress
+            };
 
-            return null;
+            Order order = await _orderRepository.GetDetailedOrderAsync(query);
+
+            OrderItem orderItem = order?.OrderItems.Find(oi => oi.PizzaSizeId == pizzaSize.Id);
+
+            if (orderItem is not null)
+            {
+                return await EditItemByIdAsync(new OrderItemEditRequest() // Coming Soon (Change to Constructor)
+                {
+                    OrderItemId = orderItem.Id,
+                    Quantity = (short)(orderItem.Quantity + request.Quantity)
+                });
+            }
+
+            order = new Order() // Coming Soon (Change to Constructor)
+            {
+                UserId = UserId,
+                Status = (short)Status.InProgress,
+                CreateAt = DateTime.Now
+            };
+
+            order = await _orderRepository.Add(order);
+
+            orderItem = new OrderItem() // Coming Soon (Change to Constructor)
+            {
+                OrderId = order.Id,
+                Order = order,
+                PizzaSizeId = pizzaSize.Id,
+                PizzaSize = pizzaSize,
+                //Price install RecalculateItem()
+                Quantity = request.Quantity,
+                CreateAt = DateTime.Now,
+                //Weight install RecalculateItem()
+            };
+
+            RecalculateItem(orderItem);
+            return await _orderItemRepository.Add(orderItem);
         }
 
         #endregion
