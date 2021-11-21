@@ -57,10 +57,12 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
             return Ok();
         }
 
-        [HttpPost("BindIngredient")]
+        [HttpPost("AddIngredient")]
         public async Task<ActionResult> BindIngredient([FromBody] PizzaIngredientBindRequest request)
         {
-            return Ok(await _pizzasCartService.BindIngredient(request));
+            var updatedPizzaSize = await _pizzasCartService.AddIngredient(request);
+            var updatedPizzaSizeView = _mapper.Map<PizzaSizesView>(updatedPizzaSize);
+            return Ok(updatedPizzaSizeView);
         }
     }
 }

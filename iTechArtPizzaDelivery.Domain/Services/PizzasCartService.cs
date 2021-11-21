@@ -31,10 +31,11 @@ namespace iTechArtPizzaDelivery.Domain.Services
             return await _pizzaSizeRepository.AddAsync(request);
         }
 
-        public async Task<PizzaIngredient> BindIngredient(PizzaIngredientBindRequest request)
+        public async Task<PizzaSize> AddIngredient(PizzaIngredientBindRequest request)
         {
-            return await _pizzaIngredientRepository.AddAsync(request);
+            var newPizzaIngredient = await _pizzaIngredientRepository.AddAsync(request);
 
+            return await GetByIdAsync(newPizzaIngredient.PizzaSizeId);
         }
 
         public async Task DeleteByIdAsync(int id)

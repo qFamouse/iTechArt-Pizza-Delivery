@@ -21,7 +21,7 @@ namespace iTechArtPizzaDelivery.Domain.Interfaces.Services
         #region Setters
 
         public Task DeleteByIdAsync(int id);
-        public Task<PizzaIngredient> BindIngredient(PizzaIngredientBindRequest request);
+        public Task<PizzaSize> AddIngredient(PizzaIngredientBindRequest request);
 
         #endregion
 
