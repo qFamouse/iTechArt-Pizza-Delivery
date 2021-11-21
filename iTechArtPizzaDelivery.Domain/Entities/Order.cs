@@ -19,5 +19,6 @@ namespace iTechArtPizzaDelivery.Domain.Entities
         public double Price { get; set; }
         public string Comment { get; set; }
         public DateTime CreateAt { get; set; }
+        public List<OrderItem> OrderItems { get; set; }
     }
 }
