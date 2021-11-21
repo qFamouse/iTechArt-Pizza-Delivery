@@ -40,7 +40,7 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
                 .SingleAsync(o => o.Id == id);
         }
 
-        public async Task<List<Order>> GetDetailedOrders(OrderQuery query)
+        public async Task<List<Order>> GetDetailedOrdersAsync(OrderQuery query)
         {
             IQueryable<Order> ordersQuery = _dbContext.Orders;
 
