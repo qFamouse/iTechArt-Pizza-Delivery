@@ -19,6 +19,7 @@ namespace iTechArtPizzaDelivery.Domain.Interfaces.Repositories
 
         #region Setters
 
+        public Task<OrderItem> Add(OrderItem orderItem);
         public Task DeleteById(int id);
 
         #endregion
