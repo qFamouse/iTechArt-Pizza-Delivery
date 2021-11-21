@@ -47,5 +47,10 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
             return Ok(orderItemsView);
         }
 
+        [HttpPut("Add")]
+        public async Task<ActionResult> Add(int id)
+        {
+            return null;
+        }
     }
 }

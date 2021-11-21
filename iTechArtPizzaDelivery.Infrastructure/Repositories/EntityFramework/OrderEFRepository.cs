@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 using AutoMapper;
 using iTechArtPizzaDelivery.Domain.Entities;
 using iTechArtPizzaDelivery.Domain.Interfaces.Repositories;
+using iTechArtPizzaDelivery.Domain.Queries;
 using iTechArtPizzaDelivery.Domain.Requests.Order;
 using iTechArtPizzaDelivery.Infrastructure.Repositories.Context;
 using iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework.Base;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
 {
@@ -36,6 +38,31 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
                 .Include(o => o.OrderItems)
                 .Include(o => o.Promocode)
                 .SingleAsync(o => o.Id == id);
+        }
+
+        public async Task<List<Order>> GetDetailedOrders(OrderQuery query)
+        {
+            IQueryable<Order> ordersQuery = _dbContext.Orders;
+
+            if (query.OrderId.HasValue)
+            {
+                ordersQuery = ordersQuery.Where(o => o.Id == query.OrderId);
+            }
+
+            if (query.UserId.HasValue)
+            {
+                ordersQuery = ordersQuery.Where(o => o.UserId == query.UserId);
+            }
+
+            if (query.Status.HasValue)
+            {
+                ordersQuery = ordersQuery.Where(o => o.Status == query.Status);
+            }
+
+            return await ordersQuery
+                .Include(o => o.OrderItems)
+                .Include(o => o.Promocode)
+                .ToListAsync();
         }
 
         public async Task SaveChangesAsync()

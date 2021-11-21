@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using iTechArtPizzaDelivery.Domain.Entities;
+using iTechArtPizzaDelivery.Domain.Queries;
 using iTechArtPizzaDelivery.Domain.Requests.Order;
 
 namespace iTechArtPizzaDelivery.Domain.Interfaces.Repositories
@@ -15,6 +16,7 @@ namespace iTechArtPizzaDelivery.Domain.Interfaces.Repositories
         public Task<List<Order>> GetAllAsync();
         public Task<Order> GetByIdAsync(int id);
         public Task<Order> GetDetailByIdAsync(int id);
+        public Task<List<Order>> GetDetailedOrders(OrderQuery query);
 
         #endregion
 

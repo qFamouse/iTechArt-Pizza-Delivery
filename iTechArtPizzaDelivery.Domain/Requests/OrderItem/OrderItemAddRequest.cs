@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace iTechArtPizzaDelivery.Domain.Requests.OrderItem
 {
-    public class OrderItemAddFirstRequest
+    public class OrderItemAddRequest
     {
         public int PizzaSizesId { get; set; }
         public short Quantity { get; set; }

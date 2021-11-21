@@ -22,5 +22,7 @@ namespace iTechArtPizzaDelivery.Domain.Interfaces.Services
         public Task DeleteItemByIdAsync(int id);
 
         #endregion
+
+        public Task<OrderItem> AddAsync(OrderItemAddRequest request);
     }
 }
