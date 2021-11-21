@@ -35,7 +35,7 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         public async Task<ActionResult> GetItemsByOrderIdAsync(int id)
         {
             var orderItems = await _ordersItemsService.GetItemsByOrderIdAsync(id);
-            var orderItemsView = _mapper.Map<List<OrderItem>, List<OrderItemsView>>(orderItems);
+            var orderItemsView = _mapper.Map<List<OrderItem>, List<OrderItemDetailView>>(orderItems);
             return Ok(orderItemsView);
         }
 
@@ -43,7 +43,7 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         public async Task<ActionResult> EditItemByIdAsync(OrderItemEditRequest request)
         {
             var orderItems = await _ordersItemsService.EditItemByIdAsync(request);
-            var orderItemsView = _mapper.Map<OrderItem, OrderItemsView>(orderItems);
+            var orderItemsView = _mapper.Map<OrderItem, OrderItemDetailView>(orderItems);
             return Ok(orderItemsView);
         }
 

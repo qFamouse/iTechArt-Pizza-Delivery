@@ -6,7 +6,7 @@ using iTechArtPizzaDelivery.Domain.Entities;
 
 namespace iTechArtPizzaDelivery.WebUI.Views
 {
-    public class OrderItemsView
+    public class OrderItemDetailView
     {
         public int Id { get; set; }
         public int OrderId { get; set; }
