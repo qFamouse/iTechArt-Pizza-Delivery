@@ -7,7 +7,7 @@ namespace iTechArtPizzaDelivery.WebUI.Views
     public class OrderView
     {
         public int Id { get; set; }
-        // User
+        public int UserId { get; set; }
         // Payment
         // Delivery
         public Promocode Promocode { get; set; }

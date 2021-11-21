@@ -20,6 +20,8 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.Context
         public DbSet<Promocode> Promocodes { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
 
+        public DbSet<User> Users { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=PizzaDelivery;Trusted_Connection=True;");

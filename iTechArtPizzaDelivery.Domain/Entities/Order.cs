@@ -10,7 +10,8 @@ namespace iTechArtPizzaDelivery.Domain.Entities
     public class Order
     {
         public int Id { get; set; }
-        // User
+        public int UserId { get; set; }
+        public User User { get; set; }
         // Payment
         // Delivery
         public int? PromocodeId { get; set; }
