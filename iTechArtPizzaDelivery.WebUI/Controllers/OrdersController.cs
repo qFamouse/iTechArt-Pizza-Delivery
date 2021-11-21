@@ -4,8 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using iTechArtPizzaDelivery.Domain.Entities;
 using iTechArtPizzaDelivery.Domain.Requests.Order;
 using iTechArtPizzaDelivery.Domain.Services;
+using iTechArtPizzaDelivery.WebUI.Views;
 
 namespace iTechArtPizzaDelivery.WebUI.Controllers
 {
@@ -14,17 +17,28 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
     public class OrdersController : ControllerBase
     {
         private readonly OrderService _orderService;
+        private readonly IMapper _mapper;
 
-        public OrdersController(OrderService orderService)
+        public OrdersController(OrderService orderService, IMapper mapper)
         {
             _orderService = orderService ??
                             throw new ArgumentNullException(nameof(orderService), "Service is null");
+
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper), "Mapper is null");
         }
 
         [HttpGet]
         public async Task<ActionResult> GetAllAsync()
         {
             return Ok(await _orderService.GetAllAsync());
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult> GetDetailByIdAsync(int id)
+        {
+            var order = await _orderService.GetDetailByIdAsync(id);
+            var orderView = _mapper.Map<OrderView>(order);
+            return Ok(orderView);
         }
 
         [HttpPut("AttachPromocode")]

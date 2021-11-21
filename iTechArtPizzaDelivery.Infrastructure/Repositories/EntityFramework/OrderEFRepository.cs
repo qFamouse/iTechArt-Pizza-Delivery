@@ -30,6 +30,13 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
                 .SingleAsync(o => o.Id == id);
         }
 
+        public async Task<Order> GetDetailByIdAsync(int id)
+        {
+            return await _dbContext.Orders
+                .Include(o => o.OrderItems)
+                .SingleAsync(o => o.Id == id);
+        }
+
         public async Task SaveChangesAsync()
         {
             await _dbContext.SaveChangesAsync();

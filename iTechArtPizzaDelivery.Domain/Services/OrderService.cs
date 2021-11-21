@@ -24,10 +24,23 @@ namespace iTechArtPizzaDelivery.Domain.Services
                                    throw new ArgumentNullException(nameof(promocodeRepository), "Interface is null");
         }
 
+        #region Public Methods
+
+        #region Getters
+
         public async Task<List<Order>> GetAllAsync()
         {
             return await _orderRepository.GetAllAsync();
         }
+
+        public async Task<Order> GetDetailByIdAsync(int id)
+        {
+            return await _orderRepository.GetDetailByIdAsync(id);
+        }
+
+        #endregion
+
+        #region Setters
 
         public async Task AttachPromocode(OrderAttachPromocodeRequest request)
         {
@@ -55,5 +68,20 @@ namespace iTechArtPizzaDelivery.Domain.Services
 
             await _orderRepository.SaveChangesAsync();
         }
+
+        #endregion
+
+        #endregion
+
+        #region Private Methods
+
+        private void RecalculateOrder(Order order)
+        {
+            double price;
+
+
+        }
+
+        #endregion
     }
 }

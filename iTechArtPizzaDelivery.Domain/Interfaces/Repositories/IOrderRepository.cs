@@ -14,6 +14,7 @@ namespace iTechArtPizzaDelivery.Domain.Interfaces.Repositories
 
         public Task<List<Order>> GetAllAsync();
         public Task<Order> GetByIdAsync(int id);
+        public Task<Order> GetDetailByIdAsync(int id);
 
         #endregion
 

@@ -13,6 +13,7 @@ namespace iTechArtPizzaDelivery.Domain.Interfaces.Services
         #region Getters
 
         public Task<List<Order>> GetAllAsync();
+        public Task<Order> GetDetailByIdAsync(int id);
 
         #endregion
 
