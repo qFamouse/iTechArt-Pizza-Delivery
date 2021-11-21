@@ -34,6 +34,7 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
         {
             return await _dbContext.Orders
                 .Include(o => o.OrderItems)
+                .Include(o => o.Promocode)
                 .SingleAsync(o => o.Id == id);
         }
 
