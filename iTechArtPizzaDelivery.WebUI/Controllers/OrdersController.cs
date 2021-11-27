@@ -47,5 +47,12 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
             await _orderService.AttachPromocode(request);
             return Ok();
         }
+
+        [HttpPut("Process")]
+        public async Task<ActionResult> Process()
+        {
+            await _orderService.ProcessOrder();
+            return Ok();
+        }
     }
 }

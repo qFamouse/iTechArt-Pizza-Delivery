@@ -66,6 +66,35 @@ namespace iTechArtPizzaDelivery.Domain.Services
             await _orderRepository.SaveChangesAsync();
         }
 
+        public async Task ProcessOrder()
+        {
+            int userId = 2; // Coming Soon (Identity)
+            // Get Initial Data //
+            OrderQuery query = new OrderQuery()
+            {
+                Status = (short) Status.InProgress,
+                UserId = userId,
+            };
+
+            var order = await _orderRepository.GetDetailedOrderAsync(query);
+            
+            // Check order //
+            if (order.PaymentId is null || order.DeliveryId is null)
+            {
+                throw new ArgumentException("Delivery and payment method are not specified");
+            }
+
+            // Recalculate order - just in case //
+            RecalculateOrder(order);
+
+            // Set Status //
+            order.Status = (short) Status.WaitingDelivery;
+
+            // Save Changes //
+            await _orderRepository.SaveChangesAsync();
+
+        }
+
         #endregion
 
         #endregion
