@@ -48,11 +48,18 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         }
 
         [HttpPost("Add")]
-        public async Task<ActionResult> Add(OrderItemAddRequest request)
+        public async Task<ActionResult> AddAsync(OrderItemAddRequest request)
         {
             var orderItem = await _ordersItemsService.AddAsync(request);
             var orderItemView = _mapper.Map<OrderItemDetailView>(orderItem);
             return Ok(orderItemView);
+        }
+
+        [HttpDelete("Delete{id}")]
+        public async Task<ActionResult> DeleteAsync(int id)
+        {
+            await _ordersItemsService.DeleteItemByIdAsync(id);
+            return Ok();
         }
     }
 }
