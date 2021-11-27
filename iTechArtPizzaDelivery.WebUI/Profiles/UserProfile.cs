@@ -13,8 +13,6 @@ namespace iTechArtPizzaDelivery.WebUI.Profiles
         public UserProfile()
         {
             CreateMap<User, UserDetailView>();
-
-            //CreateMap<List<User>, List<UserDetailView>>();
         }
     }
 }
