@@ -16,5 +16,6 @@ namespace iTechArtPizzaDelivery.Domain.Entities
         [DataType(DataType.Date)]
         [Column(TypeName = "Date")]
         public DateTime? Birthday { get; set; }
+        public List<Order> Orders { get; set; }
     }
 }
