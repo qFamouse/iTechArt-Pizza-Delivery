@@ -12,6 +12,8 @@ namespace iTechArtPizzaDelivery.WebUI.Profiles
     {
         public OrderProfile()
         {
+            CreateMap<Order, OrderDetailView>();
+
             CreateMap<Order, OrderView>();
         }
     }
