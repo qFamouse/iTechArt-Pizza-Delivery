@@ -15,6 +15,6 @@ namespace iTechArtPizzaDelivery.Domain.Entities
         public string Phone { get; set; }
         [DataType(DataType.Date)]
         [Column(TypeName = "Date")]
-        public DateTime Birthday { get; set; }
+        public DateTime? Birthday { get; set; }
     }
 }
