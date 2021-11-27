@@ -44,7 +44,24 @@ namespace iTechArtPizzaDelivery.Domain.Services
 
         public async Task DeleteItemByIdAsync(int id)
         {
-            await _orderItemRepository.SaveChangesAsync();
+            var orderItem = await _orderItemRepository.GetByIdAsync(id);
+
+            int orderId = orderItem.OrderId;
+
+            await _orderItemRepository.DeleteById(id);
+
+            OrderQuery query = new OrderQuery
+            {
+                OrderId = orderId
+            };
+
+            var order = await _orderRepository.GetDetailedOrderAsync(query);
+
+            if (order.OrderItems.Count == 0)
+            {
+                await _orderRepository.DeleteByIdAsync(orderId);
+            }
+
         }
 
         public async Task<OrderItem> EditItemByIdAsync(OrderItemEditRequest request)
@@ -80,9 +97,11 @@ namespace iTechArtPizzaDelivery.Domain.Services
             orderItem.Price = price;
         }
 
+        #endregion
+
         public async Task<OrderItem> AddAsync(OrderItemAddRequest request)
         {
-            int UserId = 1; // Coming Soon (Identity)
+            int UserId = 2; // Coming Soon (Identity)
 
 
             PizzaSize pizzaSize = await _pizzaSizeRepository.GetDetailByIdAsync(request.PizzaSizesId);
@@ -95,42 +114,45 @@ namespace iTechArtPizzaDelivery.Domain.Services
 
             Order order = await _orderRepository.GetDetailedOrderAsync(query);
 
-            OrderItem orderItem = order?.OrderItems.Find(oi => oi.PizzaSizeId == pizzaSize.Id);
-
-            if (orderItem is not null)
+            if (order is not null)
             {
-                return await EditItemByIdAsync(new OrderItemEditRequest() // Coming Soon (Change to Constructor)
+                OrderItem requestedItem = order?.OrderItems.Find(oi => oi.PizzaSizeId == pizzaSize.Id);
+
+                if (requestedItem is not null)
                 {
-                    OrderItemId = orderItem.Id,
-                    Quantity = (short)(orderItem.Quantity + request.Quantity)
-                });
+                    return await EditItemByIdAsync(new OrderItemEditRequest() // Coming Soon (Change to Constructor)
+                    {
+                        OrderItemId = requestedItem.Id,
+                        Quantity = (short)(requestedItem.Quantity + request.Quantity)
+                    });
+                }
+            }
+            else
+            {
+                order = new Order() // Coming Soon (Change to Constructor)
+                {
+                    UserId = UserId,
+                    Status = (short)Status.InProgress,
+                    CreateAt = DateTime.Now
+                };
+
+                order = await _orderRepository.AddAsync(order);
             }
 
-            order = new Order() // Coming Soon (Change to Constructor)
-            {
-                UserId = UserId,
-                Status = (short)Status.InProgress,
-                CreateAt = DateTime.Now
-            };
-
-            order = await _orderRepository.Add(order);
-
-            orderItem = new OrderItem() // Coming Soon (Change to Constructor)
+            OrderItem orderItem = new OrderItem() // Coming Soon (Change to Constructor)
             {
                 OrderId = order.Id,
                 Order = order,
                 PizzaSizeId = pizzaSize.Id,
                 PizzaSize = pizzaSize,
-                //Price install RecalculateItem()
+                //Price install by RecalculateItem()
                 Quantity = request.Quantity,
                 CreateAt = DateTime.Now,
-                //Weight install RecalculateItem()
+                //Weight install by RecalculateItem()
             };
 
             RecalculateItem(orderItem);
             return await _orderItemRepository.Add(orderItem);
         }
-
-        #endregion
     }
 }

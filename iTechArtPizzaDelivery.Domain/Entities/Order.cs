@@ -20,8 +20,11 @@ namespace iTechArtPizzaDelivery.Domain.Entities
         public int Id { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }
-        // Payment
-        // Delivery
+
+        public int PaymentId { get; set; }
+        public Payment Payment { get; set; }
+        public int DeliveryId { get; set; }
+        public Delivery Delivery { get; set; }
         public int? PromocodeId { get; set; }
         public Promocode Promocode { get; set; }
         public short Status { get; set; } // 0 .. 3

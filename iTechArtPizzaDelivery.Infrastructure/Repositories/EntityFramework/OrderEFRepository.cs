@@ -56,6 +56,14 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
                 .FirstOrDefaultAsync();
         }
 
+        public async Task DeleteByIdAsync(int id)
+        {
+            var order = await _dbContext.Orders
+                .SingleAsync(o => o.Id == id);
+            _dbContext.Orders.Remove(order);
+            await _dbContext.SaveChangesAsync();
+        }
+
         private IQueryable<Order> GetByQuery(OrderQuery query)
         {
             IQueryable<Order> ordersQuery = _dbContext.Orders;
@@ -78,7 +86,7 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
             return ordersQuery;
         }
 
-        public async Task<Order> Add(Order order)
+        public async Task<Order> AddAsync(Order order)
         {
             await _dbContext.Orders.AddAsync(order);
             await _dbContext.SaveChangesAsync();
