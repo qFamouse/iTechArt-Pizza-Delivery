@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using iTechArtPizzaDelivery.Domain.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace iTechArtPizzaDelivery.Infrastructure.Repositories.Context
 {
-    public class PizzaDeliveryContext : DbContext
+    public class PizzaDeliveryContext : IdentityDbContext<User, IdentityRole<int>, int>
     {
         public DbSet<PizzaSize> PizzasSizes { get; set; }
         public DbSet<Pizza> Pizzas { get; set; }
@@ -22,8 +24,6 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.Context
 
         public DbSet<Delivery> Deliveries { get; set; }
         public DbSet<Payment> Payments { get; set; }
-
-        public DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

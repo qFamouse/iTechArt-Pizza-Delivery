@@ -5,18 +5,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http.Features;
-using Microsoft.AspNetCore.Identity;
 
-namespace iTechArtPizzaDelivery.Domain.Entities
+namespace iTechArtPizzaDelivery.Domain.Requests.User
 {
-    public class User : IdentityUser<int>
+    public class UserRegistrationRequest
     {
+        public string Email { get; set; }
+        public string Password { get; set; }
         public string Name { get; set; }
         public string Phone { get; set; }
         [DataType(DataType.Date)]
-        [Column(TypeName = "Date")]
         public DateTime? Birthday { get; set; }
-        public List<Order> Orders { get; set; }
     }
 }
