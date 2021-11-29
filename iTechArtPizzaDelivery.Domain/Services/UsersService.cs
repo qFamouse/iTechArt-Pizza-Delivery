@@ -12,6 +12,7 @@ using iTechArtPizzaDelivery.Domain.Interfaces.Repositories;
 using iTechArtPizzaDelivery.Domain.Interfaces.Services;
 using iTechArtPizzaDelivery.Domain.Requests.User;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
 namespace iTechArtPizzaDelivery.Domain.Services
@@ -21,8 +22,10 @@ namespace iTechArtPizzaDelivery.Domain.Services
         private readonly IUserRepository _userRepository;
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
+        public IConfiguration Configuration { get; }
 
-        public UsersService(IUserRepository userRepository, UserManager<User> userManager, IMapper mapper)
+
+        public UsersService(IUserRepository userRepository, UserManager<User> userManager, IMapper mapper, IConfiguration configuration)
         {
             _userRepository = userRepository ??
                               throw new ArgumentNullException(nameof(userRepository), "Interface is null");
@@ -32,6 +35,7 @@ namespace iTechArtPizzaDelivery.Domain.Services
 
             _mapper = mapper ??
                       throw new ArgumentNullException(nameof(mapper), "Mapper is null");
+            Configuration = configuration; // Ленивая техника, попробовать через классы
         }
 
         public async Task<List<User>> GetAllAsync()
@@ -67,6 +71,7 @@ namespace iTechArtPizzaDelivery.Domain.Services
             }
 
             var roles = await _userManager.GetRolesAsync(user);
+            var RoleClaims = roles.Select(r => new Claim(ClaimTypes.Role, r));
             List<Claim> authClaims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
@@ -74,8 +79,9 @@ namespace iTechArtPizzaDelivery.Domain.Services
                 new Claim(ClaimTypes.MobilePhone, user.Phone),
                 new Claim(ClaimTypes.DateOfBirth, user.Birthday.ToString()),
                 new Claim(ClaimTypes.Email, user.UserName),
-                new Claim(ClaimTypes.Role, roles.FirstOrDefault() ?? "") // ?? Save many roles? Or how to get role with high rank
+                //new Claim(ClaimTypes.Role, roles.FirstOrDefault() ?? "") // ?? Save many roles? Or how to get role with high rank
             };
+            authClaims.AddRange(RoleClaims);
 
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("aksdokjafbkjasbfjabojsfbda"));
 
