@@ -67,6 +67,8 @@ namespace iTechArtPizzaDelivery.Domain.Services
             }
 
             var roles = await _userManager.GetRolesAsync(user);
+            var roleClaims = roles.Select(r => new Claim(ClaimTypes.Role, r)); // Claim all user roles
+
             List<Claim> authClaims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
@@ -74,8 +76,8 @@ namespace iTechArtPizzaDelivery.Domain.Services
                 new Claim(ClaimTypes.MobilePhone, user.Phone),
                 new Claim(ClaimTypes.DateOfBirth, user.Birthday.ToString()),
                 new Claim(ClaimTypes.Email, user.UserName),
-                new Claim(ClaimTypes.Role, roles.FirstOrDefault() ?? "") // ?? Save many roles? Or how to get role with high rank
             };
+            authClaims.AddRange(roleClaims); // Add user roles to main claims list
 
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("aksdokjafbkjasbfjabojsfbda"));
 
