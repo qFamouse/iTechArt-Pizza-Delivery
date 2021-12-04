@@ -8,6 +8,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using AutoMapper;
 using iTechArtPizzaDelivery.Domain.Entities;
+using iTechArtPizzaDelivery.Domain.Exceptions;
 using iTechArtPizzaDelivery.Domain.Interfaces.Repositories;
 using iTechArtPizzaDelivery.Domain.Interfaces.Services;
 using iTechArtPizzaDelivery.Domain.Requests.User;
@@ -46,7 +47,7 @@ namespace iTechArtPizzaDelivery.Domain.Services
             var result = await _userManager.CreateAsync(user, request.Password);
             if (!result.Succeeded)
             {
-                // Coming Soon (Exceptions)
+                throw new HttpStatusCodeException(404, result.Errors.First().Description);
             }
 
             return user;

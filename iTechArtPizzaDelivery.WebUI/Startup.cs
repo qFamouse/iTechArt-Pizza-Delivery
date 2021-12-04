@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -13,6 +14,7 @@ using iTechArtPizzaDelivery.Domain.Services;
 using iTechArtPizzaDelivery.Infrastructure.Repositories.Context;
 using iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework;
 using iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework.Profiles;
+using iTechArtPizzaDelivery.WebUI.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
@@ -140,6 +142,9 @@ namespace iTechArtPizzaDelivery.WebUI
 
 
             app.UseRouting();
+
+            //app.ConfigureCustomExceptionMiddleware();
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
 
             app.UseAuthentication();
             app.UseAuthorization();
