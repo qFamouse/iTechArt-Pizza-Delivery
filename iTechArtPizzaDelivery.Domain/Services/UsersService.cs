@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
@@ -47,7 +48,7 @@ namespace iTechArtPizzaDelivery.Domain.Services
             var result = await _userManager.CreateAsync(user, request.Password);
             if (!result.Succeeded)
             {
-                throw new HttpStatusCodeException(404, result.Errors.First().Description);
+                throw new HttpStatusCodeException(HttpStatusCode.BadRequest, result.Errors.First().Description);
             }
 
             return user;
@@ -59,12 +60,12 @@ namespace iTechArtPizzaDelivery.Domain.Services
 
             if (user is null)
             {
-                // throw new No such user; // Coming Soon (Exceptions)
+                throw new HttpStatusCodeException(HttpStatusCode.NotFound, "User not found");
             }
 
             if (!await _userManager.CheckPasswordAsync(user, request.Password))
             {
-                // throw new Wrong password (or email, for security) // Coming Soon (Exceptions)
+                throw new HttpStatusCodeException(HttpStatusCode.BadRequest, "Incorrect password");
             }
 
             var roles = await _userManager.GetRolesAsync(user);
