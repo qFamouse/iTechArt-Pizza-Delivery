@@ -19,6 +19,7 @@ using iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework.Profiles
 using iTechArtPizzaDelivery.WebUI.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 namespace iTechArtPizzaDelivery.WebUI
@@ -76,7 +77,8 @@ namespace iTechArtPizzaDelivery.WebUI
             services.AddScoped<IUserRepository, UserEFRepository>();
             services.AddScoped<UsersService>();
             // Infrastructure
-            services.AddDbContext<PizzaDeliveryContext>();
+            services.AddDbContext<PizzaDeliveryContext>(options => 
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             // WebUI
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
