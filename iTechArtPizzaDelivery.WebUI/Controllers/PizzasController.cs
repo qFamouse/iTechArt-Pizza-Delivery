@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using iTechArtPizzaDelivery.Domain.Entities;
 using iTechArtPizzaDelivery.Domain.Requests.Pizza;
 using iTechArtPizzaDelivery.Domain.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace iTechArtPizzaDelivery.WebUI.Controllers
 {
@@ -22,24 +23,28 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
                              throw new ArgumentNullException(nameof(pizzasService), "Service is null");
         }
 
+        [Authorize(Roles = "Administrator, Moderator")]
         [HttpGet]
         public async Task<ActionResult> GetAllAsync()
         {
             return Ok(await _pizzasService.GetAllAsync());
         }
 
+        [Authorize(Roles = "Administrator, Moderator")]
         [HttpGet("{id}")]
         public async Task<ActionResult> GetByIdAsync(int id)
         {
             return Ok(await _pizzasService.GetByIdAsync(id));
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpPost("Add")]
         public async Task<ActionResult> AddAsync([FromBody] PizzaAddRequest pAddRequest)
         {
             return Ok(await _pizzasService.AddAsync(pAddRequest));
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {

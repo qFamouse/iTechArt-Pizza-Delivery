@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using iTechArtPizzaDelivery.Domain.Requests.Payment;
 using iTechArtPizzaDelivery.Domain.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace iTechArtPizzaDelivery.WebUI.Controllers
 {
@@ -25,18 +26,21 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper), "Mapper is null");
         }
 
+        [Authorize(Roles = "Administrator, Moderator, User")]
         [HttpGet]
         public async Task<ActionResult> GetAllAsync()
         {
             return Ok(await _paymentService.GetAllAsync());
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpPost("Add")]
         public async Task<ActionResult> AddAsync(PaymentAddRequest request)
         {
             return Ok(await _paymentService.AddAsync(request));
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteAsync(int id)
         {

@@ -9,6 +9,7 @@ using iTechArtPizzaDelivery.Domain.Entities;
 using iTechArtPizzaDelivery.Domain.Requests.OrderItem;
 using iTechArtPizzaDelivery.Domain.Services;
 using iTechArtPizzaDelivery.WebUI.Views;
+using Microsoft.AspNetCore.Authorization;
 
 namespace iTechArtPizzaDelivery.WebUI.Controllers
 {
@@ -31,6 +32,7 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         //public Task DeleteAsync(int id);
         //public Task<OrderItem> AddAsync(OrderItemAddRequest oiAddRequest);
 
+        [Authorize(Roles = "Administrator, Moderator, User")]
         [HttpGet("Order/{id}")]
         public async Task<ActionResult> GetItemsByOrderIdAsync(int id)
         {
@@ -39,6 +41,7 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
             return Ok(orderItemsView);
         }
 
+        [Authorize(Roles = "Administrator, Moderator, User")]
         [HttpPut("Edit")]
         public async Task<ActionResult> EditItemByIdAsync(OrderItemEditRequest request)
         {
@@ -47,6 +50,7 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
             return Ok(orderItemsView);
         }
 
+        [Authorize(Roles = "Administrator, Moderator, User")]
         [HttpPost("Add")]
         public async Task<ActionResult> AddAsync(OrderItemAddRequest request)
         {
@@ -55,6 +59,7 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
             return Ok(orderItemView);
         }
 
+        [Authorize(Roles = "Administrator, Moderator, User")]
         [HttpDelete("Delete{id}")]
         public async Task<ActionResult> DeleteAsync(int id)
         {
