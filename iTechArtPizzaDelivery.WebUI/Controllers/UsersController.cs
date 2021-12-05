@@ -5,11 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using iTechArtPizzaDelivery.Domain;
 using iTechArtPizzaDelivery.Domain.Entities;
 using iTechArtPizzaDelivery.Domain.Requests.User;
 using iTechArtPizzaDelivery.Domain.Services;
 using iTechArtPizzaDelivery.WebUI.Views;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Options;
 
 namespace iTechArtPizzaDelivery.WebUI.Controllers
 {
@@ -19,13 +21,19 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
     {
         private readonly UsersService _usersService;
         private readonly IMapper _mapper;
+        private readonly IOptions<Company> _options;
+        private readonly Company _person;
 
-        public UsersController(UsersService usersService, IMapper mapper)
+        public UsersController(UsersService usersService, IMapper mapper, IOptions<Company> options)
         {
             _usersService = usersService ??
                             throw new ArgumentNullException(nameof(usersService), "Service is null");
 
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper), "Mapper is null");
+
+            _options = options ?? throw new ArgumentNullException(nameof(options), "options is null");
+
+            _person = options.Value;
         }
 
         [HttpGet]
@@ -48,11 +56,11 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
             return Ok(await _usersService.LoginAsync(request));
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpGet("Test")]
         public ActionResult Test()
         {
-            return Ok("I test it");
+            return Ok("I test it: " + _person.Title);
         }
     }
 }
