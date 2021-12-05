@@ -10,6 +10,7 @@ using iTechArtPizzaDelivery.Domain.Requests.PizzaIngredient;
 using iTechArtPizzaDelivery.Domain.Requests.PizzaSize;
 using iTechArtPizzaDelivery.Domain.Services;
 using iTechArtPizzaDelivery.WebUI.Views;
+using Microsoft.AspNetCore.Authorization;
 
 namespace iTechArtPizzaDelivery.WebUI.Controllers
 {
@@ -28,6 +29,7 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper), "Mapper is null");
         }
 
+        [Authorize(Roles = "Administrator, Moderator, User")]
         [HttpGet]
         public async Task<ActionResult> GetAllAsync()
         {
@@ -36,6 +38,7 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
             return Ok(pizzasSizesView);
         }
 
+        [Authorize(Roles = "Administrator, Moderator, User")]
         [HttpGet("{id}")]
         public async Task<ActionResult> GetByIdAsync(int id)
         {
@@ -44,12 +47,14 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
             return Ok(pizzaSizeView);
         }
 
+        [Authorize(Roles = "Administrator, Moderator")]
         [HttpPost("Add")]
         public async Task<ActionResult> AddAsync([FromBody] PizzaSizeAddRequest request)
         {
             return Ok(await _pizzaConstructionService.AddAsync(request));
         }
 
+        [Authorize(Roles = "Administrator, Moderator")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
@@ -57,6 +62,7 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
             return Ok();
         }
 
+        [Authorize(Roles = "Administrator, Moderator")]
         [HttpPost("AddIngredient")]
         public async Task<ActionResult> BindIngredient([FromBody] PizzaIngredientBindRequest request)
         {

@@ -9,6 +9,7 @@ using iTechArtPizzaDelivery.Domain.Entities;
 using iTechArtPizzaDelivery.Domain.Requests.Order;
 using iTechArtPizzaDelivery.Domain.Services;
 using iTechArtPizzaDelivery.WebUI.Views;
+using Microsoft.AspNetCore.Authorization;
 
 namespace iTechArtPizzaDelivery.WebUI.Controllers
 {
@@ -27,12 +28,14 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper), "Mapper is null");
         }
 
+        [Authorize(Roles = "Administrator, Moderator")]
         [HttpGet]
         public async Task<ActionResult> GetAllAsync()
         {
             return Ok(await _orderService.GetAllAsync());
         }
 
+        [Authorize(Roles = "Administrator, Moderator")]
         [HttpGet("{id}")]
         public async Task<ActionResult> GetDetailByIdAsync(int id)
         {
@@ -41,6 +44,7 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
             return Ok(orderView);
         }
 
+        [Authorize(Roles = "Administrator, Moderator, User")]
         [HttpPut("AttachPromocode")]
         public async Task<ActionResult> AttachPromocode(OrderAttachPromocodeRequest request)
         {
@@ -48,6 +52,7 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
             return Ok();
         }
 
+        [Authorize(Roles = "Administrator, Moderator, User")]
         [HttpPut("Process")]
         public async Task<ActionResult> Process()
         {

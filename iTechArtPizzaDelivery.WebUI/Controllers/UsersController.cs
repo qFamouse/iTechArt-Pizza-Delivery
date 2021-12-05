@@ -30,6 +30,7 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper), "Mapper is null");
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpGet]
         public async Task<ActionResult> GetAllAsync()
         {
@@ -50,7 +51,7 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
             return Ok(await _usersService.LoginAsync(request));
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Administrator")]
         [HttpGet("Test")]
         public ActionResult Test()
         {

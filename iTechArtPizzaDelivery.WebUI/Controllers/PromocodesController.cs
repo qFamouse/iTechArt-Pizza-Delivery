@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using iTechArtPizzaDelivery.Domain.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace iTechArtPizzaDelivery.WebUI.Controllers
 {
@@ -21,6 +22,7 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
 
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpGet]
         public async Task<ActionResult> GetAllAsync()
         {

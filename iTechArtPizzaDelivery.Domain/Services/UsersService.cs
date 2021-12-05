@@ -81,7 +81,7 @@ namespace iTechArtPizzaDelivery.Domain.Services
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.Name),
-                new Claim(ClaimTypes.MobilePhone, user.Phone),
+                new Claim(ClaimTypes.MobilePhone, user.Phone ?? ""), // fix null
                 new Claim(ClaimTypes.DateOfBirth, user.Birthday.ToString()),
                 new Claim(ClaimTypes.Email, user.UserName),
             };
