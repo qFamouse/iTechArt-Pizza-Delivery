@@ -21,19 +21,13 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
     {
         private readonly UsersService _usersService;
         private readonly IMapper _mapper;
-        private readonly IOptions<Company> _options;
-        private readonly Company _person;
 
-        public UsersController(UsersService usersService, IMapper mapper, IOptions<Company> options)
+        public UsersController(UsersService usersService, IMapper mapper)
         {
             _usersService = usersService ??
                             throw new ArgumentNullException(nameof(usersService), "Service is null");
 
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper), "Mapper is null");
-
-            _options = options ?? throw new ArgumentNullException(nameof(options), "options is null");
-
-            _person = options.Value;
         }
 
         [HttpGet]
@@ -60,7 +54,7 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         [HttpGet("Test")]
         public ActionResult Test()
         {
-            return Ok("I test it: " + _person.Title);
+            return Ok("I test it: ");
         }
     }
 }
