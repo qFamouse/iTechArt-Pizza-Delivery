@@ -8,6 +8,7 @@ using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.Text;
 using iTechArtPizzaDelivery.Domain;
+using iTechArtPizzaDelivery.Domain.Configurations;
 using iTechArtPizzaDelivery.Domain.Entities;
 using iTechArtPizzaDelivery.Domain.Interfaces.Repositories;
 using iTechArtPizzaDelivery.Domain.Mapping;
@@ -26,10 +27,7 @@ namespace iTechArtPizzaDelivery.WebUI
     {
         public Startup(IConfiguration configuration)
         {
-            //Configuration = configuration;
-
-            var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json");
-            Configuration = builder.Build();
+            Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -37,8 +35,7 @@ namespace iTechArtPizzaDelivery.WebUI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.Configure<Person>(Configuration);
-            services.Configure<Company>(Configuration.GetSection("company"));
+            services.Configure<IdentityConfiguration>(Configuration.GetSection("Identity"));
             // AutoMapper
             services.AddAutoMapper(Assembly.GetAssembly(typeof(PizzaSizeProfile))); // Get Assembly by some class from this assembly
             services.AddAutoMapper(Assembly.GetAssembly(typeof(UserProfile))); // Get Assembly by some class from this assembly
@@ -81,6 +78,7 @@ namespace iTechArtPizzaDelivery.WebUI
             // Infrastructure
             services.AddDbContext<PizzaDeliveryContext>();
             // WebUI
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(
                     options =>
@@ -92,7 +90,7 @@ namespace iTechArtPizzaDelivery.WebUI
                             ValidateLifetime = true,
                             ValidateIssuerSigningKey = true,
                             IssuerSigningKey = new SymmetricSecurityKey(
-                                Encoding.UTF8.GetBytes("aksdokjafbkjasbfjabojsfbda"))
+                                Encoding.UTF8.GetBytes(Configuration["Identity:SecurityKey"]))
                         };
                     }
                 );

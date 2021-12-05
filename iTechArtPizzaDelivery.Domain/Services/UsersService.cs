@@ -8,12 +8,14 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using AutoMapper;
+using iTechArtPizzaDelivery.Domain.Configurations;
 using iTechArtPizzaDelivery.Domain.Entities;
 using iTechArtPizzaDelivery.Domain.Exceptions;
 using iTechArtPizzaDelivery.Domain.Interfaces.Repositories;
 using iTechArtPizzaDelivery.Domain.Interfaces.Services;
 using iTechArtPizzaDelivery.Domain.Requests.User;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace iTechArtPizzaDelivery.Domain.Services
@@ -23,8 +25,9 @@ namespace iTechArtPizzaDelivery.Domain.Services
         private readonly IUserRepository _userRepository;
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
+        private readonly IdentityConfiguration _identityConfiguration;
 
-        public UsersService(IUserRepository userRepository, UserManager<User> userManager, IMapper mapper)
+        public UsersService(IUserRepository userRepository, UserManager<User> userManager, IMapper mapper, IOptions<IdentityConfiguration> identityConfiguration)
         {
             _userRepository = userRepository ??
                               throw new ArgumentNullException(nameof(userRepository), "Interface is null");
@@ -34,6 +37,9 @@ namespace iTechArtPizzaDelivery.Domain.Services
 
             _mapper = mapper ??
                       throw new ArgumentNullException(nameof(mapper), "Mapper is null");
+
+            _identityConfiguration = identityConfiguration.Value ??
+                                     throw new ArgumentNullException(nameof(identityConfiguration), "Configuration is null");
         }
 
         public async Task<List<User>> GetAllAsync()
@@ -81,10 +87,10 @@ namespace iTechArtPizzaDelivery.Domain.Services
             };
             authClaims.AddRange(roleClaims); // Add user roles to main claims list
 
-            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("aksdokjafbkjasbfjabojsfbda"));
+            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_identityConfiguration.SecurityKey));
 
             var token = new JwtSecurityToken(
-                expires: DateTime.Now.AddHours(1), // Move to constant
+                expires: DateTime.Now.AddHours(_identityConfiguration.ExpiresHours), // Move to constant
                 claims: authClaims,
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
             );
