@@ -15,9 +15,7 @@ namespace iTechArtPizzaDelivery.Domain.Mapping
         {
             CreateMap<UserRegistrationRequest, User>()
                 // UserName is Email
-                .ForMember(dest => dest.UserName, opt => opt.MapFrom(r => r.Email))
-                // Email is Null
-                .ForMember(dest => dest.Email, opt => opt.Ignore());
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(r => r.Email));
         }
     }
 }
