@@ -14,7 +14,9 @@ using iTechArtPizzaDelivery.Domain.Exceptions;
 using iTechArtPizzaDelivery.Domain.Interfaces.Repositories;
 using iTechArtPizzaDelivery.Domain.Interfaces.Services;
 using iTechArtPizzaDelivery.Domain.Requests.User;
+using iTechArtPizzaDelivery.Domain.Views;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
@@ -26,8 +28,12 @@ namespace iTechArtPizzaDelivery.Domain.Services
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
         private readonly IdentityConfiguration _identityConfiguration;
+        private readonly IIdentityService _identityService;
 
-        public UsersService(IUserRepository userRepository, UserManager<User> userManager, IMapper mapper, IOptions<IdentityConfiguration> identityConfiguration)
+        public UsersService(IUserRepository userRepository, 
+            UserManager<User> userManager, IMapper mapper, 
+            IOptions<IdentityConfiguration> identityConfiguration,
+            IIdentityService identityService)
         {
             _userRepository = userRepository ??
                               throw new ArgumentNullException(nameof(userRepository), "Interface is null");
@@ -40,6 +46,9 @@ namespace iTechArtPizzaDelivery.Domain.Services
 
             _identityConfiguration = identityConfiguration.Value ??
                                      throw new ArgumentNullException(nameof(identityConfiguration), "Configuration is null");
+
+            _identityService = identityService ??
+                               throw new ArgumentNullException(nameof(identityService), "Interface is null");
         }
 
         public async Task<List<User>> GetAllAsync()

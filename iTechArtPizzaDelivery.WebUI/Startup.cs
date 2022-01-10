@@ -7,17 +7,19 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.Text;
-using iTechArtPizzaDelivery.Domain;
 using iTechArtPizzaDelivery.Domain.Configurations;
 using iTechArtPizzaDelivery.Domain.Entities;
 using iTechArtPizzaDelivery.Domain.Interfaces.Repositories;
+using iTechArtPizzaDelivery.Domain.Interfaces.Services;
 using iTechArtPizzaDelivery.Domain.Mapping;
 using iTechArtPizzaDelivery.Domain.Services;
 using iTechArtPizzaDelivery.Infrastructure.Repositories.Context;
 using iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework;
 using iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework.Profiles;
 using iTechArtPizzaDelivery.WebUI.Middleware;
+using iTechArtPizzaDelivery.WebUI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -76,6 +78,11 @@ namespace iTechArtPizzaDelivery.WebUI
 
             services.AddScoped<IUserRepository, UserEFRepository>();
             services.AddScoped<UsersService>();
+
+            services.AddScoped<IdentityService>();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<IIdentityService, IdentityService>();
             // Infrastructure
             services.AddDbContext<PizzaDeliveryContext>(options => 
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
