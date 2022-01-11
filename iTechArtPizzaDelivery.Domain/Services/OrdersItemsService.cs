@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using iTechArtPizzaDelivery.Domain.Entities;
+using iTechArtPizzaDelivery.Domain.Extensions;
 using iTechArtPizzaDelivery.Domain.Interfaces.Repositories;
 using iTechArtPizzaDelivery.Domain.Interfaces.Services;
 using iTechArtPizzaDelivery.Domain.Queries;
@@ -16,8 +17,12 @@ namespace iTechArtPizzaDelivery.Domain.Services
         private readonly IOrderItemRepository _orderItemRepository;
         private readonly IOrderRepository _orderRepository;
         private readonly IPizzaSizeRepository _pizzaSizeRepository;
+        private readonly IIdentityService _identityService;
 
-        public OrdersItemsService(IOrderItemRepository orderItemRepository, IOrderRepository orderRepository, IPizzaSizeRepository pizzaSizeRepository)
+        public OrdersItemsService(IOrderItemRepository orderItemRepository, 
+            IOrderRepository orderRepository, 
+            IPizzaSizeRepository pizzaSizeRepository,
+            IIdentityService identityService)
         {
             _orderItemRepository = orderItemRepository ??
                                    throw new ArgumentNullException(nameof(orderItemRepository), "Interface is null");
@@ -27,20 +32,15 @@ namespace iTechArtPizzaDelivery.Domain.Services
 
             _pizzaSizeRepository = pizzaSizeRepository ??
                                    throw new ArgumentNullException(nameof(pizzaSizeRepository), "Interface is null");
+
+            _identityService = identityService ??
+                               throw new ArgumentNullException(nameof(identityService), "Interface is null");
         }
-
-        #region Public Methods
-
-        #region Getters
 
         public async Task<List<OrderItem>> GetItemsByOrderIdAsync(int id)
         {
             return await _orderItemRepository.GetAllByOrderIdAsync(id);
         }
-
-        #endregion
-
-        #region Setters
 
         public async Task DeleteItemByIdAsync(int id)
         {
@@ -70,45 +70,20 @@ namespace iTechArtPizzaDelivery.Domain.Services
 
             orderItem.Quantity = request.Quantity;
 
-            RecalculateItem(orderItem);
+            orderItem.Recalculate();
+
             await _orderItemRepository.SaveChangesAsync();
 
             return orderItem;
         }
 
-        #endregion
-
-        #endregion
-
-        #region Private Methods
-
-        private void RecalculateItem(OrderItem orderItem)
-        {
-            double weight = orderItem.PizzaSize.Weight;
-            double price = orderItem.PizzaSize.Price * orderItem.Quantity;
-
-            foreach (var pizzaIngredient in orderItem.PizzaSize.PizzaIngredients)
-            {
-                weight += pizzaIngredient.Weight;
-                price += pizzaIngredient.Ingredient.Price;
-            }
-
-            orderItem.Weight = weight;
-            orderItem.Price = price;
-        }
-
-        #endregion
-
         public async Task<OrderItem> AddAsync(OrderItemAddRequest request)
         {
-            int UserId = 2; // Coming Soon (Identity)
-
-
             PizzaSize pizzaSize = await _pizzaSizeRepository.GetDetailByIdAsync(request.PizzaSizesId);
 
             var query = new OrderQuery() // Coming Soon (Change to Constructor)
             {
-                UserId = UserId,
+                UserId = _identityService.Id,
                 Status = (short) Status.InProgress
             };
 
@@ -131,7 +106,7 @@ namespace iTechArtPizzaDelivery.Domain.Services
             {
                 order = new Order() // Coming Soon (Change to Constructor)
                 {
-                    UserId = UserId,
+                    UserId = _identityService.Id,
                     Status = (short)Status.InProgress,
                     CreateAt = DateTime.Now
                 };
@@ -151,8 +126,14 @@ namespace iTechArtPizzaDelivery.Domain.Services
                 //Weight install by RecalculateItem()
             };
 
-            RecalculateItem(orderItem);
-            return await _orderItemRepository.Add(orderItem);
+            orderItem.Recalculate();
+            await _orderItemRepository.Add(orderItem);
+
+
+            //order.OrderItems.Add(orderItem);
+            order.Recalculate();
+            await _orderRepository.SaveChangesAsync();
+            return orderItem;
         }
     }
 }
