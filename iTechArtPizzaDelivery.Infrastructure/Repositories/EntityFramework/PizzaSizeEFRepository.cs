@@ -51,12 +51,12 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<PizzaSize> AddAsync(PizzaSizeAddRequest psAddRequest)
+        public async Task<PizzaSize> AddAsync(PizzaSizeAddRequest request)
         {
             // Mapping
-            var pizzaSize = _mapper.Map<PizzaSize>(psAddRequest);
-            pizzaSize.Pizza = await _dbContext.Pizzas.SingleAsync(p => p.Id == psAddRequest.PizzaId);
-            pizzaSize.Size = await _dbContext.Sizes.SingleAsync(s => s.Id == psAddRequest.SizeId);
+            var pizzaSize = _mapper.Map<PizzaSize>(request);
+            pizzaSize.Pizza = await _dbContext.Pizzas.SingleAsync(p => p.Id == request.PizzaId);
+            pizzaSize.Size = await _dbContext.Sizes.SingleAsync(s => s.Id == request.SizeId);
             // Adding
             await _dbContext.PizzasSizes.AddAsync(pizzaSize);
             await _dbContext.SaveChangesAsync();

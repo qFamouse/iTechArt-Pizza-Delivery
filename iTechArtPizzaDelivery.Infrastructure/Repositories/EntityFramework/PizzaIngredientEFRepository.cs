@@ -17,17 +17,17 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
     {
         public PizzaIngredientEFRepository(PizzaDeliveryContext context, IMapper mapper) : base(context, mapper) { }
 
-        public async Task<PizzaIngredient> AddAsync(PizzaIngredientBindRequest pizzaIngredientAddRequest)
+        public async Task<PizzaIngredient> AddAsync(PizzaIngredientBindRequest request)
         {
             // Mapping
-            var pizzaIngredient = _mapper.Map<PizzaIngredient>(pizzaIngredientAddRequest);
+            var pizzaIngredient = _mapper.Map<PizzaIngredient>(request);
             //pizzaIngredient.Ingredient =
-            //    await _dbContext.Ingredients.SingleAsync(i => i.Id == pizzaIngredientAddRequest.IngredientId);
+            //    await _dbContext.Ingredients.SingleAsync(i => i.Id == request.IngredientId);
             //pizzaIngredient.PizzaSize =
-            //    await _dbContext.PizzasSizes.SingleAsync(i => i.Id == pizzaIngredientAddRequest.PizzaSizeId);
+            //    await _dbContext.PizzasSizes.SingleAsync(i => i.Id == request.PizzaSizeId);
 
-            pizzaIngredient.IngredientId = pizzaIngredientAddRequest.IngredientId;
-            pizzaIngredient.PizzaSizeId = pizzaIngredientAddRequest.PizzaSizeId;
+            pizzaIngredient.IngredientId = request.IngredientId;
+            pizzaIngredient.PizzaSizeId = request.PizzaSizeId;
             // Adding
             await _dbContext.PizzaIngredients.AddAsync(pizzaIngredient);
             await _dbContext.SaveChangesAsync();
