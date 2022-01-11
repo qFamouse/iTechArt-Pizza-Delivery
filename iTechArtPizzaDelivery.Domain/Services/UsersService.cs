@@ -56,7 +56,7 @@ namespace iTechArtPizzaDelivery.Domain.Services
             return await _userRepository.GetAllAsync();
         }
 
-        public async Task<User> RegisterAsync(UserRegistrationRequest request)
+        public async Task<User> RegistrationAsync(UserRegistrationRequest request)
         {
             var user = _mapper.Map<User>(request);
 
@@ -69,7 +69,7 @@ namespace iTechArtPizzaDelivery.Domain.Services
             return user;
         }
 
-        public async Task<string> LoginAsync(UserAuthorizationRequest request)
+        public async Task<UserAuthorizationResult> AuthorizationAsync(UserAuthorizationRequest request)
         {
             var user = await _userManager.FindByNameAsync(request.UserName);
 
@@ -106,13 +106,7 @@ namespace iTechArtPizzaDelivery.Domain.Services
 
             string encodedJwt = new JwtSecurityTokenHandler().WriteToken(token);
 
-            var response = new
-            {
-                token = encodedJwt,
-                expiration = token.ValidTo
-            };
-
-            return JsonSerializer.Serialize(response);
+            return new UserAuthorizationResult(encodedJwt, token.ValidTo);
         }
     }
 }

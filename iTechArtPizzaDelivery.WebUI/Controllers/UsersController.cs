@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using iTechArtPizzaDelivery.Domain;
 using iTechArtPizzaDelivery.Domain.Entities;
+using iTechArtPizzaDelivery.Domain.Interfaces.Services;
 using iTechArtPizzaDelivery.Domain.Requests.User;
 using iTechArtPizzaDelivery.Domain.Services;
 using iTechArtPizzaDelivery.WebUI.Views;
@@ -42,13 +43,13 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         [HttpPost("/Register")]
         public async Task<ActionResult> RegisterAsync(UserRegistrationRequest request)
         {
-            return Ok(await _usersService.RegisterAsync(request));
+            return Ok(await _usersService.RegistrationAsync(request));
         }
 
         [HttpPost("/Login")]
         public async Task<ActionResult> LoginAsync(UserAuthorizationRequest request)
         {
-            return Ok(await _usersService.LoginAsync(request));
+            return Ok(await _usersService.AuthorizationAsync(request));
         }
 
         [Authorize(Roles = "Administrator")]

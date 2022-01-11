@@ -4,11 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using iTechArtPizzaDelivery.Domain.Entities;
+using iTechArtPizzaDelivery.Domain.Requests.User;
+using iTechArtPizzaDelivery.Domain.Views;
 
 namespace iTechArtPizzaDelivery.Domain.Interfaces.Services
 {
     interface IUsersService
     {
-        public Task<List<User>> GetAllAsync();
+        Task<List<User>> GetAllAsync();
+        Task<User> RegistrationAsync(UserRegistrationRequest request);
+        Task<UserAuthorizationResult> AuthorizationAsync(UserAuthorizationRequest request);
     }
 }
