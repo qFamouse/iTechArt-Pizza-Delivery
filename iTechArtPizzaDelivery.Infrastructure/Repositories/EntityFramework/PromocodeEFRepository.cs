@@ -22,10 +22,17 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
             return await _dbContext.Promocodes.ToListAsync();
         }
 
-        public async Task<Promocode> GetByCode(string code)
+        public async Task<Promocode> GetByCodeAsync(string code)
         {
             return await _dbContext.Promocodes
                 .SingleAsync(p => p.Code == code);
+        }
+
+        public async Task<Promocode> AddAsync(Promocode promocode)
+        {
+            await _dbContext.Promocodes.AddAsync(promocode);
+            await _dbContext.SaveChangesAsync();
+            return promocode;
         }
     }
 }
