@@ -31,7 +31,7 @@ namespace iTechArtPizzaDelivery.Domain.Services
             return await _pizzaSizeRepository.AddAsync(request);
         }
 
-        public async Task<PizzaSize> AddIngredient(PizzaIngredientBindRequest request)
+        public async Task<PizzaSize> AddIngredientAsync(PizzaIngredientBindRequest request)
         {
             var newPizzaIngredient = await _pizzaIngredientRepository.AddAsync(request);
 

@@ -66,7 +66,7 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         [HttpPost("AddIngredient")]
         public async Task<ActionResult> BindIngredient([FromBody] PizzaIngredientBindRequest request)
         {
-            var updatedPizzaSize = await _pizzaConstructionService.AddIngredient(request);
+            var updatedPizzaSize = await _pizzaConstructionService.AddIngredientAsync(request);
             var updatedPizzaSizeView = _mapper.Map<PizzaSizesView>(updatedPizzaSize);
             return Ok(updatedPizzaSizeView);
         }

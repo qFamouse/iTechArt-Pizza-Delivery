@@ -21,9 +21,9 @@ namespace iTechArtPizzaDelivery.Domain.Services
                               throw new ArgumentNullException(nameof(sizeRepository), "Interface is null");
         }
 
-        public async Task<Size> AddAsync(SizeAddRequest sAddRequest)
+        public async Task<Size> AddAsync(SizeAddRequest request)
         {
-            return await _sizeRepository.AddAsync(sAddRequest);
+            return await _sizeRepository.AddAsync(request);
         }
 
         public async Task<List<Size>> GetAllAsync()

@@ -20,9 +20,9 @@ namespace iTechArtPizzaDelivery.Domain.Services
                                     throw new ArgumentNullException(nameof(ingredientRepository), "Interface is null");
         }
 
-        public async Task<Ingredient> AddAsync(IngredientAddRequest iAddRequest)
+        public async Task<Ingredient> AddAsync(IngredientAddRequest request)
         {
-            return await _ingredientRepository.AddAsync(iAddRequest);
+            return await _ingredientRepository.AddAsync(request);
         }
 
         public async Task<List<Ingredient>> GetAllAsync()
