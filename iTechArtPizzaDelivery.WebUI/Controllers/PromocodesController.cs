@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using iTechArtPizzaDelivery.Domain.Requests.Promocode;
 using iTechArtPizzaDelivery.Domain.Services;
 using Microsoft.AspNetCore.Authorization;
 
@@ -27,6 +28,13 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         public async Task<ActionResult> GetAllAsync()
         {
             return Ok(await _promocodesService.GetAllAsync());
+        }
+
+        [Authorize(Roles = "Administrator")]
+        [HttpPost]
+        public async Task<ActionResult> AddAsync([FromBody] PromocodeAddRequest request)
+        {
+            return Ok(await _promocodesService.AddAsync(request));
         }
     }
 }
