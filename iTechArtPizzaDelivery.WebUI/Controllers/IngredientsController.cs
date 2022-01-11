@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using iTechArtPizzaDelivery.Domain.Entities;
+using iTechArtPizzaDelivery.Domain.Interfaces.Services;
 using iTechArtPizzaDelivery.Domain.Requests.Ingredient;
 using iTechArtPizzaDelivery.Domain.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -15,9 +16,9 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
     [ApiController]
     public class IngredientsController : ControllerBase
     {
-        private readonly IngredientsService _ingredientsService;
+        private readonly IIngredientsService _ingredientsService;
 
-        public IngredientsController(IngredientsService ingredientsService)
+        public IngredientsController(IIngredientsService ingredientsService)
         {
             _ingredientsService = ingredientsService ??
                                   throw new ArgumentNullException(nameof(ingredientsService), "Service is null");

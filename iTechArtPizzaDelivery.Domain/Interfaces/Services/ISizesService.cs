@@ -8,7 +8,7 @@ using iTechArtPizzaDelivery.Domain.Requests.Size;
 
 namespace iTechArtPizzaDelivery.Domain.Interfaces.Services
 {
-    interface ISizesService
+    public interface ISizesService
     {
         Task<List<Size>> GetAllAsync();
         Task<Size> GetByIdAsync(int id);

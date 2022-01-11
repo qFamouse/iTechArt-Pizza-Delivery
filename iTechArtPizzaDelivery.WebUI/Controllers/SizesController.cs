@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using iTechArtPizzaDelivery.Domain.Entities;
+using iTechArtPizzaDelivery.Domain.Interfaces.Services;
 using iTechArtPizzaDelivery.Domain.Requests.Size;
 using iTechArtPizzaDelivery.Domain.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -16,9 +17,9 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
     [ApiController]
     public class SizesController : ControllerBase
     {
-        private readonly SizesService _sizesService;
+        private readonly ISizesService _sizesService;
 
-        public SizesController(SizesService sizesService)
+        public SizesController(ISizesService sizesService)
         {
             _sizesService = sizesService ??
                             throw new ArgumentNullException(nameof(sizesService), "Service is null");

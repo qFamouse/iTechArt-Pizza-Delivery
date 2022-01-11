@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using iTechArtPizzaDelivery.Domain.Interfaces.Services;
 using iTechArtPizzaDelivery.Domain.Requests.Payment;
 using iTechArtPizzaDelivery.Domain.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -15,10 +16,10 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
     [ApiController]
     public class PaymentsController : ControllerBase
     {
-        private readonly PaymentService _paymentService;
+        private readonly IPaymentsService _paymentService;
         private readonly IMapper _mapper;
 
-        public PaymentsController(PaymentService paymentService, IMapper mapper)
+        public PaymentsController(IPaymentsService paymentService, IMapper mapper)
         {
             _paymentService = paymentService ??
                               throw new ArgumentNullException(nameof(paymentService), "Service is null");

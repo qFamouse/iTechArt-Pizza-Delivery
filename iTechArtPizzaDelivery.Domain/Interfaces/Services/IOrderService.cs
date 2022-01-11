@@ -8,7 +8,7 @@ using iTechArtPizzaDelivery.Domain.Requests.Order;
 
 namespace iTechArtPizzaDelivery.Domain.Interfaces.Services
 {
-    interface IOrderService
+    public interface IOrderService
     {
         Task<List<Order>> GetAllAsync();
         Task<Order> GetDetailByIdAsync(int id);

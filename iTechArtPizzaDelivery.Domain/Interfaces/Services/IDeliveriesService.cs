@@ -8,7 +8,7 @@ using iTechArtPizzaDelivery.Domain.Requests.Delivery;
 
 namespace iTechArtPizzaDelivery.Domain.Interfaces.Services
 {
-    interface IDeliveriesService
+    public interface IDeliveriesService
     {
         Task<List<Delivery>> GetAllAsync();
         Task DeleteByIdAsync(int id);

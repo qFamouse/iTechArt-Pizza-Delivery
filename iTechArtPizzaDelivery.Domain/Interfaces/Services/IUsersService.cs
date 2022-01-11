@@ -9,7 +9,7 @@ using iTechArtPizzaDelivery.Domain.Views;
 
 namespace iTechArtPizzaDelivery.Domain.Interfaces.Services
 {
-    interface IUsersService
+    public interface IUsersService
     {
         Task<List<User>> GetAllAsync();
         Task<User> RegistrationAsync(UserRegistrationRequest request);

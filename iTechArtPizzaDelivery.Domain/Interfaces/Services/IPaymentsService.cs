@@ -8,7 +8,7 @@ using iTechArtPizzaDelivery.Domain.Requests.Payment;
 
 namespace iTechArtPizzaDelivery.Domain.Interfaces.Services
 {
-    interface IPaymentsService
+    public interface IPaymentsService
     {
         Task<List<Payment>> GetAllAsync();
         Task DeleteByIdAsync(int id);

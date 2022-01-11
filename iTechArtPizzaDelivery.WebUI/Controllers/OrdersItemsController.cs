@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using iTechArtPizzaDelivery.Domain.Entities;
+using iTechArtPizzaDelivery.Domain.Interfaces.Services;
 using iTechArtPizzaDelivery.Domain.Requests.OrderItem;
 using iTechArtPizzaDelivery.Domain.Services;
 using iTechArtPizzaDelivery.WebUI.Views;
@@ -17,10 +18,10 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
     [ApiController]
     public class OrdersItemsController : ControllerBase
     {
-        private readonly OrdersItemsService _ordersItemsService;
+        private readonly IOrderItemService _ordersItemsService;
         private readonly IMapper _mapper;
 
-        public OrdersItemsController(OrdersItemsService ordersItemsService, IMapper mapper)
+        public OrdersItemsController(IOrderItemService ordersItemsService, IMapper mapper)
         {
             _ordersItemsService = ordersItemsService ?? // If pizzasSizesRepository is null
                                   throw new ArgumentNullException(nameof(ordersItemsService), "Service is null");

@@ -8,7 +8,7 @@ using iTechArtPizzaDelivery.Domain.Requests.OrderItem;
 
 namespace iTechArtPizzaDelivery.Domain.Interfaces.Services
 {
-    interface IOrderItemService
+    public interface IOrderItemService
     {
         Task<List<OrderItem>> GetItemsByOrderIdAsync(int id);
         Task<OrderItem> EditItemByIdAsync(OrderItemEditRequest request);

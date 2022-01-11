@@ -20,10 +20,10 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly UsersService _usersService;
+        private readonly IUsersService _usersService;
         private readonly IMapper _mapper;
 
-        public UsersController(UsersService usersService, IMapper mapper)
+        public UsersController(IUsersService usersService, IMapper mapper)
         {
             _usersService = usersService ??
                             throw new ArgumentNullException(nameof(usersService), "Service is null");

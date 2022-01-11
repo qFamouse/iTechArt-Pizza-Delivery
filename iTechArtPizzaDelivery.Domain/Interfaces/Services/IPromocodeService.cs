@@ -8,7 +8,7 @@ using iTechArtPizzaDelivery.Domain.Requests.Promocode;
 
 namespace iTechArtPizzaDelivery.Domain.Interfaces.Services
 {
-    interface IPromocodeService
+    public interface IPromocodeService
     {
         Task<List<Promocode>> GetAllAsync();
         Task<Promocode> AddAsync(PromocodeAddRequest request);

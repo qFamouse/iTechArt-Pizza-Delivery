@@ -47,39 +47,37 @@ namespace iTechArtPizzaDelivery.WebUI
             services.AddAutoMapper(typeof(Startup));
             // Domain
             services.AddScoped<IPizzaRepository, PizzaEFRepository>();
-            services.AddScoped<PizzasService>();
+            services.AddScoped<IPizzasService, PizzasService>();
 
             services.AddScoped<ISizeRepository, SizeEFRepository>();
-            services.AddScoped<SizesService>();
+            services.AddScoped<ISizesService, SizesService>();
 
             services.AddScoped<IIngredientRepository, IngredientEFRepository>();
-            services.AddScoped<IngredientsService>();
+            services.AddScoped<IIngredientsService, IngredientsService>();
 
             
 
             services.AddScoped<IOrderRepository, OrderEFRepository>();
-            services.AddScoped<OrderService>();
+            services.AddScoped<IOrderService, OrderService>();
 
             services.AddScoped<IPromocodeRepository, PromocodeEFRepository>();
-            services.AddScoped<PromocodesService>();
+            services.AddScoped<IPromocodeService, PromocodesService>();
 
             services.AddScoped<IOrderItemRepository, OrderItemEFRepository>();
-            services.AddScoped<OrdersItemsService>();
+            services.AddScoped<IOrderItemService, OrdersItemsService>();
 
             services.AddScoped<IPizzaSizeRepository, PizzaSizeEFRepository>();
             services.AddScoped<IPizzaIngredientRepository, PizzaIngredientEFRepository>();
-            services.AddScoped<PizzaConstructionService>();
+            services.AddScoped<IPizzaConstructionService, PizzaConstructionService>();
 
             services.AddScoped<IDeliveryRepository, DeliveryEFRepository>();
-            services.AddScoped<DeliveryService>();
+            services.AddScoped<IDeliveriesService, DeliveryService>();
 
             services.AddScoped<IPaymentRepository, PaymentEFRepository>();
-            services.AddScoped<PaymentService>();
+            services.AddScoped<IPaymentsService, PaymentService>();
 
             services.AddScoped<IUserRepository, UserEFRepository>();
-            services.AddScoped<UsersService>();
-
-            services.AddScoped<IdentityService>();
+            services.AddScoped<IUsersService, UsersService>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IIdentityService, IdentityService>();
