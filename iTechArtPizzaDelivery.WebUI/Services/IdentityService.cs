@@ -22,7 +22,7 @@ namespace iTechArtPizzaDelivery.WebUI.Services
 
         #region Claims
 
-        public int? Id => GetId();
+        public int Id => GetId();
         public string Name => _claimsIdentity.Name;
         public string Phone => GetClaim(ClaimTypes.MobilePhone)?.Value;
         public string Birthday => GetClaim(ClaimTypes.DateOfBirth)?.Value;
@@ -40,10 +40,10 @@ namespace iTechArtPizzaDelivery.WebUI.Services
 
         #endregion
 
-        private int? GetId()
+        private int GetId()
         {
             string id = GetClaim(ClaimTypes.NameIdentifier)?.Value;
-            return String.IsNullOrEmpty(id) ? null : Int32.Parse(id);
+            return String.IsNullOrEmpty(id) ? 0 : Int32.Parse(id);
         }
 
         private Claim GetClaim(string claimType) => _claimsIdentity.Claims.SingleOrDefault(c => c.Type == claimType);
