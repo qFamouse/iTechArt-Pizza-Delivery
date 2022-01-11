@@ -11,20 +11,10 @@ namespace iTechArtPizzaDelivery.Domain.Interfaces.Services
 {
     interface IPizzaConstructionService
     {
-        #region Getters
-
-        public Task<List<PizzaSize>> GetAllAsync();
-        public Task<PizzaSize> GetByIdAsync(int id);
-
-        #endregion
-
-        #region Setters
-
-        public Task DeleteByIdAsync(int id);
-        public Task<PizzaSize> AddIngredient(PizzaIngredientBindRequest request);
-
-        #endregion
-
-        public Task<PizzaSize> AddAsync(PizzaSizeAddRequest request);
+        Task<List<PizzaSize>> GetAllAsync();
+        Task<PizzaSize> GetByIdAsync(int id);
+        Task DeleteByIdAsync(int id);
+        Task<PizzaSize> AddIngredientAsync(PizzaIngredientBindRequest request);
+        Task<PizzaSize> AddAsync(PizzaSizeAddRequest request);
     }
 }

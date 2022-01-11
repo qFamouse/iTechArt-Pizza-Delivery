@@ -10,19 +10,9 @@ namespace iTechArtPizzaDelivery.Domain.Interfaces.Repositories
 {
     public interface ISizeRepository
     {
-        #region Getters
-
-        public Task<List<Size>> GetAllAsync();
-        public Task<Size> GetByIdAsync(int id);
-
-        #endregion
-
-        #region Setters
-
-        public Task DeleteAsync(int id);
-
-        #endregion
-
-        public Task<Size> AddAsync(SizeAddRequest sAddRequest);
+        Task<List<Size>> GetAllAsync();
+        Task<Size> GetByIdAsync(int id);
+        Task DeleteAsync(int id);
+        Task<Size> AddAsync(SizeAddRequest request);
     }
 }

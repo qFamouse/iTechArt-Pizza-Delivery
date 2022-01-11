@@ -10,19 +10,9 @@ namespace iTechArtPizzaDelivery.Domain.Interfaces.Services
 {
     interface ISizesService
     {
-        #region Getters
-
-        public Task<List<Size>> GetAllAsync();
-        public Task<Size> GetByIdAsync(int id);
-
-        #endregion
-
-        #region Setters
-
-        public Task DeleteAsync(int id);
-
-        #endregion
-
-        public Task<Size> AddAsync(SizeAddRequest sAddRequest);
+        Task<List<Size>> GetAllAsync();
+        Task<Size> GetByIdAsync(int id);
+        Task<Size> AddAsync(SizeAddRequest request);
+        Task DeleteAsync(int id);
     }
 }

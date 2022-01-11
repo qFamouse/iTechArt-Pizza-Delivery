@@ -10,21 +10,12 @@ namespace iTechArtPizzaDelivery.Domain.Interfaces.Repositories
 {
     public interface IOrderItemRepository
     {
-        #region Getters
+        Task<List<OrderItem>> GetAllByOrderIdAsync(int id);
+        Task<OrderItem> GetByIdAsync(int id);
+        Task<OrderItem> Add(OrderItem orderItem);
+        Task DeleteById(int id);
 
-        public Task<List<OrderItem>> GetAllByOrderIdAsync(int id);
-        public Task<OrderItem> GetByIdAsync(int id);
-
-        #endregion
-
-        #region Setters
-
-        public Task<OrderItem> Add(OrderItem orderItem);
-        public Task DeleteById(int id);
-
-        #endregion
-
-        public Task SaveChangesAsync();
+        Task SaveChangesAsync();
         //public Task<OrderItem> EditByIdAsync(OrderItemEditRequest oiEditRequest);
         //public Task DeleteAsync(int id);
         //public Task<OrderItem> AddAsync(OrderItemAddRequest oiAddRequest);

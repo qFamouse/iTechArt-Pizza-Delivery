@@ -9,6 +9,6 @@ namespace iTechArtPizzaDelivery.Domain.Interfaces.Repositories
 {
     public interface IUserRepository
     {
-        public Task<List<User>> GetAllAsync();
+        Task<List<User>> GetAllAsync();
     }
 }

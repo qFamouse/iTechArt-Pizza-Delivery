@@ -9,7 +9,7 @@ namespace iTechArtPizzaDelivery.Domain.Interfaces.Services
 {
     public interface IIdentityService
     {
-        int? Id { get; }
+        int Id { get; }
         string Name { get; }
         string Phone { get; }
         string Birthday { get; }

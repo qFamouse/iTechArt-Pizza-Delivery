@@ -11,23 +11,13 @@ namespace iTechArtPizzaDelivery.Domain.Interfaces.Repositories
 {
     public interface IOrderRepository
     {
-        #region Getters
-
-        public Task<List<Order>> GetAllAsync();
-        public Task<Order> GetByIdAsync(int id);
-        public Task<Order> GetDetailByIdAsync(int id);
-        public Task<List<Order>> GetDetailedOrdersAsync(OrderQuery query);
-        public Task<Order> GetDetailedOrderAsync(OrderQuery query);
-
-        #endregion
-
-        #region Setters
-
-        public Task DeleteByIdAsync(int id);
-
-        #endregion
-
-        public Task<Order> AddAsync(Order order);
-        public Task SaveChangesAsync();
+        Task<List<Order>> GetAllAsync();
+        Task<Order> GetByIdAsync(int id);
+        Task<Order> GetDetailByIdAsync(int id);
+        Task<List<Order>> GetDetailedOrdersAsync(OrderQuery query);
+        Task<Order> GetDetailedOrderAsync(OrderQuery query);
+        Task DeleteByIdAsync(int id);
+        Task<Order> AddAsync(Order order);
+        Task SaveChangesAsync();
     }
 }

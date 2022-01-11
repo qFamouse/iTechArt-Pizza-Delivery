@@ -4,16 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using iTechArtPizzaDelivery.Domain.Entities;
+using iTechArtPizzaDelivery.Domain.Requests.Promocode;
 
 namespace iTechArtPizzaDelivery.Domain.Interfaces.Services
 {
     interface IPromocodeService
     {
-        #region Getters
-
-        public Task<List<Promocode>> GetAllAsync();
-
-        #endregion
-
+        Task<List<Promocode>> GetAllAsync();
+        Task<Promocode> AddAsync(PromocodeAddRequest request);
     }
 }

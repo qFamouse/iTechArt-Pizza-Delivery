@@ -10,17 +10,8 @@ namespace iTechArtPizzaDelivery.Domain.Interfaces.Services
 {
     interface IPaymentsService
     {
-        #region Getters
-
-        public Task<List<Payment>> GetAllAsync();
-
-        #endregion
-
-        #region Setters
-
-        public Task DeleteByIdAsync(int id);
-        public Task<Payment> AddAsync(PaymentAddRequest request);
-
-        #endregion
+        Task<List<Payment>> GetAllAsync();
+        Task DeleteByIdAsync(int id);
+        Task<Payment> AddAsync(PaymentAddRequest request);
     }
 }
