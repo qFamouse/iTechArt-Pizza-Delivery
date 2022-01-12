@@ -9,6 +9,7 @@ using AutoMapper;
 using iTechArtPizzaDelivery.Core.Interfaces.Services;
 using iTechArtPizzaDelivery.Core.Requests.Delivery;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Data.SqlClient.DataClassification;
 
 namespace iTechArtPizzaDelivery.WebUI.Controllers
 {
@@ -35,6 +36,13 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         }
 
         [Authorize(Roles = "Administrator")]
+        [HttpGet("{id}")]
+        public async Task<ActionResult> GetByIdAsync(int id)
+        {
+            return Ok(await _deliveryService.GetByIdAsync(id));
+        }
+
+        [Authorize(Roles = "Administrator")]
         [HttpPost("Add")]
         public async Task<ActionResult> AddAsync(DeliveryAddRequest request)
         {
@@ -47,6 +55,13 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         {
             await _deliveryService.DeleteByIdAsync(id);
             return Ok();
+        }
+
+        [Authorize(Roles = "Administrator")]
+        [HttpPatch("{id}")]
+        public async Task<ActionResult> UpdateAsync([FromBody] DeliveryUpdateRequest request, int id)
+        {
+            return Ok(await _deliveryService.UpdateByIdAsync(id, request));
         }
     }
 }

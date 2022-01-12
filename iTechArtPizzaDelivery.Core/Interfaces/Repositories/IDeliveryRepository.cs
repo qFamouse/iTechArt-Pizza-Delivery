@@ -8,10 +8,8 @@ using iTechArtPizzaDelivery.Core.Requests.Delivery;
 
 namespace iTechArtPizzaDelivery.Core.Interfaces.Repositories
 {
-    public interface IDeliveryRepository
+    public interface IDeliveryRepository : IBaseRepository<Delivery>
     {
-        Task<List<Delivery>> GetAllAsync();
-        Task DeleteByIdAsync(int id);
-        Task<Delivery> AddAsync(DeliveryAddRequest request);
+
     }
 }

@@ -11,7 +11,9 @@ namespace iTechArtPizzaDelivery.Core.Interfaces.Services
     public interface IDeliveriesService
     {
         Task<List<Delivery>> GetAllAsync();
-        Task DeleteByIdAsync(int id);
+        Task<Delivery> GetByIdAsync(int id);
         Task<Delivery> AddAsync(DeliveryAddRequest request);
+        Task DeleteByIdAsync(int id);
+        Task<Delivery> UpdateByIdAsync(int id, DeliveryUpdateRequest request);
     }
 }
