@@ -13,29 +13,29 @@ using Microsoft.EntityFrameworkCore;
 
 namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
 {
-    public class DeliveryEFRepository : BaseEFRepository, IDeliveryRepository
+    public class DeliveryRepository : BaseRepository<Delivery>, IDeliveryRepository
     {
-        public DeliveryEFRepository(PizzaDeliveryContext context, IMapper mapper) : base(context, mapper) { }
+        public DeliveryRepository(PizzaDeliveryContext context, IMapper mapper) : base(context, mapper) { }
 
         public async Task<Delivery> AddAsync(DeliveryAddRequest request)
         {
-            var delivery = _mapper.Map<Delivery>(request);
-            await _dbContext.Deliveries.AddAsync(delivery);
-            await _dbContext.SaveChangesAsync();
+            var delivery = Mapper.Map<Delivery>(request);
+            await DbContext.Deliveries.AddAsync(delivery);
+            await DbContext.SaveChangesAsync();
             return delivery;
         }
 
         public async Task DeleteByIdAsync(int id)
         {
-            var delivery = await _dbContext.Deliveries
+            var delivery = await DbContext.Deliveries
                 .SingleAsync(d => d.Id == id);
-            _dbContext.Deliveries.Remove(delivery);
-            await _dbContext.SaveChangesAsync();
+            DbContext.Deliveries.Remove(delivery);
+            await DbContext.SaveChangesAsync();
         }
 
         public async Task<List<Delivery>> GetAllAsync()
         {
-            return await _dbContext.Deliveries.ToListAsync();
+            return await DbContext.Deliveries.ToListAsync();
         }
     }
 }

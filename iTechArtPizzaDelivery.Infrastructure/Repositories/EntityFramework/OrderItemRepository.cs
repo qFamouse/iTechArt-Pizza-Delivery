@@ -13,27 +13,27 @@ using Microsoft.EntityFrameworkCore;
 
 namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
 {
-    public class OrderItemEFRepository : BaseEFRepository, IOrderItemRepository
+    public class OrderItemRepository : BaseRepository<OrderItem>, IOrderItemRepository
     {
-        public OrderItemEFRepository(PizzaDeliveryContext context, IMapper mapper) : base(context, mapper) { }
+        public OrderItemRepository(PizzaDeliveryContext context, IMapper mapper) : base(context, mapper) { }
 
         public async Task<OrderItem> Add(OrderItem orderItem)
         {
-            await _dbContext.OrderItems.AddAsync(orderItem);
-            await _dbContext.SaveChangesAsync();
+            await DbContext.OrderItems.AddAsync(orderItem);
+            await DbContext.SaveChangesAsync();
             return orderItem;
         }
 
         public async Task DeleteById(int id)
         {
-            _dbContext.Remove(await _dbContext.OrderItems.
+            DbContext.Remove(await DbContext.OrderItems.
                 SingleAsync(oi => oi.Id == id));
-            await _dbContext.SaveChangesAsync();
+            await DbContext.SaveChangesAsync();
         }
 
         public async Task<List<OrderItem>> GetAllByOrderIdAsync(int id)
         {
-            return await _dbContext.OrderItems
+            return await DbContext.OrderItems
                 .Include(oi => oi.PizzaSize)
                 .ThenInclude(ps => ps.Pizza)
                 .Include(oi => oi.PizzaSize)
@@ -47,7 +47,7 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
 
         public async Task<OrderItem> GetByIdAsync(int id)
         {
-            return await _dbContext.OrderItems
+            return await DbContext.OrderItems
                 .Include(oi => oi.PizzaSize)
                 .ThenInclude(ps => ps.PizzaIngredients)
                 .ThenInclude(pi => pi.Ingredient)
@@ -56,7 +56,7 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
 
         public async Task SaveChangesAsync()
         {
-            await _dbContext.SaveChangesAsync();
+            await DbContext.SaveChangesAsync();
         }
     }
 }

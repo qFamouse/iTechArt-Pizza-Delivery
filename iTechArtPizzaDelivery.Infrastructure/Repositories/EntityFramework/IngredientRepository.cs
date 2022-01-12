@@ -13,26 +13,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
 {
-    public class IngredientEFRepository : BaseEFRepository, IIngredientRepository
+    public class IngredientRepository : BaseRepository<Ingredient>, IIngredientRepository
     {
-        public IngredientEFRepository(PizzaDeliveryContext context, IMapper mapper) : base(context, mapper) { }
+        public IngredientRepository(PizzaDeliveryContext context, IMapper mapper) : base(context, mapper) { }
 
         public async Task<Ingredient> AddAsync(IngredientAddRequest iAddRequest)
         {
-            var ingredient = _mapper.Map<Ingredient>(iAddRequest);
-            await _dbContext.Ingredients.AddAsync(ingredient);
-            await _dbContext.SaveChangesAsync();
+            var ingredient = Mapper.Map<Ingredient>(iAddRequest);
+            await DbContext.Ingredients.AddAsync(ingredient);
+            await DbContext.SaveChangesAsync();
             return ingredient;
         }
 
         public async Task<List<Ingredient>> GetAllAsync()
         {
-            return await _dbContext.Ingredients.ToListAsync();
+            return await DbContext.Ingredients.ToListAsync();
         }
 
         public async Task<Ingredient> GetByIdAsync(int id)
         {
-            return await _dbContext.Ingredients.FirstOrDefaultAsync(i => i.Id == id);
+            return await DbContext.Ingredients.FirstOrDefaultAsync(i => i.Id == id);
         }
     }
 }

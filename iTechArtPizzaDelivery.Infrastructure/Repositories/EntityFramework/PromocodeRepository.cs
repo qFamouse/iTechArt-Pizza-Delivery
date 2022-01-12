@@ -13,25 +13,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
 {
-    public class PromocodeEFRepository : BaseEFRepository, IPromocodeRepository
+    public class PromocodeRepository : BaseRepository<Promocode>, IPromocodeRepository
     {
-        public PromocodeEFRepository(PizzaDeliveryContext context, IMapper mapper) : base(context, mapper) { }
+        public PromocodeRepository(PizzaDeliveryContext context, IMapper mapper) : base(context, mapper) { }
 
         public async Task<List<Promocode>> GetAllAsync()
         {
-            return await _dbContext.Promocodes.ToListAsync();
+            return await DbContext.Promocodes.ToListAsync();
         }
 
         public async Task<Promocode> GetByCodeAsync(string code)
         {
-            return await _dbContext.Promocodes
+            return await DbContext.Promocodes
                 .SingleAsync(p => p.Code == code);
         }
 
         public async Task<Promocode> AddAsync(Promocode promocode)
         {
-            await _dbContext.Promocodes.AddAsync(promocode);
-            await _dbContext.SaveChangesAsync();
+            await DbContext.Promocodes.AddAsync(promocode);
+            await DbContext.SaveChangesAsync();
             return promocode;
         }
     }

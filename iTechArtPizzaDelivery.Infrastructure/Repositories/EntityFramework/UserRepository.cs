@@ -12,13 +12,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
 {
-    public class UserEFRepository : BaseEFRepository, IUserRepository
+    public class UserRepository : BaseRepository<User>, IUserRepository
     {
-        public UserEFRepository(PizzaDeliveryContext context, IMapper mapper) : base(context, mapper) { }
+        public UserRepository(PizzaDeliveryContext context, IMapper mapper) : base(context, mapper) { }
 
         public async Task<List<User>> GetAllAsync()
         {
-            return await _dbContext.Users
+            return await DbContext.Users
                 .Include(o => o.Orders)
                 .ToListAsync();
         }

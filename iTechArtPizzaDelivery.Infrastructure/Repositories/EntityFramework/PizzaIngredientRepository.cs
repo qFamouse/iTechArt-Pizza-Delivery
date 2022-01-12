@@ -13,30 +13,30 @@ using Microsoft.EntityFrameworkCore;
 
 namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
 {
-    public class PizzaIngredientEFRepository : BaseEFRepository, IPizzaIngredientRepository
+    public class PizzaIngredientRepository : BaseRepository<PizzaIngredient>, IPizzaIngredientRepository
     {
-        public PizzaIngredientEFRepository(PizzaDeliveryContext context, IMapper mapper) : base(context, mapper) { }
+        public PizzaIngredientRepository(PizzaDeliveryContext context, IMapper mapper) : base(context, mapper) { }
 
         public async Task<PizzaIngredient> AddAsync(PizzaIngredientBindRequest request)
         {
             // Mapping
-            var pizzaIngredient = _mapper.Map<PizzaIngredient>(request);
+            var pizzaIngredient = Mapper.Map<PizzaIngredient>(request);
             //pizzaIngredient.Ingredient =
-            //    await _dbContext.Ingredients.SingleAsync(i => i.Id == request.IngredientId);
+            //    await DbContext.Ingredients.SingleAsync(i => i.Id == request.IngredientId);
             //pizzaIngredient.PizzaSize =
-            //    await _dbContext.PizzasSizes.SingleAsync(i => i.Id == request.PizzaSizeId);
+            //    await DbContext.PizzasSizes.SingleAsync(i => i.Id == request.PizzaSizeId);
 
             pizzaIngredient.IngredientId = request.IngredientId;
             pizzaIngredient.PizzaSizeId = request.PizzaSizeId;
             // Adding
-            await _dbContext.PizzaIngredients.AddAsync(pizzaIngredient);
-            await _dbContext.SaveChangesAsync();
+            await DbContext.PizzaIngredients.AddAsync(pizzaIngredient);
+            await DbContext.SaveChangesAsync();
             return pizzaIngredient;
         }
 
         public async Task<List<PizzaIngredient>> GetAllAsync()
         {
-            return await _dbContext.PizzaIngredients
+            return await DbContext.PizzaIngredients
                 .Include(pi => pi.PizzaSize)
                 .Include(pi => pi.Ingredient)
                 .ToListAsync();

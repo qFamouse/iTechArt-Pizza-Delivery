@@ -13,33 +13,33 @@ using Microsoft.EntityFrameworkCore;
 
 namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
 {
-    public class PizzaEFRepository : BaseEFRepository, IPizzaRepository
+    public class PizzaRepository : BaseRepository<Pizza>, IPizzaRepository
     {
-        public PizzaEFRepository(PizzaDeliveryContext context, IMapper mapper) : base(context, mapper) { }
+        public PizzaRepository(PizzaDeliveryContext context, IMapper mapper) : base(context, mapper) { }
 
         public async Task<Pizza> AddAsync(PizzaAddRequest request)
         {
-            var pizza = _mapper.Map<Pizza>(request);
-            await _dbContext.Pizzas.AddAsync(pizza);
-            await _dbContext.SaveChangesAsync();
+            var pizza = Mapper.Map<Pizza>(request);
+            await DbContext.Pizzas.AddAsync(pizza);
+            await DbContext.SaveChangesAsync();
             return pizza;
         }
 
         public async Task<List<Pizza>> GetAllAsync()
         {
-            return await _dbContext.Pizzas.ToListAsync();
+            return await DbContext.Pizzas.ToListAsync();
         }
 
         public async Task<Pizza> GetByIdAsync(int id)
         {
-            return await _dbContext.Pizzas.FirstOrDefaultAsync(p => p.Id == id);
+            return await DbContext.Pizzas.FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task DeleteAsync(int id)
         {
-            var pizza = await _dbContext.Pizzas.FirstOrDefaultAsync(p => p.Id == id);
-            _dbContext.Pizzas.Remove(pizza);
-            await _dbContext.SaveChangesAsync();
+            var pizza = await DbContext.Pizzas.FirstOrDefaultAsync(p => p.Id == id);
+            DbContext.Pizzas.Remove(pizza);
+            await DbContext.SaveChangesAsync();
         }
     }
 }

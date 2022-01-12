@@ -14,13 +14,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
 {
-    public class PizzaSizeEFRepository : BaseEFRepository, IPizzaSizeRepository
+    public class PizzaSizeRepository : BaseRepository<PizzaSize>, IPizzaSizeRepository
     {
-        public PizzaSizeEFRepository(PizzaDeliveryContext context, IMapper mapper) : base(context, mapper) { }
+        public PizzaSizeRepository(PizzaDeliveryContext context, IMapper mapper) : base(context, mapper) { }
 
         public async Task<List<PizzaSize>> GetAllAsync()
         {
-            return await _dbContext.PizzasSizes
+            return await DbContext.PizzasSizes
                 .Include(p => p.Pizza)
                 .Include(s => s.Size)
                 .Include(ps => ps.PizzaIngredients)
@@ -30,13 +30,13 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
 
         public async Task<PizzaSize> GetByIdAsync(int id)
         {
-            return await _dbContext.PizzasSizes
+            return await DbContext.PizzasSizes
                 .SingleAsync(ps => ps.Id == id);
         }
 
         public async Task<PizzaSize> GetDetailByIdAsync(int id)
         {
-            return await _dbContext.PizzasSizes
+            return await DbContext.PizzasSizes
                 .Include(p => p.Pizza)
                 .Include(s => s.Size)
                 .Include(ps => ps.PizzaIngredients)
@@ -46,20 +46,20 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
 
         public async Task DeleteAsync(int id)
         {
-            var pizza = await _dbContext.PizzasSizes.FirstOrDefaultAsync(ps => ps.Id == id);
-            _dbContext.PizzasSizes.Remove(pizza);
-            await _dbContext.SaveChangesAsync();
+            var pizza = await DbContext.PizzasSizes.FirstOrDefaultAsync(ps => ps.Id == id);
+            DbContext.PizzasSizes.Remove(pizza);
+            await DbContext.SaveChangesAsync();
         }
 
         public async Task<PizzaSize> AddAsync(PizzaSizeAddRequest request)
         {
             // Mapping
-            var pizzaSize = _mapper.Map<PizzaSize>(request);
-            pizzaSize.Pizza = await _dbContext.Pizzas.SingleAsync(p => p.Id == request.PizzaId);
-            pizzaSize.Size = await _dbContext.Sizes.SingleAsync(s => s.Id == request.SizeId);
+            var pizzaSize = Mapper.Map<PizzaSize>(request);
+            pizzaSize.Pizza = await DbContext.Pizzas.SingleAsync(p => p.Id == request.PizzaId);
+            pizzaSize.Size = await DbContext.Sizes.SingleAsync(s => s.Id == request.SizeId);
             // Adding
-            await _dbContext.PizzasSizes.AddAsync(pizzaSize);
-            await _dbContext.SaveChangesAsync();
+            await DbContext.PizzasSizes.AddAsync(pizzaSize);
+            await DbContext.SaveChangesAsync();
             return pizzaSize;
         }
     }

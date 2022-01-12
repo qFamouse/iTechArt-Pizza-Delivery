@@ -15,26 +15,26 @@ using Microsoft.EntityFrameworkCore.Query;
 
 namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
 {
-    public class OrderEFRepository : BaseEFRepository, IOrderRepository
+    public class OrderRepository : BaseRepository<Order>, IOrderRepository
     {
-        public OrderEFRepository(PizzaDeliveryContext context, IMapper mapper) : base(context, mapper) {}
+        public OrderRepository(PizzaDeliveryContext context, IMapper mapper) : base(context, mapper) {}
 
         public async Task<List<Order>> GetAllAsync()
         {
-            return await _dbContext.Orders
+            return await DbContext.Orders
                 .Include(o => o.Promocode)
                 .ToListAsync();
         }
 
         public async Task<Order> GetByIdAsync(int id)
         {
-            return await _dbContext.Orders
+            return await DbContext.Orders
                 .SingleAsync(o => o.Id == id);
         }
 
         public async Task<Order> GetDetailByIdAsync(int id)
         {
-            return await _dbContext.Orders
+            return await DbContext.Orders
                 .Include(o => o.OrderItems)
                 .Include(o => o.Promocode)
                 .SingleAsync(o => o.Id == id);
@@ -58,15 +58,15 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
 
         public async Task DeleteByIdAsync(int id)
         {
-            var order = await _dbContext.Orders
+            var order = await DbContext.Orders
                 .SingleAsync(o => o.Id == id);
-            _dbContext.Orders.Remove(order);
-            await _dbContext.SaveChangesAsync();
+            DbContext.Orders.Remove(order);
+            await DbContext.SaveChangesAsync();
         }
 
         private IQueryable<Order> GetByQuery(OrderQuery query)
         {
-            IQueryable<Order> ordersQuery = _dbContext.Orders;
+            IQueryable<Order> ordersQuery = DbContext.Orders;
 
             if (query.OrderId.HasValue)
             {
@@ -88,14 +88,14 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
 
         public async Task<Order> AddAsync(Order order)
         {
-            await _dbContext.Orders.AddAsync(order);
-            await _dbContext.SaveChangesAsync();
+            await DbContext.Orders.AddAsync(order);
+            await DbContext.SaveChangesAsync();
             return order;
         }
 
         public async Task SaveChangesAsync()
         {
-            await _dbContext.SaveChangesAsync();
+            await DbContext.SaveChangesAsync();
         }
 
     }
