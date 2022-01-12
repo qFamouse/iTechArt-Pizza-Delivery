@@ -5,10 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using iTechArtPizzaDelivery.Domain.Entities;
-using iTechArtPizzaDelivery.Domain.Interfaces.Services;
-using iTechArtPizzaDelivery.Domain.Requests.Size;
-using iTechArtPizzaDelivery.Domain.Services;
+using iTechArtPizzaDelivery.Core.Entities;
+using iTechArtPizzaDelivery.Core.Interfaces.Services;
+using iTechArtPizzaDelivery.Core.Requests.Size;
+using iTechArtPizzaDelivery.Core.Services;
 using Microsoft.AspNetCore.Authorization;
 
 namespace iTechArtPizzaDelivery.WebUI.Controllers

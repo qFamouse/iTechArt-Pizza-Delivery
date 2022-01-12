@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
-using iTechArtPizzaDelivery.Domain.Entities;
-using iTechArtPizzaDelivery.Domain.Requests.Delivery;
+using iTechArtPizzaDelivery.Core.Entities;
+using iTechArtPizzaDelivery.Core.Requests.Delivery;
 
 namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework.Profiles
 {

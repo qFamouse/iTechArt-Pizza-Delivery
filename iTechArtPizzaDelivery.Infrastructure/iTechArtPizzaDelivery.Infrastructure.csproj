@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\iTechArtPizzaDelivery.Domain\iTechArtPizzaDelivery.Domain.csproj" />
+    <ProjectReference Include="..\iTechArtPizzaDelivery.Core\iTechArtPizzaDelivery.Core.csproj" />
   </ItemGroup>
 
 </Project>

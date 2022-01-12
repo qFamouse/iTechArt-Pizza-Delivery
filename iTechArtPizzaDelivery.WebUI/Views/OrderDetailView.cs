@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using iTechArtPizzaDelivery.Domain.Entities;
+using iTechArtPizzaDelivery.Core.Entities;
 
 namespace iTechArtPizzaDelivery.WebUI.Views
 {

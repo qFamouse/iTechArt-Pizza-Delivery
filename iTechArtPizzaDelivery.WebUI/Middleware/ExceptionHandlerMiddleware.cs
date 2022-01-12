@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
-using iTechArtPizzaDelivery.Domain.Exceptions;
+using iTechArtPizzaDelivery.Core.Exceptions;
 using Microsoft.AspNetCore.Http;
 
 namespace iTechArtPizzaDelivery.WebUI.Middleware

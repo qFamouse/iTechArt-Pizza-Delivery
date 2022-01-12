@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using iTechArtPizzaDelivery.Domain.Interfaces.Services;
-using iTechArtPizzaDelivery.Domain.Views;
+using iTechArtPizzaDelivery.Core.Interfaces.Services;
+using iTechArtPizzaDelivery.Core.Views;
 using Microsoft.AspNetCore.Http;
 
 namespace iTechArtPizzaDelivery.WebUI.Services

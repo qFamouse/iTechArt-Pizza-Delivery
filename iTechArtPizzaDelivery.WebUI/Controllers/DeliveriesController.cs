@@ -4,10 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using iTechArtPizzaDelivery.Domain.Services;
+using iTechArtPizzaDelivery.Core.Services;
 using AutoMapper;
-using iTechArtPizzaDelivery.Domain.Interfaces.Services;
-using iTechArtPizzaDelivery.Domain.Requests.Delivery;
+using iTechArtPizzaDelivery.Core.Interfaces.Services;
+using iTechArtPizzaDelivery.Core.Requests.Delivery;
 using Microsoft.AspNetCore.Authorization;
 
 namespace iTechArtPizzaDelivery.WebUI.Controllers

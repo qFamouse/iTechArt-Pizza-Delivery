@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTechArtPizzaDelivery.WebUI", "iTechArtPizzaDelivery.WebUI.csproj", "{4A26D77F-302A-42C0-96AD-0763E6BE7AF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iTechArtPizzaDelivery.WebUI", "iTechArtPizzaDelivery.WebUI.csproj", "{4A26D77F-302A-42C0-96AD-0763E6BE7AF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTechArtPizzaDelivery.Infrastructure", "..\iTechArtPizzaDelivery.Infrastructure\iTechArtPizzaDelivery.Infrastructure.csproj", "{F1E9974E-A67C-4C0C-A816-22CB08AEC1CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iTechArtPizzaDelivery.Infrastructure", "..\iTechArtPizzaDelivery.Infrastructure\iTechArtPizzaDelivery.Infrastructure.csproj", "{F1E9974E-A67C-4C0C-A816-22CB08AEC1CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTechArtPizzaDelivery.Domain", "..\iTechArtPizzaDelivery.Domain\iTechArtPizzaDelivery.Domain.csproj", "{416FFCBB-910C-4975-B828-0AB4D1684187}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iTechArtPizzaDelivery.Core", "..\iTechArtPizzaDelivery.Core\iTechArtPizzaDelivery.Core.csproj", "{41139099-92D1-466C-9DE3-745E38AB843A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{F1E9974E-A67C-4C0C-A816-22CB08AEC1CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1E9974E-A67C-4C0C-A816-22CB08AEC1CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1E9974E-A67C-4C0C-A816-22CB08AEC1CB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{416FFCBB-910C-4975-B828-0AB4D1684187}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{416FFCBB-910C-4975-B828-0AB4D1684187}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{416FFCBB-910C-4975-B828-0AB4D1684187}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{416FFCBB-910C-4975-B828-0AB4D1684187}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41139099-92D1-466C-9DE3-745E38AB843A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41139099-92D1-466C-9DE3-745E38AB843A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41139099-92D1-466C-9DE3-745E38AB843A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41139099-92D1-466C-9DE3-745E38AB843A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
