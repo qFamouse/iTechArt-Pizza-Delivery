@@ -5,8 +5,10 @@ using System.Reflection;
 using System.Threading.Tasks;
 using iTechArtPizzaDelivery.Core.Interfaces.Repositories;
 using iTechArtPizzaDelivery.Core.Interfaces.Services;
+using iTechArtPizzaDelivery.Core.Interfaces.Services.Validation;
 using iTechArtPizzaDelivery.Core.Mapping;
 using iTechArtPizzaDelivery.Core.Services;
+using iTechArtPizzaDelivery.Core.Services.Validation;
 using iTechArtPizzaDelivery.Infrastructure.Data;
 using iTechArtPizzaDelivery.Infrastructure.Data.Repositories.Account;
 using iTechArtPizzaDelivery.Infrastructure.Data.Repositories.Components;
@@ -32,6 +34,8 @@ namespace iTechArtPizzaDelivery.WebUI.Extensions
         }
         public static void AddCoreDependencies(this IServiceCollection services)
         {
+            services.AddScoped<IDeliveryValidationService, DeliveryValidationService>();
+
             services.AddScoped<IPizzasService, PizzasService>();
             services.AddScoped<ISizesService, SizesService>();
             services.AddScoped<IIngredientsService, IngredientsService>();
@@ -42,6 +46,7 @@ namespace iTechArtPizzaDelivery.WebUI.Extensions
             services.AddScoped<IDeliveriesService, DeliveryService>();
             services.AddScoped<IPaymentsService, PaymentService>();
             services.AddScoped<IUsersService, UsersService>();
+
         }
 
         public static void AddInfrastructureDependencies(this IServiceCollection services)

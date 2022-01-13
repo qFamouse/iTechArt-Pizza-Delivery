@@ -45,9 +45,9 @@ namespace iTechArtPizzaDelivery.WebUI
 
             services.AddAutoMappers();
 
+            services.AddInfrastructureDependencies();
             services.AddCoreDependencies();
             services.AddWebUiDependencies();
-            services.AddInfrastructureDependencies();
 
             services.AddDbContext(Configuration.GetConnectionString("DefaultConnection"));
 
