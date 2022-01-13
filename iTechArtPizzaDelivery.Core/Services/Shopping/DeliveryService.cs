@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using iTechArtPizzaDelivery.Core.Entities;
+using iTechArtPizzaDelivery.Core.Exceptions;
 using iTechArtPizzaDelivery.Core.Interfaces.Repositories;
 using iTechArtPizzaDelivery.Core.Interfaces.Services;
 using iTechArtPizzaDelivery.Core.Interfaces.Services.Shopping;
@@ -35,7 +36,8 @@ namespace iTechArtPizzaDelivery.Core.Services.Shopping
 
         public async Task<Delivery> GetByIdAsync(int id)
         {
-            return await _deliveryRepository.GetByIdAsync(id);
+            return await _deliveryRepository.GetByIdAsync(id) ??
+                   throw new HttpStatusCodeException(404, "Delivery not found");
         }
 
         public async Task<Delivery> AddAsync(DeliveryAddRequest request)
@@ -48,7 +50,9 @@ namespace iTechArtPizzaDelivery.Core.Services.Shopping
 
         public async Task DeleteByIdAsync(int id)
         {
+            await _deliveryValidationService.DeliveryExistsAsync(id);
             await _deliveryRepository.DeleteByIdAsync(id);
+            await _deliveryRepository.Save();
         }
 
         public async Task<Delivery> UpdateByIdAsync(int id, DeliveryUpdateRequest request)

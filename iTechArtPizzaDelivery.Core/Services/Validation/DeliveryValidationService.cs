@@ -20,7 +20,7 @@ namespace iTechArtPizzaDelivery.Core.Services.Validation
 
         public async Task DeliveryExistsAsync(int id)
         {
-            if (await _deliveryRepository.GetByIdAsync(id) is null)
+            if (!await _deliveryRepository.IsExists(id))
             {
                 throw new HttpStatusCodeException(404, "Delivery not found");
             }
