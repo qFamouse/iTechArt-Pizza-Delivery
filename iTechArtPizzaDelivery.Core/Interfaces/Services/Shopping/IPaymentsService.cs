@@ -8,7 +8,9 @@ namespace iTechArtPizzaDelivery.Core.Interfaces.Services.Shopping
     public interface IPaymentsService
     {
         Task<List<Payment>> GetAllAsync();
-        Task DeleteByIdAsync(int id);
+        Task<Payment> GetByIdAsync(int id);
         Task<Payment> AddAsync(PaymentAddRequest request);
+        Task DeleteByIdAsync(int id);
+        Task<Payment> UpdateByIdAsync(int id, PaymentUpdateRequest request);
     }
 }

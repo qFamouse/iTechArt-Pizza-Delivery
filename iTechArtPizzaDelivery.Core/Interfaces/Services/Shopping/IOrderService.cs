@@ -9,7 +9,7 @@ namespace iTechArtPizzaDelivery.Core.Interfaces.Services.Shopping
     {
         Task<List<Order>> GetAllAsync();
         Task<Order> GetDetailByIdAsync(int id);
-        Task AttachPromocode(OrderAttachPromocodeRequest request);
-        Task ProcessOrder();
+        Task AttachPromocodeAsync(OrderAttachPromocodeRequest request);
+        Task ProcessOrderAsync();
     }
 }
