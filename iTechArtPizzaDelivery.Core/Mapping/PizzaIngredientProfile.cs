@@ -7,9 +7,9 @@ using AutoMapper;
 using iTechArtPizzaDelivery.Core.Entities;
 using iTechArtPizzaDelivery.Core.Requests.PizzaIngredient;
 
-namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework.Profiles
+namespace iTechArtPizzaDelivery.Core.Mapping
 {
-    public class PizzaIngredientProfile : Profile
+    class PizzaIngredientProfile : Profile
     {
         public PizzaIngredientProfile()
         {

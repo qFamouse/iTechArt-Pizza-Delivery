@@ -15,7 +15,6 @@ using iTechArtPizzaDelivery.Core.Mapping;
 using iTechArtPizzaDelivery.Core.Services;
 using iTechArtPizzaDelivery.Infrastructure.Repositories.Context;
 using iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework;
-using iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework.Profiles;
 using iTechArtPizzaDelivery.WebUI.Middleware;
 using iTechArtPizzaDelivery.WebUI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -40,7 +39,7 @@ namespace iTechArtPizzaDelivery.WebUI
         {
             services.Configure<IdentityConfiguration>(Configuration.GetSection("Identity"));
             // AutoMapper
-            services.AddAutoMapper(Assembly.GetAssembly(typeof(PizzaSizeProfile))); // Get Assembly by some class from this assembly
+            // services.AddAutoMapper(Assembly.GetAssembly(typeof(PizzaSizeProfile))); // Get Assembly by some class from this assembly
             services.AddAutoMapper(Assembly.GetAssembly(typeof(UserProfile))); // Get Assembly by some class from this assembly
             // Other method using hard brute force
             //services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies().Single(x => x.FullName.StartsWith("iTechArtPizzaDelivery.Infrastructure")));

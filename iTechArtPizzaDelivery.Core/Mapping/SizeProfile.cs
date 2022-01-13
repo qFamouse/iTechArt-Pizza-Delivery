@@ -7,9 +7,9 @@ using AutoMapper;
 using iTechArtPizzaDelivery.Core.Entities;
 using iTechArtPizzaDelivery.Core.Requests.Size;
 
-namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework.Profiles
+namespace iTechArtPizzaDelivery.Core.Mapping
 {
-    public class SizeProfile : Profile
+    class SizeProfile : Profile
     {
         public SizeProfile()
         {

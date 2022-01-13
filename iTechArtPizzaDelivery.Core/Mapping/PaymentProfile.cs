@@ -7,9 +7,9 @@ using AutoMapper;
 using iTechArtPizzaDelivery.Core.Entities;
 using iTechArtPizzaDelivery.Core.Requests.Payment;
 
-namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework.Profiles
+namespace iTechArtPizzaDelivery.Core.Mapping
 {
-    public class PaymentProfile : Profile
+    class PaymentProfile : Profile
     {
         public PaymentProfile()
         {
