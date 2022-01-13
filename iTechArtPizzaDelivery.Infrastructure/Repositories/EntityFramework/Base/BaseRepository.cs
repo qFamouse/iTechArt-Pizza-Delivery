@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using iTechArtPizzaDelivery.Core.Exceptions;
 using iTechArtPizzaDelivery.Core.Interfaces.Repositories;
 using iTechArtPizzaDelivery.Infrastructure.Repositories.Context;
 using Microsoft.EntityFrameworkCore;
@@ -33,7 +34,7 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework.Base
 
         public async Task<T> GetByIdAsync(int id)
         {
-            return await _dbSet.FindAsync(id);
+            return await _dbSet.FindAsync(id) ?? throw new HttpStatusCodeException(404, "Not found");
         }
 
         public async Task<T> InsertAsync(T entity)
@@ -45,13 +46,14 @@ namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework.Base
 
         public async Task DeleteByIdAsync(int id)
         {
-            var entity = await _dbSet.FindAsync(id);
+            var entity = await _dbSet.FindAsync(id) ?? throw new HttpStatusCodeException(404, "Not found");
             _dbSet.Remove(entity);
             await DbContext.SaveChangesAsync();
         }
 
-        public void Update(T entity)
+        public async void Update(T entity)
         {
+            var aa = await DbContext.Entry(entity).GetDatabaseValuesAsync();
             DbContext.Entry(entity).State = EntityState.Modified;
         }
 
