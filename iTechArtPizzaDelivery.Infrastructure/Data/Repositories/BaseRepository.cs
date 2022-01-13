@@ -30,26 +30,24 @@ namespace iTechArtPizzaDelivery.Infrastructure.Data.Repositories
 
         public async Task<T> GetByIdAsync(int id)
         {
-            return await _dbSet.FindAsync(id) ?? throw new HttpStatusCodeException(404, "Not found");
+            return await _dbSet.FindAsync(id);
         }
 
         public async Task<T> InsertAsync(T entity)
         {
             await _dbSet.AddAsync(entity);
-            await DbContext.SaveChangesAsync();
             return entity;
         }
 
         public async Task DeleteByIdAsync(int id)
         {
-            var entity = await _dbSet.FindAsync(id) ?? throw new HttpStatusCodeException(404, "Not found");
+            var entity = await _dbSet.FindAsync(id);
             _dbSet.Remove(entity);
             await DbContext.SaveChangesAsync();
         }
 
-        public async void Update(T entity)
+        public void Update(T entity)
         {
-            var aa = await DbContext.Entry(entity).GetDatabaseValuesAsync();
             DbContext.Entry(entity).State = EntityState.Modified;
         }
 
