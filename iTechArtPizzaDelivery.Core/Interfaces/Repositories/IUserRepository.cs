@@ -7,8 +7,8 @@ using iTechArtPizzaDelivery.Core.Entities;
 
 namespace iTechArtPizzaDelivery.Core.Interfaces.Repositories
 {
-    public interface IUserRepository
+    public interface IUserRepository : IBaseRepository<User>
     {
-        Task<List<User>> GetAllAsync();
+
     }
 }

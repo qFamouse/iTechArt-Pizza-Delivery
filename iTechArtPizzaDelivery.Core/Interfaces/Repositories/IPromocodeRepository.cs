@@ -7,11 +7,8 @@ using iTechArtPizzaDelivery.Core.Entities;
 
 namespace iTechArtPizzaDelivery.Core.Interfaces.Repositories
 {
-    public interface IPromocodeRepository
+    public interface IPromocodeRepository : IBaseRepository<Promocode>
     {
-        Task<List<Promocode>> GetAllAsync();
         Task<Promocode> GetByCodeAsync(string code);
-        Task<Promocode> AddAsync(Promocode promocode);
-
     }
 }

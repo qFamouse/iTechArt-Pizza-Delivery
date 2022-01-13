@@ -8,10 +8,8 @@ using iTechArtPizzaDelivery.Core.Requests.Payment;
 
 namespace iTechArtPizzaDelivery.Core.Interfaces.Repositories
 {
-    public interface IPaymentRepository
+    public interface IPaymentRepository : IBaseRepository<Payment>
     {
-        Task<List<Payment>> GetAllAsync();
-        Task DeleteByIdAsync(int id);
-        Task<Payment> AddAsync(PaymentAddRequest request);
+
     }
 }

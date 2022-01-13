@@ -9,13 +9,8 @@ using iTechArtPizzaDelivery.Core.Requests;
 
 namespace iTechArtPizzaDelivery.Core.Interfaces.Repositories
 {
-    public interface IPizzaSizeRepository
+    public interface IPizzaSizeRepository : IBaseRepository<PizzaSize>
     {
-        Task<List<PizzaSize>> GetAllAsync();
         Task<PizzaSize> GetDetailByIdAsync(int id);
-        Task<PizzaSize> GetByIdAsync(int id);
-        Task DeleteAsync(int id);
-        Task<PizzaSize> AddAsync(PizzaSizeAddRequest request);
-
     }
 }

@@ -8,11 +8,8 @@ using iTechArtPizzaDelivery.Core.Requests.Size;
 
 namespace iTechArtPizzaDelivery.Core.Interfaces.Repositories
 {
-    public interface ISizeRepository
+    public interface ISizeRepository : IBaseRepository<Size>
     {
-        Task<List<Size>> GetAllAsync();
-        Task<Size> GetByIdAsync(int id);
-        Task DeleteAsync(int id);
-        Task<Size> AddAsync(SizeAddRequest request);
+
     }
 }

@@ -11,22 +11,10 @@ namespace iTechArtPizzaDelivery.Infrastructure.Data.Repositories.Shopping
     {
         public PromocodeRepository(PizzaDeliveryContext context, IMapper mapper) : base(context, mapper) { }
 
-        public async Task<List<Promocode>> GetAllAsync()
-        {
-            return await DbContext.Promocodes.ToListAsync();
-        }
-
         public async Task<Promocode> GetByCodeAsync(string code)
         {
             return await DbContext.Promocodes
                 .SingleAsync(p => p.Code == code);
-        }
-
-        public async Task<Promocode> AddAsync(Promocode promocode)
-        {
-            await DbContext.Promocodes.AddAsync(promocode);
-            await DbContext.SaveChangesAsync();
-            return promocode;
         }
     }
 }

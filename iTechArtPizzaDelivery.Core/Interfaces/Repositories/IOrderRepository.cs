@@ -9,15 +9,10 @@ using iTechArtPizzaDelivery.Core.Requests.Order;
 
 namespace iTechArtPizzaDelivery.Core.Interfaces.Repositories
 {
-    public interface IOrderRepository
+    public interface IOrderRepository : IBaseRepository<Order>
     {
-        Task<List<Order>> GetAllAsync();
-        Task<Order> GetByIdAsync(int id);
         Task<Order> GetDetailByIdAsync(int id);
         Task<List<Order>> GetDetailedOrdersAsync(OrderQuery query);
         Task<Order> GetDetailedOrderAsync(OrderQuery query);
-        Task DeleteByIdAsync(int id);
-        Task<Order> AddAsync(Order order);
-        Task SaveChangesAsync();
     }
 }

@@ -13,19 +13,6 @@ namespace iTechArtPizzaDelivery.Infrastructure.Data.Repositories.Shopping
     {
         public OrderRepository(PizzaDeliveryContext context, IMapper mapper) : base(context, mapper) {}
 
-        public async Task<List<Order>> GetAllAsync()
-        {
-            return await DbContext.Orders
-                .Include(o => o.Promocode)
-                .ToListAsync();
-        }
-
-        public async Task<Order> GetByIdAsync(int id)
-        {
-            return await DbContext.Orders
-                .SingleAsync(o => o.Id == id);
-        }
-
         public async Task<Order> GetDetailByIdAsync(int id)
         {
             return await DbContext.Orders
@@ -50,14 +37,6 @@ namespace iTechArtPizzaDelivery.Infrastructure.Data.Repositories.Shopping
                 .FirstOrDefaultAsync();
         }
 
-        public async Task DeleteByIdAsync(int id)
-        {
-            var order = await DbContext.Orders
-                .SingleAsync(o => o.Id == id);
-            DbContext.Orders.Remove(order);
-            await DbContext.SaveChangesAsync();
-        }
-
         private IQueryable<Order> GetByQuery(OrderQuery query)
         {
             IQueryable<Order> ordersQuery = DbContext.Orders;
@@ -79,18 +58,5 @@ namespace iTechArtPizzaDelivery.Infrastructure.Data.Repositories.Shopping
 
             return ordersQuery;
         }
-
-        public async Task<Order> AddAsync(Order order)
-        {
-            await DbContext.Orders.AddAsync(order);
-            await DbContext.SaveChangesAsync();
-            return order;
-        }
-
-        public async Task SaveChangesAsync()
-        {
-            await DbContext.SaveChangesAsync();
-        }
-
     }
 }

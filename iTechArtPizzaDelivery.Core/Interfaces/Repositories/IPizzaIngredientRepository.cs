@@ -8,9 +8,8 @@ using iTechArtPizzaDelivery.Core.Requests.PizzaIngredient;
 
 namespace iTechArtPizzaDelivery.Core.Interfaces.Repositories
 {
-    public interface IPizzaIngredientRepository
+    public interface IPizzaIngredientRepository : IBaseRepository<PizzaIngredient>
     {
-        Task<List<PizzaIngredient>> GetAllAsync();
-        Task<PizzaIngredient> AddAsync(PizzaIngredientBindRequest request);
+
     }
 }

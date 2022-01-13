@@ -12,25 +12,5 @@ namespace iTechArtPizzaDelivery.Infrastructure.Data.Repositories.Shopping
     {
         public PaymentRepository(PizzaDeliveryContext context, IMapper mapper) : base(context, mapper) { }
 
-        public async Task<Payment> AddAsync(PaymentAddRequest request)
-        {
-            var payment = Mapper.Map<Payment>(request);
-            await DbContext.Payments.AddAsync(payment);
-            await DbContext.SaveChangesAsync();
-            return payment;
-        }
-
-        public async Task DeleteByIdAsync(int id)
-        {
-            var payment = await DbContext.Payments
-                .SingleAsync(p => p.Id == id);
-            DbContext.Payments.Remove(payment);
-            await DbContext.SaveChangesAsync();
-        }
-
-        public async Task<List<Payment>> GetAllAsync()
-        {
-            return await DbContext.Payments.ToListAsync();
-        }
     }
 }
