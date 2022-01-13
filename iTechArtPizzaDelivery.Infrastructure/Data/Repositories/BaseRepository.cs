@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using iTechArtPizzaDelivery.Core.Exceptions;
 using iTechArtPizzaDelivery.Core.Interfaces.Repositories;
-using iTechArtPizzaDelivery.Infrastructure.Repositories.Context;
 using Microsoft.EntityFrameworkCore;
 
-namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework.Base
+namespace iTechArtPizzaDelivery.Infrastructure.Data.Repositories
 {
     public class BaseRepository<T> : IBaseRepository<T>
         where T: class

@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using iTechArtPizzaDelivery.Core.Entities;
 using iTechArtPizzaDelivery.Core.Interfaces.Repositories;
 using iTechArtPizzaDelivery.Core.Queries;
-using iTechArtPizzaDelivery.Core.Requests.Order;
-using iTechArtPizzaDelivery.Infrastructure.Repositories.Context;
-using iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework.Base;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
 
-namespace iTechArtPizzaDelivery.Infrastructure.Repositories.EntityFramework
+namespace iTechArtPizzaDelivery.Infrastructure.Data.Repositories.Shopping
 {
     public class OrderRepository : BaseRepository<Order>, IOrderRepository
     {
