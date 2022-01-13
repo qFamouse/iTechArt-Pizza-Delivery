@@ -18,6 +18,7 @@ using iTechArtPizzaDelivery.Infrastructure.Data.Repositories.Account;
 using iTechArtPizzaDelivery.Infrastructure.Data.Repositories.Components;
 using iTechArtPizzaDelivery.Infrastructure.Data.Repositories.Construction;
 using iTechArtPizzaDelivery.Infrastructure.Data.Repositories.Shopping;
+using iTechArtPizzaDelivery.WebUI.Extensions;
 using iTechArtPizzaDelivery.WebUI.Middleware;
 using iTechArtPizzaDelivery.WebUI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -41,52 +42,14 @@ namespace iTechArtPizzaDelivery.WebUI
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<IdentityConfiguration>(Configuration.GetSection("Identity"));
-            // AutoMapper
-            // services.AddAutoMapper(Assembly.GetAssembly(typeof(PizzaSizeProfile))); // Get Assembly by some class from this assembly
-            services.AddAutoMapper(Assembly.GetAssembly(typeof(UserProfile))); // Get Assembly by some class from this assembly
-            // Other method using hard brute force
-            //services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies().Single(x => x.FullName.StartsWith("iTechArtPizzaDelivery.Infrastructure")));
-            services.AddAutoMapper(typeof(Startup));
-            // Domain
-            services.AddScoped<IPizzaRepository, PizzaRepository>();
-            services.AddScoped<IPizzasService, PizzasService>();
 
-            services.AddScoped<ISizeRepository, SizeRepository>();
-            services.AddScoped<ISizesService, SizesService>();
+            services.AddAutoMappers();
 
-            services.AddScoped<IIngredientRepository, IngredientRepository>();
-            services.AddScoped<IIngredientsService, IngredientsService>();
+            services.AddCoreDependencies();
+            services.AddWebUiDependencies();
+            services.AddInfrastructureDependencies();
 
-            
-
-            services.AddScoped<IOrderRepository, OrderRepository>();
-            services.AddScoped<IOrderService, OrderService>();
-
-            services.AddScoped<IPromocodeRepository, PromocodeRepository>();
-            services.AddScoped<IPromocodeService, PromocodesService>();
-
-            services.AddScoped<IOrderItemRepository, OrderItemRepository>();
-            services.AddScoped<IOrderItemService, OrdersItemsService>();
-
-            services.AddScoped<IPizzaSizeRepository, PizzaSizeRepository>();
-            services.AddScoped<IPizzaIngredientRepository, PizzaIngredientRepository>();
-            services.AddScoped<IPizzaConstructionService, PizzaConstructionService>();
-
-            services.AddScoped<IDeliveryRepository, DeliveryRepository>();
-            services.AddScoped<IDeliveriesService, DeliveryService>();
-
-            services.AddScoped<IPaymentRepository, PaymentRepository>();
-            services.AddScoped<IPaymentsService, PaymentService>();
-
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IUsersService, UsersService>();
-
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddScoped<IIdentityService, IdentityService>();
-            // Infrastructure
-            services.AddDbContext<PizzaDeliveryContext>(options => 
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            // WebUI
+            services.AddDbContext(Configuration.GetConnectionString("DefaultConnection"));
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(
@@ -156,7 +119,6 @@ namespace iTechArtPizzaDelivery.WebUI
 
             app.UseRouting();
 
-            //app.ConfigureCustomExceptionMiddleware();
             app.UseMiddleware<ExceptionHandlerMiddleware>();
 
             app.UseAuthentication();
