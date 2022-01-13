@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace iTechArtPizzaDelivery.Core.Entities
 {
-    public class Payment
+    public class Payment : IEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }

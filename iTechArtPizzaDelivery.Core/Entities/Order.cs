@@ -15,7 +15,7 @@ namespace iTechArtPizzaDelivery.Core.Entities
         Delivered           // 3 D
     }
 
-    public class Order
+    public class Order : IEntity
     {
         public int Id { get; set; }
         public int UserId { get; set; }

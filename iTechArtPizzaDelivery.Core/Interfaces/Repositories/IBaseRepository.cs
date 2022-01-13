@@ -10,6 +10,7 @@ namespace iTechArtPizzaDelivery.Core.Interfaces.Repositories
     {
         Task<List<T>> GetAllAsync();
         Task<T> GetByIdAsync(int id);
+        Task<bool> IsExists(int id);
         Task<T> InsertAsync(T entity);
         Task DeleteByIdAsync(int id);
         void Update(T entity);

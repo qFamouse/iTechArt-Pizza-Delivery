@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace iTechArtPizzaDelivery.Core.Entities
 {
-    public class Ingredient : IEntity
+    public interface IEntity
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public double Price { get; set; }
+        int Id { get; set; }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using iTechArtPizzaDelivery.Core.Entities;
 using iTechArtPizzaDelivery.Core.Exceptions;
 using iTechArtPizzaDelivery.Core.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 namespace iTechArtPizzaDelivery.Infrastructure.Data.Repositories
 {
     public class BaseRepository<T> : IBaseRepository<T>
-        where T: class
+        where T: class, IEntity
     {
         protected PizzaDeliveryContext DbContext { get; }
         protected IMapper Mapper { get; }
@@ -33,6 +35,11 @@ namespace iTechArtPizzaDelivery.Infrastructure.Data.Repositories
             return await _dbSet.FindAsync(id);
         }
 
+        public async Task<bool> IsExists(int id)
+        {
+            return await _dbSet.AnyAsync(e => e.Id == id);
+        }
+
         public async Task<T> InsertAsync(T entity)
         {
             await _dbSet.AddAsync(entity);
@@ -43,7 +50,6 @@ namespace iTechArtPizzaDelivery.Infrastructure.Data.Repositories
         {
             var entity = await _dbSet.FindAsync(id);
             _dbSet.Remove(entity);
-            await DbContext.SaveChangesAsync();
         }
 
         public void Update(T entity)

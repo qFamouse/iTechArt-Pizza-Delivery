@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace iTechArtPizzaDelivery.Core.Entities
 {
-    public class PizzaIngredient
+    public class PizzaIngredient : IEntity
     {
         public int Id { get; set; }
         public float Weight { get; set; }

@@ -12,7 +12,7 @@ namespace iTechArtPizzaDelivery.Core.Entities
         Money
     }
 
-    public class Promocode
+    public class Promocode : IEntity
     {
         public int Id { get; set; }
         public string Code { get; set; }
