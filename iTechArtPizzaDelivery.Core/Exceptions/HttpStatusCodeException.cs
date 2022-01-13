@@ -14,12 +14,12 @@ namespace iTechArtPizzaDelivery.Core.Exceptions
     {
         public int StatusCode { get; set; }
 
-        public HttpStatusCodeException(int statusCode) : base("")
+        public HttpStatusCodeException(int statusCode) : base(GetDefaultMessage(statusCode))
         {
             this.StatusCode = statusCode;
         }
 
-        public HttpStatusCodeException(HttpStatusCode statusCode) : base("")
+        public HttpStatusCodeException(HttpStatusCode statusCode) : base(GetDefaultMessage((int)statusCode))
         {
             this.StatusCode = (int)statusCode;
         }
@@ -32,6 +32,15 @@ namespace iTechArtPizzaDelivery.Core.Exceptions
         public HttpStatusCodeException(HttpStatusCode statusCode, string message) : base(message)
         {
             this.StatusCode = (int)statusCode;
+        }
+
+        private static string GetDefaultMessage(int statusCode)
+        {
+            switch (statusCode)
+            {
+                case 404: return "Not Found";
+                default: return "";
+            }
         }
     }
 }
