@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using iTechArtPizzaDelivery.Core.Entities;
+using iTechArtPizzaDelivery.Core.Extensions;
 using iTechArtPizzaDelivery.Core.Interfaces.Repositories;
 using iTechArtPizzaDelivery.Core.Interfaces.Services;
+using iTechArtPizzaDelivery.Core.Interfaces.Services.Account;
+using iTechArtPizzaDelivery.Core.Interfaces.Services.Shopping;
 using iTechArtPizzaDelivery.Core.Queries;
 using iTechArtPizzaDelivery.Core.Requests.Order;
-using iTechArtPizzaDelivery.Core.Extensions;
 
-namespace iTechArtPizzaDelivery.Core.Services
+namespace iTechArtPizzaDelivery.Core.Services.Shopping
 {
     public class OrderService : IOrderService
     {

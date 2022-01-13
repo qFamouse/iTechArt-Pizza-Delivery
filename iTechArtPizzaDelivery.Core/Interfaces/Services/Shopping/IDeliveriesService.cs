@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using iTechArtPizzaDelivery.Core.Entities;
 using iTechArtPizzaDelivery.Core.Requests.Delivery;
 
-namespace iTechArtPizzaDelivery.Core.Interfaces.Services
+namespace iTechArtPizzaDelivery.Core.Interfaces.Services.Shopping
 {
     public interface IDeliveriesService
     {

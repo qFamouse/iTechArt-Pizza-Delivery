@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using iTechArtPizzaDelivery.Core.Entities;
 using iTechArtPizzaDelivery.Core.Interfaces.Repositories;
 using iTechArtPizzaDelivery.Core.Interfaces.Services;
+using iTechArtPizzaDelivery.Core.Interfaces.Services.Construction;
 using iTechArtPizzaDelivery.Core.Requests.PizzaIngredient;
 using iTechArtPizzaDelivery.Core.Requests.PizzaSize;
 
-namespace iTechArtPizzaDelivery.Core.Services
+namespace iTechArtPizzaDelivery.Core.Services.Construction
 {
     public class PizzaConstructionService : IPizzaConstructionService
     {

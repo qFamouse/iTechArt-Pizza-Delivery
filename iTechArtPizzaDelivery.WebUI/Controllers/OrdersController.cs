@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using iTechArtPizzaDelivery.Core.Entities;
 using iTechArtPizzaDelivery.Core.Interfaces.Services;
+using iTechArtPizzaDelivery.Core.Interfaces.Services.Shopping;
 using iTechArtPizzaDelivery.Core.Requests.Order;
 using iTechArtPizzaDelivery.Core.Services;
 using iTechArtPizzaDelivery.WebUI.Views;

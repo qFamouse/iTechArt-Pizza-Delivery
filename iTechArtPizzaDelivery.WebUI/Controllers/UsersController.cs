@@ -8,6 +8,7 @@ using AutoMapper;
 using iTechArtPizzaDelivery.Core;
 using iTechArtPizzaDelivery.Core.Entities;
 using iTechArtPizzaDelivery.Core.Interfaces.Services;
+using iTechArtPizzaDelivery.Core.Interfaces.Services.Account;
 using iTechArtPizzaDelivery.Core.Requests.User;
 using iTechArtPizzaDelivery.Core.Services;
 using iTechArtPizzaDelivery.WebUI.Views;

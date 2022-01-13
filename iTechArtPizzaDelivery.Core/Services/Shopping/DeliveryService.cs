@@ -1,19 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using iTechArtPizzaDelivery.Core.Entities;
-using iTechArtPizzaDelivery.Core.Exceptions;
 using iTechArtPizzaDelivery.Core.Interfaces.Repositories;
 using iTechArtPizzaDelivery.Core.Interfaces.Services;
+using iTechArtPizzaDelivery.Core.Interfaces.Services.Shopping;
 using iTechArtPizzaDelivery.Core.Interfaces.Services.Validation;
 using iTechArtPizzaDelivery.Core.Requests.Delivery;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
-namespace iTechArtPizzaDelivery.Core.Services
+namespace iTechArtPizzaDelivery.Core.Services.Shopping
 {
     public class DeliveryService : IDeliveriesService
     {

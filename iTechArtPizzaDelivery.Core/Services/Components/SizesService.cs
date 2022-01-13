@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using iTechArtPizzaDelivery.Core.Entities;
 using iTechArtPizzaDelivery.Core.Interfaces.Repositories;
 using iTechArtPizzaDelivery.Core.Interfaces.Services;
+using iTechArtPizzaDelivery.Core.Interfaces.Services.Components;
 using iTechArtPizzaDelivery.Core.Requests.Size;
 
-namespace iTechArtPizzaDelivery.Core.Services
+namespace iTechArtPizzaDelivery.Core.Services.Components
 {
     public class SizesService : ISizesService
     {

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using iTechArtPizzaDelivery.Core.Entities;
 using iTechArtPizzaDelivery.Core.Interfaces.Services;
+using iTechArtPizzaDelivery.Core.Interfaces.Services.Components;
 using iTechArtPizzaDelivery.Core.Requests.Pizza;
 using iTechArtPizzaDelivery.Core.Services;
 using Microsoft.AspNetCore.Authorization;

@@ -5,7 +5,6 @@ using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 using AutoMapper;
 using iTechArtPizzaDelivery.Core.Configurations;
@@ -13,14 +12,14 @@ using iTechArtPizzaDelivery.Core.Entities;
 using iTechArtPizzaDelivery.Core.Exceptions;
 using iTechArtPizzaDelivery.Core.Interfaces.Repositories;
 using iTechArtPizzaDelivery.Core.Interfaces.Services;
+using iTechArtPizzaDelivery.Core.Interfaces.Services.Account;
 using iTechArtPizzaDelivery.Core.Requests.User;
 using iTechArtPizzaDelivery.Core.Views;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-namespace iTechArtPizzaDelivery.Core.Services
+namespace iTechArtPizzaDelivery.Core.Services.Account
 {
     public class UsersService : IUsersService
     {
