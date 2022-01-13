@@ -52,6 +52,7 @@ namespace iTechArtPizzaDelivery.WebUI.Middleware
         {
             context.Response.ContentType = "application/json";
             int statusCode = (int) HttpStatusCode.InternalServerError;
+            context.Response.StatusCode = statusCode;
 
             return context.Response.WriteAsJsonAsync(new
             {
