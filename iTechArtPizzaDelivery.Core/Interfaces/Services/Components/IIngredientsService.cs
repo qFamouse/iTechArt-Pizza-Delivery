@@ -10,5 +10,7 @@ namespace iTechArtPizzaDelivery.Core.Interfaces.Services.Components
         Task<List<Ingredient>> GetAllAsync();
         Task<Ingredient> GetByIdAsync(int id);
         Task<Ingredient> AddAsync(IngredientAddRequest request);
+        Task DeleteByIdAsync(int id);
+        Task<Ingredient> UpdateByIdAsync(int id, IngredientUpdateRequest request);
     }
 }

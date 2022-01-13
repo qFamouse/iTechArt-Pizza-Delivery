@@ -45,5 +45,20 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         {
             return Ok(await _ingredientsService.AddAsync(iAddRequest));
         }
+
+        [Authorize(Roles = "Administrator")]
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteAsync(int id)
+        {
+            await _ingredientsService.DeleteByIdAsync(id);
+            return Ok();
+        }
+
+        [Authorize(Roles = "Administrator")]
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateAsync([FromBody] IngredientUpdateRequest request, int id)
+        {
+            return Ok(await _ingredientsService.UpdateByIdAsync(id, request));
+        }
     }
 }

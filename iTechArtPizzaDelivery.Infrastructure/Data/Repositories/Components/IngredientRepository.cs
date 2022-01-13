@@ -12,22 +12,5 @@ namespace iTechArtPizzaDelivery.Infrastructure.Data.Repositories.Components
     {
         public IngredientRepository(PizzaDeliveryContext context, IMapper mapper) : base(context, mapper) { }
 
-        public async Task<Ingredient> AddAsync(IngredientAddRequest iAddRequest)
-        {
-            var ingredient = Mapper.Map<Ingredient>(iAddRequest);
-            await DbContext.Ingredients.AddAsync(ingredient);
-            await DbContext.SaveChangesAsync();
-            return ingredient;
-        }
-
-        public async Task<List<Ingredient>> GetAllAsync()
-        {
-            return await DbContext.Ingredients.ToListAsync();
-        }
-
-        public async Task<Ingredient> GetByIdAsync(int id)
-        {
-            return await DbContext.Ingredients.FirstOrDefaultAsync(i => i.Id == id);
-        }
     }
 }
