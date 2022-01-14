@@ -9,6 +9,7 @@ using iTechArtPizzaDelivery.Core.Entities;
 using iTechArtPizzaDelivery.Core.Interfaces.Services;
 using iTechArtPizzaDelivery.Core.Interfaces.Services.Shopping;
 using iTechArtPizzaDelivery.Core.Requests.Order;
+using iTechArtPizzaDelivery.Core.Requests.Promocode;
 using iTechArtPizzaDelivery.Core.Services;
 using iTechArtPizzaDelivery.WebUI.Views;
 using Microsoft.AspNetCore.Authorization;
@@ -49,18 +50,34 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         }
 
         [Authorize(Roles = "Administrator, Moderator, User")]
-        [HttpPut("AttachPromocode")]
-        public async Task<ActionResult> AttachPromocode(OrderAttachPromocodeRequest request)
+        [HttpPatch("attach_promocode")]
+        public async Task<ActionResult> AttachPromocodeAsync(string promocode)
         {
-            await _orderService.AttachPromocode(request);
+            await _orderService.AttachPromocodeAsync(promocode);
             return Ok();
         }
 
         [Authorize(Roles = "Administrator, Moderator, User")]
-        [HttpPut("Process")]
+        [HttpPatch("attach_payment")]
+        public async Task<ActionResult> AttachPaymentAsync(int paymentId)
+        {
+            await _orderService.AttachPaymentAsync(paymentId);
+            return Ok();
+        }
+
+        [Authorize(Roles = "Administrator, Moderator, User")]
+        [HttpPatch("attach_delivery")]
+        public async Task<ActionResult> AttachDeliveryAsync(int deliveryId)
+        {
+            await _orderService.AttachDeliveryAsync(deliveryId);
+            return Ok();
+        }
+
+        [Authorize(Roles = "Administrator, Moderator, User")]
+        [HttpPut("processing")]
         public async Task<ActionResult> Process()
         {
-            await _orderService.ProcessOrder();
+            await _orderService.ProcessOrderAsync();
             return Ok();
         }
     }

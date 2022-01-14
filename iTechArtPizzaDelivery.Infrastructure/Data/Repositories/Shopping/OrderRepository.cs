@@ -17,11 +17,13 @@ namespace iTechArtPizzaDelivery.Infrastructure.Data.Repositories.Shopping
         {
             return await DbContext.Orders
                 .Include(o => o.OrderItems)
+                .Include(o => o.Payment)
+                .Include(o => o.Delivery)
                 .Include(o => o.Promocode)
-                .SingleAsync(o => o.Id == id);
+                .SingleOrDefaultAsync(o => o.Id == id);
         }
 
-        public async Task<List<Order>> GetDetailedOrdersAsync(OrderQuery query)
+        public async Task<List<Order>> GetAllDetailedByQueryAsync(OrderQuery query)
         {
             return await GetByQuery(query)
                 .Include(o => o.OrderItems)
@@ -29,13 +31,21 @@ namespace iTechArtPizzaDelivery.Infrastructure.Data.Repositories.Shopping
                 .ToListAsync();
         }
 
-        public async Task<Order> GetDetailedOrderAsync(OrderQuery query)
+        public async Task<Order> GetDetailedByQueryAsync(OrderQuery query)
         {
             return await GetByQuery(query)
                 .Include(o => o.OrderItems)
                 .Include(o => o.Promocode)
                 .FirstOrDefaultAsync();
         }
+
+        public async Task<Order> GetByQueryAsync(OrderQuery query)
+        {
+            return await GetByQuery(query)
+                .FirstOrDefaultAsync();
+        }
+
+        #region Private Methods
 
         private IQueryable<Order> GetByQuery(OrderQuery query)
         {
@@ -58,5 +68,7 @@ namespace iTechArtPizzaDelivery.Infrastructure.Data.Repositories.Shopping
 
             return ordersQuery;
         }
+
+        #endregion
     }
 }

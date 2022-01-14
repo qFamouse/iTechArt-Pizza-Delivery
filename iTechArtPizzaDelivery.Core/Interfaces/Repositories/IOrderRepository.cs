@@ -12,7 +12,8 @@ namespace iTechArtPizzaDelivery.Core.Interfaces.Repositories
     public interface IOrderRepository : IBaseRepository<Order>
     {
         Task<Order> GetDetailByIdAsync(int id);
-        Task<List<Order>> GetDetailedOrdersAsync(OrderQuery query);
-        Task<Order> GetDetailedOrderAsync(OrderQuery query);
+        Task<List<Order>> GetAllDetailedByQueryAsync(OrderQuery query);
+        Task<Order> GetDetailedByQueryAsync(OrderQuery query);
+        Task<Order> GetByQueryAsync(OrderQuery query);
     }
 }

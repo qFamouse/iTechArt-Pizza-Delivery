@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using iTechArtPizzaDelivery.Core.Entities;
+using iTechArtPizzaDelivery.Core.Exceptions;
 using iTechArtPizzaDelivery.Core.Extensions;
 using iTechArtPizzaDelivery.Core.Interfaces.Repositories;
 using iTechArtPizzaDelivery.Core.Interfaces.Services;
 using iTechArtPizzaDelivery.Core.Interfaces.Services.Account;
 using iTechArtPizzaDelivery.Core.Interfaces.Services.Shopping;
+using iTechArtPizzaDelivery.Core.Interfaces.Services.Validation;
 using iTechArtPizzaDelivery.Core.Queries;
 using iTechArtPizzaDelivery.Core.Requests.Order;
 
@@ -15,21 +18,29 @@ namespace iTechArtPizzaDelivery.Core.Services.Shopping
     public class OrderService : IOrderService
     {
         private readonly IOrderRepository _orderRepository;
+        private readonly IPaymentRepository _paymentRepository;
+        private readonly IDeliveryRepository _deliveryRepository;
         private readonly IPromocodeRepository _promocodeRepository;
+        private readonly IPromocodeValidationService _promocodeValidationService;
+        private readonly IOrderValidationService _orderValidationService;
         private readonly IIdentityService _identityService;
+        private readonly IMapper _mapper;
 
-        public OrderService(IOrderRepository orderRepository,
-            IPromocodeRepository promocodeRepository, 
-            IIdentityService identityService)
+        public OrderService(IOrderRepository orderRepository, IPaymentRepository paymentRepository,
+            IDeliveryRepository deliveryRepository, IPromocodeRepository promocodeRepository,
+            IPromocodeValidationService promocodeValidationService, IOrderValidationService orderValidationService,
+            IIdentityService identityService, IMapper mapper)
         {
-            _orderRepository = orderRepository ??
-                               throw new ArgumentNullException(nameof(orderRepository), "Interface is null");
-
-            _promocodeRepository = promocodeRepository ??
-                                   throw new ArgumentNullException(nameof(promocodeRepository), "Interface is null");
-
-            _identityService = identityService ??
-                               throw new ArgumentNullException(nameof(identityService), "Interface is null");
+            _orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
+            _paymentRepository = paymentRepository ?? throw new ArgumentNullException(nameof(paymentRepository));
+            _deliveryRepository = deliveryRepository ?? throw new ArgumentNullException(nameof(deliveryRepository));
+            _promocodeRepository = promocodeRepository ?? throw new ArgumentNullException(nameof(promocodeRepository));
+            _promocodeValidationService = promocodeValidationService ??
+                                          throw new ArgumentNullException(nameof(promocodeValidationService));
+            _orderValidationService =
+                orderValidationService ?? throw new ArgumentNullException(nameof(orderValidationService));
+            _identityService = identityService ?? throw new ArgumentNullException(nameof(identityService));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         public async Task<List<Order>> GetAllAsync()
@@ -39,58 +50,89 @@ namespace iTechArtPizzaDelivery.Core.Services.Shopping
 
         public async Task<Order> GetDetailByIdAsync(int id)
         {
-            return await _orderRepository.GetDetailByIdAsync(id);
+            return await _orderRepository.GetDetailByIdAsync(id) ??
+                   throw new HttpStatusCodeException(404, "Order not found");
         }
 
-        public async Task AttachPromocode(OrderAttachPromocodeRequest request)
+        public async Task AttachPromocodeAsync(string code)
         {
-            // Get Initial Data //
-            Order order = await _orderRepository.GetDetailByIdAsync(request.OrderId);
-            Promocode promocode = await _promocodeRepository.GetByCodeAsync(request.Code);
+            // Search order 'in progress' in current user data
+            var order = await _orderRepository.GetDetailedByQueryAsync(new OrderQuery()
+            {
+                Status = (short) Status.InProgress,
+                UserId = _identityService.Id
+            }) ?? throw new HttpStatusCodeException(404, "Order not found");
 
-            // Check Order to existing promocode //
             if (order.Promocode is not null)
             {
-                throw new ArgumentException("The order already has an active promo code", nameof(order.Promocode));
+                throw new HttpStatusCodeException(400, "The order already has an active promo code");
             }
 
-            // Attach Promocode to Order //
+            // Search promocode
+            var promocode = await _promocodeRepository.GetByCodeAsync(code) ??
+                            throw new HttpStatusCodeException(404, "Promo code not found");
+
+            _promocodeValidationService.PromocodeIsValid(promocode);
+
+            // Attaching promocode
             order.Promocode = promocode;
             order.PromocodeId = promocode.Id;
-
-            // Recalculate Order //
             order.Recalculate();
-
-            // Save changes //
-            await _orderRepository.SaveChangesAsync();
+            await _orderRepository.Save();
         }
 
-        public async Task ProcessOrder()
+        public async Task AttachPaymentAsync(int paymentId)
         {
-            // Get Initial Data //
-            OrderQuery query = new OrderQuery()
+            // Search order 'in progress' in current user data
+            var order = await _orderRepository.GetDetailedByQueryAsync(new OrderQuery()
             {
                 Status = (short)Status.InProgress,
-                UserId = _identityService.Id,
-            };
+                UserId = _identityService.Id
+            }) ?? throw new HttpStatusCodeException(404, "Order not found");
 
-            var order = await _orderRepository.GetDetailedOrderAsync(query);
+            // Search payment
+            var payment = await _paymentRepository.GetByIdAsync(paymentId) ??
+                throw new HttpStatusCodeException(404, "Payment not found");
 
-            // Check order //
-            if (order.PaymentId is null || order.DeliveryId is null)
+            // Attaching payment
+            order.Payment = payment;
+            order.PaymentId = payment.Id;
+            await _orderRepository.Save();
+        }
+
+        public async Task AttachDeliveryAsync(int deliveryId)
+        {
+            // Search order 'in progress' in current user data
+            var order = await _orderRepository.GetDetailedByQueryAsync(new OrderQuery()
             {
-                throw new ArgumentException("Delivery and payment method are not specified");
-            }
+                Status = (short)Status.InProgress,
+                UserId = _identityService.Id
+            }) ?? throw new HttpStatusCodeException(404, "Order not found");
 
-            // Recalculate order - just in case //
+            // Search payment
+            var delivery = await _deliveryRepository.GetByIdAsync(deliveryId) ??
+                          throw new HttpStatusCodeException(404, "Delivery not found");
+
+            // Attaching payment
+            order.Delivery = delivery;
+            order.DeliveryId = delivery.Id;
+            await _orderRepository.Save();
+        }
+
+        public async Task ProcessOrderAsync()
+        {
+            // Search order 'in progress' in current user data
+            var order = await _orderRepository.GetDetailedByQueryAsync(new OrderQuery()
+            {
+                Status = (short) Status.InProgress,
+                UserId = _identityService.Id
+            }) ?? throw new HttpStatusCodeException(404, "Order not found");
+
+            _orderValidationService.OrderReadyToDelivery(order);
+
             order.Recalculate();
-
-            // Set Status //
-            order.Status = (short)Status.WaitingDelivery;
-
-            // Save Changes //
-            await _orderRepository.SaveChangesAsync();
-
+            order.Status = (short) Status.WaitingDelivery;
+            await _orderRepository.Save();
         }
     }
 }
