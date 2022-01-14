@@ -9,7 +9,9 @@ namespace iTechArtPizzaDelivery.Core.Entities
     public class PizzaSize : IEntity
     {
         public int Id { get; set; }
+        public int PizzaId { get; set; }
         public Pizza Pizza { get; set; }
+        public int SizeId { get; set; }
         public Size Size { get; set; }
         public double Price { get; set; }
         public float Weight { get; set; }
