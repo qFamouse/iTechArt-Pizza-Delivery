@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace iTechArtPizzaDelivery.Core.Requests.PizzaIngredient
 {
-    public class PizzaIngredientBindRequest
+    public class PizzaIngredientRequest
     {
         public int PizzaSizeId { get; set; }
         public int IngredientId { get; set; }

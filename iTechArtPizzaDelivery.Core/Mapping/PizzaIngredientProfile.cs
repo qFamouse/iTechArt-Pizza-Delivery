@@ -13,7 +13,7 @@ namespace iTechArtPizzaDelivery.Core.Mapping
     {
         public PizzaIngredientProfile()
         {
-            CreateMap<PizzaIngredientBindRequest, PizzaIngredient>();
+            CreateMap<PizzaIngredientRequest, PizzaIngredient>();
         }
     }
 }

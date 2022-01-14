@@ -9,9 +9,9 @@ namespace iTechArtPizzaDelivery.Core.Interfaces.Services.Construction
     public interface IPizzaConstructionService
     {
         Task<List<PizzaSize>> GetAllAsync();
-        Task<PizzaSize> GetByIdAsync(int id);
+        Task<PizzaSize> GetDetailByIdAsync(int id);
         Task DeleteByIdAsync(int id);
-        Task<PizzaSize> AddIngredientAsync(PizzaIngredientBindRequest request);
-        Task<PizzaSize> AddAsync(PizzaSizeAddRequest request);
+        Task<PizzaSize> InsertIngredientAsync(PizzaIngredientRequest request);
+        Task<PizzaSize> InsertAsync(PizzaSizeAddRequest request);
     }
 }

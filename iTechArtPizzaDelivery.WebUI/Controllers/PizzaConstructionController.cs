@@ -44,16 +44,18 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult> GetByIdAsync(int id)
         {
-            var pizzaSize = await _pizzaConstructionService.GetByIdAsync(id);
-            var pizzaSizeView = _mapper.Map<PizzaSizesView>(pizzaSize);
+            var pizzaSize = await _pizzaConstructionService.GetDetailByIdAsync(id);
+            var pizzaSizeView = _mapper.Map<PizzaSizesDetailView>(pizzaSize);
             return Ok(pizzaSizeView);
         }
 
         [Authorize(Roles = "Administrator, Moderator")]
-        [HttpPost("Add")]
-        public async Task<ActionResult> AddAsync([FromBody] PizzaSizeAddRequest request)
+        [HttpPost]
+        public async Task<ActionResult> InsertAsync([FromBody] PizzaSizeAddRequest request)
         {
-            return Ok(await _pizzaConstructionService.AddAsync(request));
+            var pizzaSize = await _pizzaConstructionService.InsertAsync(request);
+            var pizzaSizeView = _mapper.Map<PizzaSizesDetailView>(pizzaSize);
+            return Ok(pizzaSizeView);
         }
 
         [Authorize(Roles = "Administrator, Moderator")]
@@ -65,11 +67,11 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         }
 
         [Authorize(Roles = "Administrator, Moderator")]
-        [HttpPost("AddIngredient")]
-        public async Task<ActionResult> BindIngredient([FromBody] PizzaIngredientBindRequest request)
+        [HttpPost("ingredient")]
+        public async Task<ActionResult> InsertIngredientAsync([FromBody] PizzaIngredientRequest request)
         {
-            var updatedPizzaSize = await _pizzaConstructionService.AddIngredientAsync(request);
-            var updatedPizzaSizeView = _mapper.Map<PizzaSizesView>(updatedPizzaSize);
+            var updatedPizzaSize = await _pizzaConstructionService.InsertIngredientAsync(request);
+            var updatedPizzaSizeView = _mapper.Map<PizzaSizesDetailView>(updatedPizzaSize);
             return Ok(updatedPizzaSizeView);
         }
     }

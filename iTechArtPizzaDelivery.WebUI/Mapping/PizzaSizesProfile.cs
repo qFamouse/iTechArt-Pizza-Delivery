@@ -8,6 +8,7 @@ namespace iTechArtPizzaDelivery.WebUI.Mapping
     {
         public PizzaSizesProfile()
         {
+            CreateMap<PizzaSize, PizzaSizesDetailView>();
             CreateMap<PizzaSize, PizzaSizesView>();
         }
     }
