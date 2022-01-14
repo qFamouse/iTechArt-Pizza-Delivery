@@ -51,6 +51,13 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
             return Ok(await _userService.AuthorizationAsync(request));
         }
 
+        [HttpDelete]
+        public async Task<ActionResult> DeleteAsync()
+        {
+            await _userService.DeleteAsync();
+            return Ok();
+        }
+
         [Authorize(Roles = "Administrator")]
         [HttpGet("Test")]
         public ActionResult Test()

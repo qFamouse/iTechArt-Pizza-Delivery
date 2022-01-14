@@ -21,8 +21,11 @@ namespace iTechArtPizzaDelivery.WebUI.Services
             _claimsIdentity = _httpContext.User.Identity as ClaimsIdentity;
         }
 
+
+
         #region Claims
 
+        public ClaimsPrincipal ClaimsPrincipal => _httpContext.User;
         public int Id => GetId();
         public string Name => _claimsIdentity.Name;
         public string Phone => GetClaim(ClaimTypes.MobilePhone)?.Value;

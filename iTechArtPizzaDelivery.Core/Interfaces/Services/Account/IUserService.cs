@@ -11,5 +11,6 @@ namespace iTechArtPizzaDelivery.Core.Interfaces.Services.Account
         Task<List<User>> GetAllAsync();
         Task<User> RegistrationAsync(UserRegistrationRequest request);
         Task<UserAuthorizationResult> AuthorizationAsync(UserAuthorizationRequest request);
+        Task DeleteAsync();
     }
 }

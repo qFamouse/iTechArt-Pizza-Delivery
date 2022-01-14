@@ -65,6 +65,8 @@ namespace iTechArtPizzaDelivery.Core.Services.Account
                 throw new HttpStatusCodeException(HttpStatusCode.BadRequest, result.Errors.First().Description);
             }
 
+            await _userManager.AddToRoleAsync(user, _identityConfiguration.UserRole);
+
             return user;
         }
 
@@ -89,7 +91,7 @@ namespace iTechArtPizzaDelivery.Core.Services.Account
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.Name),
-                new Claim(ClaimTypes.MobilePhone, user.Phone ?? ""), // fix null
+                new Claim(ClaimTypes.MobilePhone, user.Phone ?? ""),
                 new Claim(ClaimTypes.DateOfBirth, user.Birthday.ToString()),
                 new Claim(ClaimTypes.Email, user.UserName),
             };
@@ -98,7 +100,7 @@ namespace iTechArtPizzaDelivery.Core.Services.Account
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_identityConfiguration.SecurityKey));
 
             var token = new JwtSecurityToken(
-                expires: DateTime.Now.AddHours(_identityConfiguration.ExpiresHours), // Move to constant
+                expires: DateTime.Now.AddHours(_identityConfiguration.ExpiresHours),
                 claims: authClaims,
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
             );
@@ -106,6 +108,13 @@ namespace iTechArtPizzaDelivery.Core.Services.Account
             string encodedJwt = new JwtSecurityTokenHandler().WriteToken(token);
 
             return new UserAuthorizationResult(encodedJwt, token.ValidTo);
+        }
+
+        public async Task DeleteAsync()
+        {
+            var user = await _userManager.GetUserAsync(_identityService.ClaimsPrincipal);
+            await _userManager.DeleteAsync(user);
+            var a = _identityService.IsAuthenticated;
         }
     }
 }
