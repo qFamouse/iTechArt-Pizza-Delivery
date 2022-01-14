@@ -7,10 +7,9 @@ namespace iTechArtPizzaDelivery.Core.Interfaces.Services.Shopping
 {
     public interface IOrderItemService
     {
-        Task<List<Ingredient>> GetAllAsync();
         Task<OrderItem> AddAsync(OrderItemAddRequest request);
-        Task DeleteByIdAsync(int id);
-        Task<OrderItem> UpdateByIdAsync(int id, OrderItemEditRequest request);
-        Task<List<OrderItem>> GetItemsByOrderIdAsync(int id);
+        Task DeleteByIdAsync(int orderItemId);
+        Task<OrderItem> UpdateByIdAsync(int orderItemId, OrderItemUpdateRequest request);
+        Task<List<OrderItem>> GetByOrderIdAsync(int id);
     }
 }

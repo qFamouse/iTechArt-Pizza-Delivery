@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using iTechArtPizzaDelivery.Core.Entities;
+using iTechArtPizzaDelivery.Core.Exceptions;
 using iTechArtPizzaDelivery.Core.Extensions;
 using iTechArtPizzaDelivery.Core.Interfaces.Repositories;
 using iTechArtPizzaDelivery.Core.Interfaces.Services;
 using iTechArtPizzaDelivery.Core.Interfaces.Services.Account;
 using iTechArtPizzaDelivery.Core.Interfaces.Services.Shopping;
+using iTechArtPizzaDelivery.Core.Interfaces.Services.Validation;
 using iTechArtPizzaDelivery.Core.Queries;
 using iTechArtPizzaDelivery.Core.Requests.OrderItem;
 
@@ -18,103 +21,103 @@ namespace iTechArtPizzaDelivery.Core.Services.Shopping
         private readonly IOrderRepository _orderRepository;
         private readonly IPizzaSizeRepository _pizzaSizeRepository;
         private readonly IIdentityService _identityService;
+        private readonly IOrderValidationService _orderValidationService;
+        private readonly IOrderItemValidationService _orderItemValidationService;
 
-        public OrdersItemsService(IOrderItemRepository orderItemRepository, 
-            IOrderRepository orderRepository, 
-            IPizzaSizeRepository pizzaSizeRepository,
-            IIdentityService identityService)
+        public OrdersItemsService(IOrderItemRepository orderItemRepository, IOrderRepository orderRepository,
+            IPizzaSizeRepository pizzaSizeRepository, IIdentityService identityService,
+            IOrderValidationService orderValidationService, IOrderItemValidationService orderItemValidationService)
         {
-            _orderItemRepository = orderItemRepository ??
-                                   throw new ArgumentNullException(nameof(orderItemRepository), "Interface is null");
-
-            _orderRepository = orderRepository ??
-                               throw new ArgumentNullException(nameof(orderRepository), "Interface is null");
-
-            _pizzaSizeRepository = pizzaSizeRepository ??
-                                   throw new ArgumentNullException(nameof(pizzaSizeRepository), "Interface is null");
-
-            _identityService = identityService ??
-                               throw new ArgumentNullException(nameof(identityService), "Interface is null");
+            _orderItemRepository = orderItemRepository ?? throw new ArgumentNullException(nameof(orderItemRepository));
+            _orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
+            _pizzaSizeRepository = pizzaSizeRepository ?? throw new ArgumentNullException(nameof(pizzaSizeRepository));
+            _identityService = identityService ?? throw new ArgumentNullException(nameof(identityService));
+            _orderValidationService =
+                orderValidationService ?? throw new ArgumentNullException(nameof(orderValidationService));
+            _orderItemValidationService = orderItemValidationService ??
+                                          throw new ArgumentNullException(nameof(orderItemValidationService));
         }
 
-        public async Task<List<OrderItem>> GetItemsByOrderIdAsync(int id)
+        public async Task<List<OrderItem>> GetByOrderIdAsync(int id)
         {
             return await _orderItemRepository.GetAllByOrderIdAsync(id);
         }
 
-        public async Task DeleteItemByIdAsync(int id)
+        public async Task DeleteByIdAsync(int orderItemId)
         {
-            var orderItem = await _orderItemRepository.GetByIdAsync(id);
+            await _orderItemValidationService.OrderItemExistsAsync(orderItemId);
 
-            int orderId = orderItem.OrderId;
-
-            await _orderItemRepository.DeleteById(id);
-
-            OrderQuery query = new OrderQuery
+            // Search order
+            var order = await _orderRepository.GetDetailedByQueryAsync(new OrderQuery()
             {
-                OrderId = orderId
-            };
+                OrderId = orderItemId, // TODO: We need order ID!
+                UserId = _identityService.Id
+            }) ?? throw new HttpStatusCodeException(400, "Order access protection");
 
-            var order = await _orderRepository.GetDetailedOrderAsync(query);
+            // If order in progress then we can delete item from this order
+            _orderValidationService.OrderInProgress(order);
+            await _orderItemRepository.DeleteByIdAsync(orderItemId);
+            await _orderItemRepository.Save(); // TODO: Is maybe redundant
 
-            if (order.OrderItems.Count == 0)
-            {
-                await _orderRepository.DeleteByIdAsync(orderId);
-            }
-
+            order.Recalculate();
+            await _orderRepository.Save();
         }
 
-        public async Task<OrderItem> EditItemByIdAsync(OrderItemEditRequest request)
+        public async Task<OrderItem> UpdateByIdAsync(int orderItemId, OrderItemUpdateRequest request)
         {
-            var orderItem = await _orderItemRepository.GetByIdAsync(request.OrderItemId);
+            var orderItem = await _orderItemRepository.GetByIdAsync(orderItemId) ??
+                            throw new HttpStatusCodeException(400, "Item not found");
 
+            // Check order
+            var order = await _orderRepository.GetByQueryAsync(new OrderQuery()
+            {
+                OrderId = orderItem.OrderId,
+                UserId = _identityService.Id
+            }) ?? throw new HttpStatusCodeException(400, "Order access protection");
+
+            // Editing
             orderItem.Quantity = request.Quantity;
-
             orderItem.Recalculate();
-
-            await _orderItemRepository.SaveChangesAsync();
-
+            order.Recalculate();
+            await _orderRepository.Save();
             return orderItem;
         }
 
         public async Task<OrderItem> AddAsync(OrderItemAddRequest request)
         {
-            PizzaSize pizzaSize = await _pizzaSizeRepository.GetDetailByIdAsync(request.PizzaSizesId);
+            var pizzaSize = await _pizzaSizeRepository.GetDetailByIdAsync(request.PizzaSizesId) ??
+                            throw new HttpStatusCodeException(400, "Pizza not found");
 
-            var query = new OrderQuery() // Coming Soon (Change to Constructor)
+            var order = await _orderRepository.GetDetailedByQueryAsync(new OrderQuery()
             {
                 UserId = _identityService.Id,
                 Status = (short) Status.InProgress
-            };
-
-            Order order = await _orderRepository.GetDetailedOrderAsync(query);
+            });
 
             if (order is not null)
             {
-                OrderItem requestedItem = order?.OrderItems.Find(oi => oi.PizzaSizeId == pizzaSize.Id);
+                // Looking for the same product in this order
+                var existingOrderItem = order?.OrderItems.SingleOrDefault(oi => oi.PizzaSizeId == pizzaSize.Id);
 
-                if (requestedItem is not null)
+                if (existingOrderItem is not null)
                 {
-                    return await EditItemByIdAsync(new OrderItemEditRequest() // Coming Soon (Change to Constructor)
+                    return await UpdateByIdAsync(existingOrderItem.Id, new OrderItemUpdateRequest()
                     {
-                        OrderItemId = requestedItem.Id,
-                        Quantity = (short)(requestedItem.Quantity + request.Quantity)
+                        Quantity = (short) (existingOrderItem.Quantity + request.Quantity)
                     });
                 }
             }
             else
             {
-                order = new Order() // Coming Soon (Change to Constructor)
+                order = new Order()
                 {
                     UserId = _identityService.Id,
-                    Status = (short)Status.InProgress,
+                    Status = (short) Status.InProgress,
                     CreateAt = DateTime.Now
                 };
-
-                order = await _orderRepository.AddAsync(order);
             }
 
-            OrderItem orderItem = new OrderItem() // Coming Soon (Change to Constructor)
+            var orderItem = new OrderItem()
             {
                 OrderId = order.Id,
                 Order = order,
@@ -125,15 +128,51 @@ namespace iTechArtPizzaDelivery.Core.Services.Shopping
                 CreateAt = DateTime.Now,
                 //Weight install by RecalculateItem()
             };
-
             orderItem.Recalculate();
-            await _orderItemRepository.Add(orderItem);
+            order.Recalculate();
 
+            await _orderItemRepository.InsertAsync(orderItem);
+            await _orderItemRepository.Save();
+            return orderItem;
 
             //order.OrderItems.Add(orderItem);
-            order.Recalculate();
-            await _orderRepository.SaveChangesAsync();
-            return orderItem;
+            //await _orderRepository.SaveChangesAsync();
+
+            //var query = new OrderQuery() // Coming Soon (Change to Constructor)
+            //{
+            //    UserId = _identityService.Id,
+            //    Status = (short) Status.InProgress
+            //};
+
+            //Order order = await _orderRepository.GetDetailedByQueryAsync(query);
+
+            //if (order is not null)
+            //{
+            //    OrderItem requestedItem = order?.OrderItems.Find(oi => oi.PizzaSizeId == pizzaSize.Id);
+
+            //    if (requestedItem is not null)
+            //    {
+            //        return await UpdateAsync(new OrderItemUpdateRequest() // Coming Soon (Change to Constructor)
+            //        {
+            //            OrderItemId = requestedItem.Id,
+            //            Quantity = (short)(requestedItem.Quantity + request.Quantity)
+            //        });
+            //    }
+            //}
+            //else
+            //{
+            //    order = new Order() // Coming Soon (Change to Constructor)
+            //    {
+            //        UserId = _identityService.Id,
+            //        Status = (short)Status.InProgress,
+            //        CreateAt = DateTime.Now
+            //    };
+
+            //    order = await _orderRepository.DeleteAsync(order);
+            //}
+
         }
+
+
     }
 }

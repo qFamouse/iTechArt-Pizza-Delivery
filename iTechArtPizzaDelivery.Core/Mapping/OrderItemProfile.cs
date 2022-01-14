@@ -13,7 +13,8 @@ namespace iTechArtPizzaDelivery.Core.Mapping
     {
         public OrderItemProfile()
         {
-            CreateMap<OrderItemEditRequest, OrderItem>();
+            CreateMap<OrderItemUpdateRequest, OrderItem>();
+            CreateMap<OrderItemUpdateRequest, OrderItem>();
         }
     }
 }
