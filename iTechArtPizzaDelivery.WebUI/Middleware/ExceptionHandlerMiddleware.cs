@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
 using iTechArtPizzaDelivery.Core.Exceptions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 
 namespace iTechArtPizzaDelivery.WebUI.Middleware
 {
@@ -57,6 +60,7 @@ namespace iTechArtPizzaDelivery.WebUI.Middleware
             return context.Response.WriteAsJsonAsync(new
             {
                 StatusCode = statusCode,
+                ErrorType = exception.GetType().FullName,
                 Error = exception.Message
             });
         }
