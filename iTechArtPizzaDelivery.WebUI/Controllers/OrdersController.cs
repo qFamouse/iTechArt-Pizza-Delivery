@@ -47,6 +47,15 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         }
 
         [Authorize(Roles = "Administrator, Moderator, User")]
+        [HttpGet("my_order")]
+        public async Task<ActionResult> GetMyOrder()
+        {
+            var order = await _orderService.GetUserDetailAsync();
+            var orderView = _mapper.Map<OrderDetailView>(order);
+            return Ok(orderView);
+        }
+
+        [Authorize(Roles = "Administrator, Moderator, User")]
         [HttpPatch("attach_promocode")]
         public async Task<ActionResult> AttachPromocodeAsync(string promocode)
         {

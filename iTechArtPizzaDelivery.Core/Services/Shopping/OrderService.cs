@@ -53,6 +53,15 @@ namespace iTechArtPizzaDelivery.Core.Services.Shopping
                    throw new HttpStatusCodeException(404, "Order not found");
         }
 
+        public async Task<Order> GetUserDetailAsync()
+        {
+            return await _orderRepository.GetDetailedByQueryAsync(new OrderQuery()
+            {
+                Status = (short)Status.InProgress,
+                UserId = _identityService.Id
+            }) ?? throw new HttpStatusCodeException(404, "Order not found");
+        }
+
         public async Task AttachPromocodeAsync(string code)
         {
             // Search order 'in progress' in current user data
