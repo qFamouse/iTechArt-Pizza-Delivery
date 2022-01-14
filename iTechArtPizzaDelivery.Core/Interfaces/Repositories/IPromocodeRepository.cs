@@ -10,5 +10,6 @@ namespace iTechArtPizzaDelivery.Core.Interfaces.Repositories
     public interface IPromocodeRepository : IBaseRepository<Promocode>
     {
         Task<Promocode> GetByCodeAsync(string code);
+        Task<bool> IsExistingCode(string code);
     }
 }

@@ -14,6 +14,7 @@ namespace iTechArtPizzaDelivery.Core.Mapping
         public PromocodeProfile()
         {
             CreateMap<PromocodeAddRequest, Promocode>();
+            CreateMap<PromocodeUpdateRequest, Promocode>();
         }
     }
 }

@@ -8,9 +8,9 @@ namespace iTechArtPizzaDelivery.Core.Interfaces.Services.Shopping
     public interface IPromocodeService
     {
         Task<List<Promocode>> GetAllAsync();
-        Task<Promocode> GetByCodeAsync();
-        Task<Promocode> AddAsync(PromocodeAddRequest request);
-        Task DeleteByIdAsync(int id);
-        Task<Promocode> UpdateByIdAsync(int id, PromocodeUpdateRequest request);
+        Task<Promocode> GetByCodeAsync(string code);
+        Task<Promocode> InsertAsync(PromocodeAddRequest request);
+        Task DeleteByCodeAsync(string code);
+        Task<Promocode> UpdateByCodeAsync(string code, PromocodeUpdateRequest request);
     }
 }

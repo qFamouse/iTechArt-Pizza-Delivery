@@ -14,7 +14,13 @@ namespace iTechArtPizzaDelivery.Infrastructure.Data.Repositories.Shopping
         public async Task<Promocode> GetByCodeAsync(string code)
         {
             return await DbContext.Promocodes
-                .SingleAsync(p => p.Code == code);
+                .SingleOrDefaultAsync(p => p.Code == code);
+        }
+
+        public async Task<bool> IsExistingCode(string code)
+        {
+            return await DbContext.Promocodes
+                .AnyAsync(p => p.Code == code);
         }
     }
 }
