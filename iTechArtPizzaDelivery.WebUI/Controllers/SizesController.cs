@@ -22,8 +22,7 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
 
         public SizesController(ISizesService sizesService)
         {
-            _sizesService = sizesService ??
-                            throw new ArgumentNullException(nameof(sizesService), "Service is null");
+            _sizesService = sizesService ?? throw new ArgumentNullException(nameof(sizesService));
         }
 
         [Authorize(Roles = "Administrator, Moderator")]
@@ -41,18 +40,25 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         }
 
         [Authorize(Roles = "Administrator")]
-        [HttpPost("Add")]
-        public async Task<ActionResult> AddAsync([FromBody] SizeAddRequest sAddRequest)
+        [HttpPost]
+        public async Task<ActionResult> InsertAsync([FromBody] SizeAddRequest request)
         {
-            return Ok(await _sizesService.AddAsync(sAddRequest));
+            return Ok(await _sizesService.InsertAsync(request));
         }
 
         [Authorize(Roles = "Administrator")]
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> DeleteAsync(int id)
         {
-            await _sizesService.DeleteAsync(id);
+            await _sizesService.DeleteByIdAsync(id);
             return Ok();
+        }
+
+        [Authorize(Roles = "Administrator")]
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateAsync(int id, [FromBody] SizeUpdateRequest request)
+        {
+            return Ok(await _sizesService.UpdateByIdAsync(id, request));
         }
     }
 }

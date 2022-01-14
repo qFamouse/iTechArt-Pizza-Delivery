@@ -9,7 +9,7 @@ namespace iTechArtPizzaDelivery.Core.Interfaces.Services.Components
     {
         Task<List<Size>> GetAllAsync();
         Task<Size> GetByIdAsync(int id);
-        Task<Size> AddAsync(SizeAddRequest request);
+        Task<Size> InsertAsync(SizeAddRequest request);
         Task DeleteByIdAsync(int id);
         Task<Size> UpdateByIdAsync(int id, SizeUpdateRequest request);
 

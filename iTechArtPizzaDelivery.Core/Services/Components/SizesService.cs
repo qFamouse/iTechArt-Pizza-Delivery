@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using iTechArtPizzaDelivery.Core.Entities;
 using iTechArtPizzaDelivery.Core.Interfaces.Repositories;
-using iTechArtPizzaDelivery.Core.Interfaces.Services;
 using iTechArtPizzaDelivery.Core.Interfaces.Services.Components;
+using iTechArtPizzaDelivery.Core.Interfaces.Services.Validation;
 using iTechArtPizzaDelivery.Core.Requests.Size;
 
 namespace iTechArtPizzaDelivery.Core.Services.Components
@@ -12,17 +13,16 @@ namespace iTechArtPizzaDelivery.Core.Services.Components
     public class SizesService : ISizesService
     {
         private readonly ISizeRepository _sizeRepository;
+        private readonly ISizesValidationService _sizesValidationService;
+        private readonly IMapper _mapper;
 
-        public SizesService(ISizeRepository sizeRepository)
+        public SizesService(ISizeRepository sizeRepository, ISizesValidationService sizesValidationService,
+            IMapper mapper)
         {
-
-            _sizeRepository = sizeRepository ?? // If pizzasSizesRepository is null
-                              throw new ArgumentNullException(nameof(sizeRepository), "Interface is null");
-        }
-
-        public async Task<Size> AddAsync(SizeAddRequest request)
-        {
-            return await _sizeRepository.AddAsync(request);
+            _sizeRepository = sizeRepository ?? throw new ArgumentNullException(nameof(sizeRepository));
+            _sizesValidationService =
+                sizesValidationService ?? throw new ArgumentNullException(nameof(sizesValidationService));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         public async Task<List<Size>> GetAllAsync()
@@ -35,9 +35,31 @@ namespace iTechArtPizzaDelivery.Core.Services.Components
             return await _sizeRepository.GetByIdAsync(id);
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task<Size> InsertAsync(SizeAddRequest request)
         {
-            await _sizeRepository.DeleteAsync(id);
+            var size = _mapper.Map<Size>(request);
+            await _sizeRepository.InsertAsync(size);
+            await _sizeRepository.Save();
+            return size;
+        }
+
+        public async Task DeleteByIdAsync(int id)
+        {
+            await _sizesValidationService.SizeExistsAsync(id);
+            await _sizeRepository.DeleteByIdAsync(id);
+            await _sizeRepository.Save();
+        }
+
+        public async Task<Size> UpdateByIdAsync(int id, SizeUpdateRequest request)
+        {
+            await _sizesValidationService.SizeExistsAsync(id);
+            var size = _mapper.Map<Size>(request);
+            size.Id = id;
+
+            _sizeRepository.Update(size);
+            await _sizeRepository.Save();
+
+            return size;
         }
     }
 }

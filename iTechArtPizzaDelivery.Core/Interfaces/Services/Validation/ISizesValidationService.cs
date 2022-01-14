@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace iTechArtPizzaDelivery.Core.Interfaces.Services.Validation
 {
-    class ISizesValidationService
+    public interface ISizesValidationService
     {
+        Task SizeExistsAsync(int id);
     }
 }
