@@ -14,6 +14,7 @@ namespace iTechArtPizzaDelivery.Core.Mapping
         public PaymentProfile()
         {
             CreateMap<PaymentAddRequest, Payment>();
+            CreateMap<PaymentUpdateRequest, Payment>();
         }
     }
 }

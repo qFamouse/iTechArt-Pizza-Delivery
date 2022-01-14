@@ -35,11 +35,18 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
             return Ok(await _paymentService.GetAllAsync());
         }
 
-        [Authorize(Roles = "Administrator")]
-        [HttpPost("Add")]
-        public async Task<ActionResult> AddAsync(PaymentAddRequest request)
+        [Authorize(Roles = "Administrator, Moderator, User")]
+        [HttpGet("{id}")]
+        public async Task<ActionResult> GetByIdAsync(int id)
         {
-            return Ok(await _paymentService.AddAsync(request));
+            return Ok(await _paymentService.GetByIdAsync(id));
+        }
+
+        [Authorize(Roles = "Administrator")]
+        [HttpPost]
+        public async Task<ActionResult> InsertAsync([FromBody] PaymentAddRequest request)
+        {
+            return Ok(await _paymentService.InsertAsync(request));
         }
 
         [Authorize(Roles = "Administrator")]
@@ -47,6 +54,14 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         public async Task<ActionResult> DeleteAsync(int id)
         {
             await _paymentService.DeleteByIdAsync(id);
+            return Ok();
+        }
+
+        [Authorize(Roles = "Administrator")]
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateAsync(int id, [FromBody] PaymentUpdateRequest request)
+        {
+            await _paymentService.UpdateByIdAsync(id, request);
             return Ok();
         }
     }

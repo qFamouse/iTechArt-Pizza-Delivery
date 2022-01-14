@@ -45,7 +45,7 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
 
         [Authorize(Roles = "Administrator")]
         [HttpPost("Add")]
-        public async Task<ActionResult> AddAsync(DeliveryAddRequest request)
+        public async Task<ActionResult> AddAsync([FromBody] DeliveryAddRequest request)
         {
             return Ok(await _deliveryService.AddAsync(request));
         }
@@ -59,7 +59,7 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         }
 
         [Authorize(Roles = "Administrator")]
-        [HttpPatch("{id}")]
+        [HttpPut("{id}")]
         public async Task<ActionResult> UpdateAsync([FromBody] DeliveryUpdateRequest request, int id)
         {
             return Ok(await _deliveryService.UpdateByIdAsync(id, request));
