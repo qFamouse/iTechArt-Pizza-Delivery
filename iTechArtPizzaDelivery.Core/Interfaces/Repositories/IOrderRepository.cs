@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using iTechArtPizzaDelivery.Core.Entities;
 using iTechArtPizzaDelivery.Core.Queries;
-using iTechArtPizzaDelivery.Core.Requests.Order;
 
 namespace iTechArtPizzaDelivery.Core.Interfaces.Repositories
 {

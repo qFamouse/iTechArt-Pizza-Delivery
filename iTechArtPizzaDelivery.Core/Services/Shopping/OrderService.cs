@@ -11,7 +11,6 @@ using iTechArtPizzaDelivery.Core.Interfaces.Services.Account;
 using iTechArtPizzaDelivery.Core.Interfaces.Services.Shopping;
 using iTechArtPizzaDelivery.Core.Interfaces.Services.Validation;
 using iTechArtPizzaDelivery.Core.Queries;
-using iTechArtPizzaDelivery.Core.Requests.Order;
 
 namespace iTechArtPizzaDelivery.Core.Services.Shopping
 {
