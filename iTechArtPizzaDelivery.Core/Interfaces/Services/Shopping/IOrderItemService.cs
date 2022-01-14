@@ -10,6 +10,7 @@ namespace iTechArtPizzaDelivery.Core.Interfaces.Services.Shopping
         Task<OrderItem> AddAsync(OrderItemInsertRequest request);
         Task DeleteByIdAsync(int orderItemId);
         Task<OrderItem> UpdateByIdAsync(int orderItemId, OrderItemUpdateRequest request);
-        Task<List<OrderItem>> GetByOrderIdAsync(int id);
+        
+        Task<List<OrderItem>> GetAllAsync();
     }
 }

@@ -29,10 +29,10 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         }
 
         [Authorize(Roles = "Administrator, Moderator, User")]
-        [HttpGet("{id}")]
-        public async Task<ActionResult> GetByOrderIdAsync(int id)
+        [HttpGet]
+        public async Task<ActionResult> GetAllAsync()
         {
-            var orderItems = await _orderItemService.GetByOrderIdAsync(id);
+            var orderItems = await _orderItemService.GetAllAsync();
             var orderItemsView = _mapper.Map<List<OrderItem>, List<OrderItemDetailView>>(orderItems);
             return Ok(orderItemsView);
         }
