@@ -44,6 +44,13 @@ namespace iTechArtPizzaDelivery.WebUI.Extensions
         {
             services.AddScoped<IDeliveryValidationService, DeliveryValidationService>();
             services.AddScoped<IIngredientsValidationService, IngredientsValidationService>();
+            services.AddScoped<IOrderItemValidationService, OrderItemValidationService>();
+            services.AddScoped<IOrderValidationService, OrderValidationService>();
+            services.AddScoped<IPaymentValidationService, PaymentValidationService>();
+            services.AddScoped<IPizzaSizeValidationService, PizzaSizeValidationService>();
+            services.AddScoped<IPizzasValidationService, PizzasValidationService>();
+            services.AddScoped<IPromocodeValidationService, PromocodeValidationService>();
+            services.AddScoped<ISizesValidationService, SizesValidationService>();
 
             services.AddScoped<IPizzasService, PizzasService>();
             services.AddScoped<ISizesService, SizesService>();
