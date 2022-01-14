@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace iTechArtPizzaDelivery.Core.Interfaces.Services.Validation
 {
-    interface IPizzasValidationService
+    public interface IPizzasValidationService
     {
+        Task PizzaExistsAsync(int id);
     }
 }

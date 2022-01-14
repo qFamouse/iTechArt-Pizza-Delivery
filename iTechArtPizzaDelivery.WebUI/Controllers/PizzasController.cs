@@ -21,8 +21,7 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
 
         public PizzasController(IPizzasService pizzasService)
         {
-            _pizzasService = pizzasService ??
-                             throw new ArgumentNullException(nameof(pizzasService), "Service is null");
+            _pizzasService = pizzasService ?? throw new ArgumentNullException(nameof(pizzasService));
         }
 
         [Authorize(Roles = "Administrator, Moderator")]
@@ -40,18 +39,25 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         }
 
         [Authorize(Roles = "Administrator")]
-        [HttpPost("Add")]
-        public async Task<ActionResult> AddAsync([FromBody] PizzaAddRequest pAddRequest)
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteAsync(int id)
         {
-            return Ok(await _pizzasService.AddAsync(pAddRequest));
+            await _pizzasService.DeleteByIdAsync(id);
+            return Ok();
         }
 
         [Authorize(Roles = "Administrator")]
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(int id)
+        [HttpPost]
+        public async Task<ActionResult> InsertAsync([FromBody] PizzaInsertRequest request)
         {
-            await _pizzasService.DeleteAsync(id);
-            return Ok();
+            return Ok(await _pizzasService.AddAsync(request));
+        }
+
+        [Authorize(Roles = "Administrator")]
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateAsync(int id, [FromBody] PizzaUpdateRequest request)
+        {
+            return Ok(await _pizzasService.UpdateByIdAsync(id, request));
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace iTechArtPizzaDelivery.Core.Requests.Pizza
 {
-    public class PizzaAddRequest
+    public class PizzaInsertRequest
     {
         public string Image { get; set; }
         public string Name { get; set; }

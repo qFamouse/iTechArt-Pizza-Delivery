@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using iTechArtPizzaDelivery.Core.Entities;
+using iTechArtPizzaDelivery.Core.Exceptions;
 using iTechArtPizzaDelivery.Core.Interfaces.Repositories;
-using iTechArtPizzaDelivery.Core.Interfaces.Services;
 using iTechArtPizzaDelivery.Core.Interfaces.Services.Components;
+using iTechArtPizzaDelivery.Core.Interfaces.Services.Validation;
 using iTechArtPizzaDelivery.Core.Requests.Pizza;
 
 namespace iTechArtPizzaDelivery.Core.Services.Components
@@ -12,11 +14,15 @@ namespace iTechArtPizzaDelivery.Core.Services.Components
     public class PizzasService : IPizzasService
     {
         private readonly IPizzaRepository _pizzaRepository;
-
-        public PizzasService(IPizzaRepository pizzaRepository)
+        private readonly IPizzasValidationService _pizzasValidationService;
+        private readonly IMapper _mapper;
+        public PizzasService(IPizzaRepository pizzaRepository, IPizzasValidationService pizzasValidationService,
+            IMapper mapper)
         {
-            _pizzaRepository = pizzaRepository ??
-                               throw new ArgumentNullException(nameof(pizzaRepository), "Interface is null");
+            _pizzaRepository = pizzaRepository ?? throw new ArgumentNullException(nameof(pizzaRepository));
+            _pizzasValidationService = pizzasValidationService ??
+                                       throw new ArgumentNullException(nameof(pizzasValidationService));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         public async Task<List<Pizza>> GetAllAsync()
@@ -26,17 +32,35 @@ namespace iTechArtPizzaDelivery.Core.Services.Components
 
         public async Task<Pizza> GetByIdAsync(int id)
         {
-            return await _pizzaRepository.GetByIdAsync(id);
+            return await _pizzaRepository.GetByIdAsync(id) ??
+                   throw new HttpStatusCodeException(404, "Pizza not found");
         }
 
-        public async Task<Pizza> AddAsync(PizzaAddRequest request)
+        public async Task<Pizza> AddAsync(PizzaInsertRequest request)
         {
-            return await _pizzaRepository.AddAsync(request);
+            var pizza = _mapper.Map<Pizza>(request);
+            await _pizzaRepository.InsertAsync(pizza);
+            await _pizzaRepository.Save();
+            return pizza;
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteByIdAsync(int id)
         {
-            await _pizzaRepository.DeleteAsync(id);
+            await _pizzasValidationService.PizzaExistsAsync(id);
+            await _pizzaRepository.DeleteByIdAsync(id);
+            await _pizzaRepository.Save();
+        }
+
+        public async Task<Pizza> UpdateByIdAsync(int id, PizzaUpdateRequest request)
+        {
+            await _pizzasValidationService.PizzaExistsAsync(id);
+            var pizza = _mapper.Map<Pizza>(request);
+            pizza.Id = id;
+
+            _pizzaRepository.Update(pizza);
+            await _pizzaRepository.Save();
+
+            return pizza;
         }
     }
 }
