@@ -29,7 +29,7 @@ namespace iTechArtPizzaDelivery.Core.Services.Account
         private readonly IdentityConfiguration _identityConfiguration;
         private readonly IIdentityService _identityService;
 
-        public UsersService(IUserRepository userRepository, 
+        public UsersService(IUserRepository userRepository,
             UserManager<User> userManager, IMapper mapper, 
             IOptions<IdentityConfiguration> identityConfiguration,
             IIdentityService identityService)

@@ -41,14 +41,14 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
             return Ok(usersView);
         }
 
-        [HttpPost("/Register")]
-        public async Task<ActionResult> RegisterAsync(UserRegistrationRequest request)
+        [HttpPost("register")]
+        public async Task<ActionResult> RegisterAsync([FromBody] UserRegistrationRequest request)
         {
             return Ok(await _usersService.RegistrationAsync(request));
         }
 
-        [HttpPost("/Login")]
-        public async Task<ActionResult> LoginAsync(UserAuthorizationRequest request)
+        [HttpPost("login")]
+        public async Task<ActionResult> LoginAsync([FromBody] UserAuthorizationRequest request)
         {
             return Ok(await _usersService.AuthorizationAsync(request));
         }
