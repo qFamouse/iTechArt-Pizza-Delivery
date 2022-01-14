@@ -12,7 +12,7 @@ using iTechArtPizzaDelivery.Core.Requests.Delivery;
 
 namespace iTechArtPizzaDelivery.Core.Services.Shopping
 {
-    public class DeliveryService : IDeliveriesService
+    public class DeliveryService : IDeliveryService
     {
         private readonly IDeliveryRepository _deliveryRepository;
         private readonly IDeliveryValidationService _deliveryValidationService;
@@ -40,7 +40,7 @@ namespace iTechArtPizzaDelivery.Core.Services.Shopping
                    throw new HttpStatusCodeException(404, "Delivery not found");
         }
 
-        public async Task<Delivery> AddAsync(DeliveryAddRequest request)
+        public async Task<Delivery> AddAsync(DeliveryInsertRequest request)
         {
             var delivery = _mapper.Map<Delivery>(request);
             await _deliveryRepository.InsertAsync(delivery);

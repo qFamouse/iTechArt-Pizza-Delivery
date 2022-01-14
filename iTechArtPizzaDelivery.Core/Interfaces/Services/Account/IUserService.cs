@@ -6,7 +6,7 @@ using iTechArtPizzaDelivery.Core.Views;
 
 namespace iTechArtPizzaDelivery.Core.Interfaces.Services.Account
 {
-    public interface IUsersService
+    public interface IUserService
     {
         Task<List<User>> GetAllAsync();
         Task<User> RegistrationAsync(UserRegistrationRequest request);

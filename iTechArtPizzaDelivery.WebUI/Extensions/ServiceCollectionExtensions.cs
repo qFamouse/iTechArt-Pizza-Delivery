@@ -43,25 +43,25 @@ namespace iTechArtPizzaDelivery.WebUI.Extensions
         public static void AddCoreDependencies(this IServiceCollection services)
         {
             services.AddScoped<IDeliveryValidationService, DeliveryValidationService>();
-            services.AddScoped<IIngredientsValidationService, IngredientsValidationService>();
+            services.AddScoped<IIngredientsValidationService, IngredientValidationService>();
             services.AddScoped<IOrderItemValidationService, OrderItemValidationService>();
             services.AddScoped<IOrderValidationService, OrderValidationService>();
             services.AddScoped<IPaymentValidationService, PaymentValidationService>();
             services.AddScoped<IPizzaSizeValidationService, PizzaSizeValidationService>();
-            services.AddScoped<IPizzasValidationService, PizzasValidationService>();
+            services.AddScoped<IPizzasValidationService, PizzaValidationService>();
             services.AddScoped<IPromocodeValidationService, PromocodeValidationService>();
-            services.AddScoped<ISizesValidationService, SizesValidationService>();
+            services.AddScoped<ISizesValidationService, SizeValidationService>();
 
-            services.AddScoped<IPizzasService, PizzasService>();
-            services.AddScoped<ISizesService, SizesService>();
-            services.AddScoped<IIngredientsService, IngredientsService>();
+            services.AddScoped<IPizzaService, PizzaService>();
+            services.AddScoped<ISizeService, SizeService>();
+            services.AddScoped<IIngredientService, IngredientService>();
             services.AddScoped<IOrderService, OrderService>();
-            services.AddScoped<IPromocodeService, PromocodesService>();
-            services.AddScoped<IOrderItemService, OrdersItemsService>();
+            services.AddScoped<IPromocodeService, PromocodeService>();
+            services.AddScoped<IOrderItemService, OrderItemService>();
             services.AddScoped<IPizzaConstructionService, PizzaConstructionService>();
-            services.AddScoped<IDeliveriesService, DeliveryService>();
-            services.AddScoped<IPaymentsService, PaymentService>();
-            services.AddScoped<IUsersService, UsersService>();
+            services.AddScoped<IDeliveryService, DeliveryService>();
+            services.AddScoped<IPaymentService, PaymentService>();
+            services.AddScoped<IUserService, UserService>();
 
         }
 

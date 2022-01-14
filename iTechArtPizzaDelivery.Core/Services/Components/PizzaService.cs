@@ -11,12 +11,12 @@ using iTechArtPizzaDelivery.Core.Requests.Pizza;
 
 namespace iTechArtPizzaDelivery.Core.Services.Components
 {
-    public class PizzasService : IPizzasService
+    public class PizzaService : IPizzaService
     {
         private readonly IPizzaRepository _pizzaRepository;
         private readonly IPizzasValidationService _pizzasValidationService;
         private readonly IMapper _mapper;
-        public PizzasService(IPizzaRepository pizzaRepository, IPizzasValidationService pizzasValidationService,
+        public PizzaService(IPizzaRepository pizzaRepository, IPizzasValidationService pizzasValidationService,
             IMapper mapper)
         {
             _pizzaRepository = pizzaRepository ?? throw new ArgumentNullException(nameof(pizzaRepository));

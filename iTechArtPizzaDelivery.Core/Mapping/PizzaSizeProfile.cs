@@ -13,7 +13,7 @@ namespace iTechArtPizzaDelivery.Core.Mapping
     {
         public PizzaSizeProfile()
         {
-            CreateMap<PizzaSizeAddRequest, PizzaSize>();
+            CreateMap<PizzaSizeInsertRequest, PizzaSize>();
             CreateMap<PizzaSizeUpdateRequest, PizzaSize>();
         }
     }

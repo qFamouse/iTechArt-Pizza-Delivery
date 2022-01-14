@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace iTechArtPizzaDelivery.Core.Requests.Delivery
+namespace iTechArtPizzaDelivery.Core.Requests.Payment
 {
-    public class DeliveryAddRequest
+    public class PaymentInsertRequest
     {
         public string Name { get; set; }
         public string Description { get; set; }

@@ -5,7 +5,7 @@ using iTechArtPizzaDelivery.Core.Requests.Pizza;
 
 namespace iTechArtPizzaDelivery.Core.Interfaces.Services.Components
 {
-    public interface IPizzasService
+    public interface IPizzaService
     {
         Task<List<Pizza>> GetAllAsync();
         Task<Pizza> GetByIdAsync(int id);

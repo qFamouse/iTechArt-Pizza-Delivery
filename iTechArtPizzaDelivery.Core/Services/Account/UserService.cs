@@ -21,7 +21,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace iTechArtPizzaDelivery.Core.Services.Account
 {
-    public class UsersService : IUsersService
+    public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
         private readonly UserManager<User> _userManager;
@@ -29,7 +29,7 @@ namespace iTechArtPizzaDelivery.Core.Services.Account
         private readonly IdentityConfiguration _identityConfiguration;
         private readonly IIdentityService _identityService;
 
-        public UsersService(IUserRepository userRepository,
+        public UserService(IUserRepository userRepository,
             UserManager<User> userManager, IMapper mapper, 
             IOptions<IdentityConfiguration> identityConfiguration,
             IIdentityService identityService)

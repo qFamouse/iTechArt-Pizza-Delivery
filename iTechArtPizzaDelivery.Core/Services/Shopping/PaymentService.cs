@@ -13,7 +13,7 @@ using iTechArtPizzaDelivery.Core.Requests.Payment;
 
 namespace iTechArtPizzaDelivery.Core.Services.Shopping
 {
-    public class PaymentService : IPaymentsService
+    public class PaymentService : IPaymentService
     {
         private readonly IPaymentRepository _paymentRepository;
         private readonly IPaymentValidationService _paymentValidationService;
@@ -39,7 +39,7 @@ namespace iTechArtPizzaDelivery.Core.Services.Shopping
                    throw new HttpStatusCodeException(404, "Payment not found");
         }
 
-        public async Task<Payment> InsertAsync(PaymentAddRequest request)
+        public async Task<Payment> InsertAsync(PaymentInsertRequest request)
         {
             var payment = _mapper.Map<Payment>(request);
             await _paymentRepository.InsertAsync(payment);

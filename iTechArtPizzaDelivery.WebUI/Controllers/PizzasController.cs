@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using iTechArtPizzaDelivery.Core.Entities;
 using iTechArtPizzaDelivery.Core.Interfaces.Services;
 using iTechArtPizzaDelivery.Core.Interfaces.Services.Components;
@@ -17,32 +18,34 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
     [ApiController]
     public class PizzasController : ControllerBase
     {
-        private readonly IPizzasService _pizzasService;
+        private readonly IPizzaService _pizzaService;
+        private readonly IMapper _mapper;
 
-        public PizzasController(IPizzasService pizzasService)
+        public PizzasController(IPizzaService pizzaService, IMapper mapper)
         {
-            _pizzasService = pizzasService ?? throw new ArgumentNullException(nameof(pizzasService));
+            _pizzaService = pizzaService ?? throw new ArgumentNullException(nameof(pizzaService));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         [Authorize(Roles = "Administrator, Moderator")]
         [HttpGet]
         public async Task<ActionResult> GetAllAsync()
         {
-            return Ok(await _pizzasService.GetAllAsync());
+            return Ok(await _pizzaService.GetAllAsync());
         }
 
         [Authorize(Roles = "Administrator, Moderator")]
         [HttpGet("{id}")]
         public async Task<ActionResult> GetByIdAsync(int id)
         {
-            return Ok(await _pizzasService.GetByIdAsync(id));
+            return Ok(await _pizzaService.GetByIdAsync(id));
         }
 
         [Authorize(Roles = "Administrator")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteAsync(int id)
         {
-            await _pizzasService.DeleteByIdAsync(id);
+            await _pizzaService.DeleteByIdAsync(id);
             return Ok();
         }
 
@@ -50,14 +53,14 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         [HttpPost]
         public async Task<ActionResult> InsertAsync([FromBody] PizzaInsertRequest request)
         {
-            return Ok(await _pizzasService.AddAsync(request));
+            return Ok(await _pizzaService.AddAsync(request));
         }
 
         [Authorize(Roles = "Administrator")]
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateAsync(int id, [FromBody] PizzaUpdateRequest request)
         {
-            return Ok(await _pizzasService.UpdateByIdAsync(id, request));
+            return Ok(await _pizzaService.UpdateByIdAsync(id, request));
         }
     }
 }

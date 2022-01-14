@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using iTechArtPizzaDelivery.Core.Interfaces.Services;
 using iTechArtPizzaDelivery.Core.Interfaces.Services.Shopping;
 using iTechArtPizzaDelivery.Core.Requests.Promocode;
@@ -16,39 +17,41 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
     [ApiController]
     public class PromocodesController : ControllerBase
     {
-        private readonly IPromocodeService _promocodesService;
+        private readonly IPromocodeService _promocodeService;
+        private readonly IMapper _mapper;
 
-        public PromocodesController(IPromocodeService promocodesService)
+        public PromocodesController(IPromocodeService promocodeService, IMapper mapper)
         {
-            _promocodesService = promocodesService ?? throw new ArgumentNullException(nameof(promocodesService));
+            _promocodeService = promocodeService ?? throw new ArgumentNullException(nameof(promocodeService));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         [Authorize(Roles = "Administrator")]
         [HttpGet]
         public async Task<ActionResult> GetAllAsync()
         {
-            return Ok(await _promocodesService.GetAllAsync());
+            return Ok(await _promocodeService.GetAllAsync());
         }
 
         [Authorize(Roles = "Administrator, Moderator")]
         [HttpGet("{code}")]
         public async Task<ActionResult> GetByCodeAsync(string code)
         {
-            return Ok(await _promocodesService.GetByCodeAsync(code));
+            return Ok(await _promocodeService.GetByCodeAsync(code));
         }
 
         [Authorize(Roles = "Administrator")]
         [HttpPost]
-        public async Task<ActionResult> InsertAsync([FromBody] PromocodeAddRequest request)
+        public async Task<ActionResult> InsertAsync([FromBody] PromocodeInsertRequest request)
         {
-            return Ok(await _promocodesService.InsertAsync(request));
+            return Ok(await _promocodeService.InsertAsync(request));
         }
 
         [Authorize(Roles = "Administrator")]
         [HttpDelete("{code}")]
         public async Task<ActionResult> DeleteAsync(string code)
         {
-            await _promocodesService.DeleteByCodeAsync(code);
+            await _promocodeService.DeleteByCodeAsync(code);
             return Ok();
         }
 
@@ -56,7 +59,7 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         [HttpPut("{code}")]
         public async Task<ActionResult> UpdateAsync(string code, PromocodeUpdateRequest request)
         {
-            return Ok(await _promocodesService.UpdateByCodeAsync(code, request));
+            return Ok(await _promocodeService.UpdateByCodeAsync(code, request));
         }
     }
 }

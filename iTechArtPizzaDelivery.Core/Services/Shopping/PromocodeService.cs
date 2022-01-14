@@ -12,13 +12,13 @@ using iTechArtPizzaDelivery.Core.Requests.Promocode;
 
 namespace iTechArtPizzaDelivery.Core.Services.Shopping
 {
-    public class PromocodesService : IPromocodeService
+    public class PromocodeService : IPromocodeService
     {
         private readonly IPromocodeRepository _promocodeRepository;
         private readonly IPromocodeValidationService _promocodeValidationService;
         private readonly IMapper _mapper;
 
-        public PromocodesService(IPromocodeRepository promocodeRepository, IPromocodeValidationService promocodeValidationService, IMapper mapper)
+        public PromocodeService(IPromocodeRepository promocodeRepository, IPromocodeValidationService promocodeValidationService, IMapper mapper)
         {
             _promocodeRepository = promocodeRepository;
             _promocodeValidationService = promocodeValidationService;
@@ -36,7 +36,7 @@ namespace iTechArtPizzaDelivery.Core.Services.Shopping
                    throw new HttpStatusCodeException(404, "Promocode not found");
         }
 
-        public async Task<Promocode> InsertAsync(PromocodeAddRequest request)
+        public async Task<Promocode> InsertAsync(PromocodeInsertRequest request)
         {
             var promocode = _mapper.Map<Promocode>(request);
             await _promocodeRepository.InsertAsync(promocode);

@@ -6,12 +6,14 @@ using iTechArtPizzaDelivery.Core.Entities;
 
 namespace iTechArtPizzaDelivery.WebUI.Views
 {
-    public class PizzaSizesView
+    public class PizzaSizeDetailView
     {
         public int Id { get; set; }
-        public int PizzaId { get; set; }
-        public int SizeId { get; set; }
+        public Pizza Pizza { get; set; }
+        public Size Size { get; set; }
         public double Price { get; set; }
         public float Weight { get; set; }
+
+        public List<PizzaIngredientDetailView> PizzaIngredients { get; set; }
     }
 }

@@ -43,7 +43,7 @@ namespace iTechArtPizzaDelivery.Core.Services.Construction
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public async Task<PizzaSize> InsertAsync(PizzaSizeAddRequest request)
+        public async Task<PizzaSize> InsertAsync(PizzaSizeInsertRequest request)
         {
             await _pizzasValidationService.PizzaExistsAsync(request.PizzaId);
             await _sizesValidationService.SizeExistsAsync(request.SizeId);

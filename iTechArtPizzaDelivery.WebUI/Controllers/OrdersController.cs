@@ -24,10 +24,8 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
 
         public OrdersController(IOrderService orderService, IMapper mapper)
         {
-            _orderService = orderService ??
-                            throw new ArgumentNullException(nameof(orderService), "Service is null");
-
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper), "Mapper is null");
+            _orderService = orderService ?? throw new ArgumentNullException(nameof(orderService));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         [Authorize(Roles = "Administrator, Moderator")]

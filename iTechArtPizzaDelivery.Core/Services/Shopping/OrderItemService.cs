@@ -15,7 +15,7 @@ using iTechArtPizzaDelivery.Core.Requests.OrderItem;
 
 namespace iTechArtPizzaDelivery.Core.Services.Shopping
 {
-    public class OrdersItemsService : IOrderItemService
+    public class OrderItemService : IOrderItemService
     {
         private readonly IOrderItemRepository _orderItemRepository;
         private readonly IOrderRepository _orderRepository;
@@ -24,7 +24,7 @@ namespace iTechArtPizzaDelivery.Core.Services.Shopping
         private readonly IOrderValidationService _orderValidationService;
         private readonly IOrderItemValidationService _orderItemValidationService;
 
-        public OrdersItemsService(IOrderItemRepository orderItemRepository, IOrderRepository orderRepository,
+        public OrderItemService(IOrderItemRepository orderItemRepository, IOrderRepository orderRepository,
             IPizzaSizeRepository pizzaSizeRepository, IIdentityService identityService,
             IOrderValidationService orderValidationService, IOrderItemValidationService orderItemValidationService)
         {
@@ -83,7 +83,7 @@ namespace iTechArtPizzaDelivery.Core.Services.Shopping
             return orderItem;
         }
 
-        public async Task<OrderItem> AddAsync(OrderItemAddRequest request)
+        public async Task<OrderItem> AddAsync(OrderItemInsertRequest request)
         {
             var pizzaSize = await _pizzaSizeRepository.GetDetailByIdAsync(request.PizzaSizesId) ??
                             throw new HttpStatusCodeException(400, "Pizza not found");

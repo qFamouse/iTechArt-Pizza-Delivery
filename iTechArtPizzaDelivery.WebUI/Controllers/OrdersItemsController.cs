@@ -19,21 +19,20 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
     [ApiController]
     public class OrdersItemsController : ControllerBase
     {
-        private readonly IOrderItemService _ordersItemsService;
+        private readonly IOrderItemService _orderItemService;
         private readonly IMapper _mapper;
 
-        public OrdersItemsController(IOrderItemService ordersItemsService, IMapper mapper)
+        public OrdersItemsController(IOrderItemService orderItemService, IMapper mapper)
         {
-            _ordersItemsService = ordersItemsService ?? // If pizzasSizesRepository is null
-                                  throw new ArgumentNullException(nameof(ordersItemsService), "Service is null");
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper), "Mapper is null");
+            _orderItemService = orderItemService ?? throw new ArgumentNullException(nameof(orderItemService));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         [Authorize(Roles = "Administrator, Moderator, User")]
         [HttpGet("{id}")]
         public async Task<ActionResult> GetByOrderIdAsync(int id)
         {
-            var orderItems = await _ordersItemsService.GetByOrderIdAsync(id);
+            var orderItems = await _orderItemService.GetByOrderIdAsync(id);
             var orderItemsView = _mapper.Map<List<OrderItem>, List<OrderItemDetailView>>(orderItems);
             return Ok(orderItemsView);
         }
@@ -42,16 +41,16 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateAsync(int id, [FromBody] OrderItemUpdateRequest request)
         {
-            var orderItems = await _ordersItemsService.UpdateByIdAsync(id, request);
+            var orderItems = await _orderItemService.UpdateByIdAsync(id, request);
             var orderItemsView = _mapper.Map<OrderItemDetailView>(orderItems);
             return Ok(orderItemsView);
         }
 
         [Authorize(Roles = "Administrator, Moderator, User")]
         [HttpPost]
-        public async Task<ActionResult> InsertAsync([FromBody] OrderItemAddRequest request)
+        public async Task<ActionResult> InsertAsync([FromBody] OrderItemInsertRequest request)
         {
-            var orderItem = await _ordersItemsService.AddAsync(request);
+            var orderItem = await _orderItemService.AddAsync(request);
             var orderItemView = _mapper.Map<OrderItemDetailView>(orderItem);
             return Ok(orderItemView);
         }
@@ -60,7 +59,7 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteAsync(int id)
         {
-            await _ordersItemsService.DeleteByIdAsync(id);
+            await _orderItemService.DeleteByIdAsync(id);
             return Ok();
         }
     }

@@ -17,10 +17,10 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
     [ApiController]
     public class PaymentsController : ControllerBase
     {
-        private readonly IPaymentsService _paymentService;
+        private readonly IPaymentService _paymentService;
         private readonly IMapper _mapper;
 
-        public PaymentsController(IPaymentsService paymentService, IMapper mapper)
+        public PaymentsController(IPaymentService paymentService, IMapper mapper)
         {
             _paymentService = paymentService ??
                               throw new ArgumentNullException(nameof(paymentService), "Service is null");
@@ -44,7 +44,7 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
 
         [Authorize(Roles = "Administrator")]
         [HttpPost]
-        public async Task<ActionResult> InsertAsync([FromBody] PaymentAddRequest request)
+        public async Task<ActionResult> InsertAsync([FromBody] PaymentInsertRequest request)
         {
             return Ok(await _paymentService.InsertAsync(request));
         }

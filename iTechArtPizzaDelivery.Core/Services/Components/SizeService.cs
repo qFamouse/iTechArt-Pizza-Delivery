@@ -10,13 +10,13 @@ using iTechArtPizzaDelivery.Core.Requests.Size;
 
 namespace iTechArtPizzaDelivery.Core.Services.Components
 {
-    public class SizesService : ISizesService
+    public class SizeService : ISizeService
     {
         private readonly ISizeRepository _sizeRepository;
         private readonly ISizesValidationService _sizesValidationService;
         private readonly IMapper _mapper;
 
-        public SizesService(ISizeRepository sizeRepository, ISizesValidationService sizesValidationService,
+        public SizeService(ISizeRepository sizeRepository, ISizesValidationService sizesValidationService,
             IMapper mapper)
         {
             _sizeRepository = sizeRepository ?? throw new ArgumentNullException(nameof(sizeRepository));
@@ -35,7 +35,7 @@ namespace iTechArtPizzaDelivery.Core.Services.Components
             return await _sizeRepository.GetByIdAsync(id);
         }
 
-        public async Task<Size> InsertAsync(SizeAddRequest request)
+        public async Task<Size> InsertAsync(SizeInsertRequest request)
         {
             var size = _mapper.Map<Size>(request);
             await _sizeRepository.InsertAsync(size);

@@ -21,22 +21,20 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly IUsersService _usersService;
+        private readonly IUserService _userService;
         private readonly IMapper _mapper;
 
-        public UsersController(IUsersService usersService, IMapper mapper)
+        public UsersController(IUserService userService, IMapper mapper)
         {
-            _usersService = usersService ??
-                            throw new ArgumentNullException(nameof(usersService), "Service is null");
-
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper), "Mapper is null");
+            _userService = userService ?? throw new ArgumentNullException(nameof(userService));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         [Authorize(Roles = "Administrator")]
         [HttpGet]
         public async Task<ActionResult> GetAllAsync()
         {
-            var users = await _usersService.GetAllAsync();
+            var users = await _userService.GetAllAsync();
             var usersView = _mapper.Map<List<User>, List<UserDetailView>> (users);
             return Ok(usersView);
         }
@@ -44,13 +42,13 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         [HttpPost("register")]
         public async Task<ActionResult> RegisterAsync([FromBody] UserRegistrationRequest request)
         {
-            return Ok(await _usersService.RegistrationAsync(request));
+            return Ok(await _userService.RegistrationAsync(request));
         }
 
         [HttpPost("login")]
         public async Task<ActionResult> LoginAsync([FromBody] UserAuthorizationRequest request)
         {
-            return Ok(await _usersService.AuthorizationAsync(request));
+            return Ok(await _userService.AuthorizationAsync(request));
         }
 
         [Authorize(Roles = "Administrator")]

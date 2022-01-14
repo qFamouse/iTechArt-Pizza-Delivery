@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace iTechArtPizzaDelivery.Core.Requests.Promocode
 {
-    public class PromocodeAddRequest
+    public class PromocodeInsertRequest
     {
         public string Code { get; set; }
         public double Discount { get; set; }

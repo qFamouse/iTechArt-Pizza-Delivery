@@ -18,15 +18,13 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
     [ApiController]
     public class DeliveriesController : ControllerBase
     {
-        private readonly IDeliveriesService _deliveryService;
+        private readonly IDeliveryService _deliveryService;
         private readonly IMapper _mapper;
 
-        public DeliveriesController(IDeliveriesService deliveryService, IMapper mapper)
+        public DeliveriesController(IDeliveryService deliveryService, IMapper mapper)
         {
-            _deliveryService = deliveryService ??
-                               throw new ArgumentNullException(nameof(deliveryService), "Service is null");
-
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper), "Mapper is null");
+            _deliveryService = deliveryService ?? throw new ArgumentNullException(nameof(deliveryService));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         [Authorize(Roles = "Administrator, Moderator, User")]
@@ -45,7 +43,7 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
 
         [Authorize(Roles = "Administrator")]
         [HttpPost("Add")]
-        public async Task<ActionResult> AddAsync([FromBody] DeliveryAddRequest request)
+        public async Task<ActionResult> AddAsync([FromBody] DeliveryInsertRequest request)
         {
             return Ok(await _deliveryService.AddAsync(request));
         }

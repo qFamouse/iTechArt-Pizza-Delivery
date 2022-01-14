@@ -12,13 +12,13 @@ using iTechArtPizzaDelivery.Core.Requests.Ingredient;
 
 namespace iTechArtPizzaDelivery.Core.Services.Components
 {
-    public class IngredientsService : IIngredientsService
+    public class IngredientService : IIngredientService
     {
         private readonly IIngredientRepository _ingredientRepository;
         private readonly IIngredientsValidationService _ingredientsValidationService;
         private readonly IMapper _mapper;
 
-        public IngredientsService(IIngredientRepository ingredientRepository,
+        public IngredientService(IIngredientRepository ingredientRepository,
             IIngredientsValidationService ingredientsValidationService, IMapper mapper)
         {
             _ingredientRepository =
@@ -39,7 +39,7 @@ namespace iTechArtPizzaDelivery.Core.Services.Components
                    throw new HttpStatusCodeException(404, "Ingredient not found");
         }
 
-        public async Task<Ingredient> AddAsync(IngredientAddRequest request)
+        public async Task<Ingredient> AddAsync(IngredientInsertRequest request)
         {
             var ingredient = _mapper.Map<Ingredient>(request);
             await _ingredientRepository.InsertAsync(ingredient);

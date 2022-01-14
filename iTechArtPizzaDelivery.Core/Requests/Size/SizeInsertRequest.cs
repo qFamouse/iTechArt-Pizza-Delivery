@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace iTechArtPizzaDelivery.Core.Requests.Size
 {
-    public class SizeAddRequest
+    public class SizeInsertRequest
     {
         public string Name { get; set; }
         public short Diameter { get; set; }

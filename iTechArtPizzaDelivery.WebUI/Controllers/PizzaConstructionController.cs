@@ -26,9 +26,8 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         public PizzaConstructionController(IPizzaConstructionService pizzaConstructionService, IMapper mapper)
         {
             _pizzaConstructionService = pizzaConstructionService ??
-                                 throw new ArgumentNullException(nameof(pizzaConstructionService), "Service is null");
-
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper), "Mapper is null");
+                                        throw new ArgumentNullException(nameof(pizzaConstructionService));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         [Authorize(Roles = "Administrator, Moderator, User")]
@@ -36,7 +35,7 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         public async Task<ActionResult> GetAllAsync()
         {
             var pizzasSizes = await _pizzaConstructionService.GetAllAsync();
-            var pizzasSizesView = _mapper.Map<List<PizzaSize>, List<PizzaSizesView>>(pizzasSizes);
+            var pizzasSizesView = _mapper.Map<List<PizzaSize>, List<PizzaSizeView>>(pizzasSizes);
             return Ok(pizzasSizesView);
         }
 
@@ -45,16 +44,16 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         public async Task<ActionResult> GetByIdAsync(int id)
         {
             var pizzaSize = await _pizzaConstructionService.GetDetailByIdAsync(id);
-            var pizzaSizeView = _mapper.Map<PizzaSizesDetailView>(pizzaSize);
+            var pizzaSizeView = _mapper.Map<PizzaSizeDetailView>(pizzaSize);
             return Ok(pizzaSizeView);
         }
 
         [Authorize(Roles = "Administrator, Moderator")]
         [HttpPost]
-        public async Task<ActionResult> InsertAsync([FromBody] PizzaSizeAddRequest request)
+        public async Task<ActionResult> InsertAsync([FromBody] PizzaSizeInsertRequest request)
         {
             var pizzaSize = await _pizzaConstructionService.InsertAsync(request);
-            var pizzaSizeView = _mapper.Map<PizzaSizesDetailView>(pizzaSize);
+            var pizzaSizeView = _mapper.Map<PizzaSizeDetailView>(pizzaSize);
             return Ok(pizzaSizeView);
         }
 
@@ -71,7 +70,7 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         public async Task<ActionResult> InsertIngredientAsync([FromBody] PizzaIngredientRequest request)
         {
             var updatedPizzaSize = await _pizzaConstructionService.InsertIngredientAsync(request);
-            var updatedPizzaSizeView = _mapper.Map<PizzaSizesDetailView>(updatedPizzaSize);
+            var updatedPizzaSizeView = _mapper.Map<PizzaSizeDetailView>(updatedPizzaSize);
             return Ok(updatedPizzaSizeView);
         }
     }

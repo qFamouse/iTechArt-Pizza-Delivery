@@ -9,11 +9,11 @@ using iTechArtPizzaDelivery.Core.Interfaces.Services.Validation;
 
 namespace iTechArtPizzaDelivery.Core.Services.Validation
 {
-    public class PizzasValidationService : IPizzasValidationService
+    public class PizzaValidationService : IPizzasValidationService
     {
         private readonly IPizzaRepository _pizzaRepository;
 
-        public PizzasValidationService(IPizzaRepository pizzaRepository)
+        public PizzaValidationService(IPizzaRepository pizzaRepository)
         {
             _pizzaRepository = pizzaRepository ?? throw new ArgumentNullException(nameof(pizzaRepository));
         }

@@ -13,7 +13,7 @@ namespace iTechArtPizzaDelivery.Core.Mapping
     {
         public DeliveryProfile()
         {
-            CreateMap<DeliveryAddRequest, Delivery>();
+            CreateMap<DeliveryInsertRequest, Delivery>();
             CreateMap<DeliveryUpdateRequest, Delivery>();
         }
     }

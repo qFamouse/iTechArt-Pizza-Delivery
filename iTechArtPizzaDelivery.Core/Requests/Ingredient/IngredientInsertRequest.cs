@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace iTechArtPizzaDelivery.Core.Requests.Payment
+namespace iTechArtPizzaDelivery.Core.Requests.Ingredient
 {
-    public class PaymentAddRequest
+    public class IngredientInsertRequest
     {
         public string Name { get; set; }
-        public string Description { get; set; }
+        public double Price { get; set; }
     }
 }

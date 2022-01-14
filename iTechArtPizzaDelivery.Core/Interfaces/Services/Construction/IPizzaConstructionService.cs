@@ -12,6 +12,6 @@ namespace iTechArtPizzaDelivery.Core.Interfaces.Services.Construction
         Task<PizzaSize> GetDetailByIdAsync(int id);
         Task DeleteByIdAsync(int id);
         Task<PizzaSize> InsertIngredientAsync(PizzaIngredientRequest request);
-        Task<PizzaSize> InsertAsync(PizzaSizeAddRequest request);
+        Task<PizzaSize> InsertAsync(PizzaSizeInsertRequest request);
     }
 }
