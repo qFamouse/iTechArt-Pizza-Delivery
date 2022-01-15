@@ -41,7 +41,7 @@ namespace iTechArtPizzaDelivery.Core.Services.Shopping
         public async Task<List<OrderItem>> GetAllAsync()
         {
             // Search order
-            var order = await _orderRepository.GetDetailedByQueryAsync(new OrderQuery()
+            var order = await _orderRepository.GetDetailByQueryAsync(new OrderQuery()
             {
                 UserId = _identityService.Id,
                 Status = (short) Status.InProgress
@@ -52,19 +52,22 @@ namespace iTechArtPizzaDelivery.Core.Services.Shopping
 
         public async Task DeleteByIdAsync(int orderItemId)
         {
-            await _orderItemValidationService.OrderItemExistsAsync(orderItemId);
+            var orderItem = await _orderItemRepository.GetByIdAsync(orderItemId) ??
+                            throw new HttpStatusCodeException(400, "Item not found");
+
 
             // Search order
-            var order = await _orderRepository.GetDetailedByQueryAsync(new OrderQuery()
+            var order = await _orderRepository.GetDetailByQueryAsync(new OrderQuery()
             {
-                OrderId = orderItemId, // TODO: We need order ID!
-                UserId = _identityService.Id
+                OrderId = orderItem.OrderId,
+                UserId = _identityService.Id,
+                Status = (short) Status.InProgress
             }) ?? throw new HttpStatusCodeException(400, "Order access protection");
 
-            // If order in progress then we can delete item from this order
-            _orderValidationService.OrderInProgress(order);
+            // Deleting orderItem
+            // _orderValidationService.OrderInProgress(order); -- redundant because we check status in order request
             await _orderItemRepository.DeleteByIdAsync(orderItemId);
-            await _orderItemRepository.Save(); // TODO: Is maybe redundant
+            await _orderItemRepository.Save();
 
             order.Recalculate();
             await _orderRepository.Save();
@@ -72,14 +75,15 @@ namespace iTechArtPizzaDelivery.Core.Services.Shopping
 
         public async Task<OrderItem> UpdateByIdAsync(int orderItemId, OrderItemUpdateRequest request)
         {
-            var orderItem = await _orderItemRepository.GetByIdAsync(orderItemId) ??
+            var orderItem = await _orderItemRepository.GetDetailByIdAsync(orderItemId) ??
                             throw new HttpStatusCodeException(400, "Item not found");
 
             // Check order
-            var order = await _orderRepository.GetByQueryAsync(new OrderQuery()
+            var order = await _orderRepository.GetDetailByQueryAsync(new OrderQuery()
             {
                 OrderId = orderItem.OrderId,
-                UserId = _identityService.Id
+                UserId = _identityService.Id,
+                Status = (short) Status.InProgress
             }) ?? throw new HttpStatusCodeException(400, "Order access protection");
 
             // Editing
@@ -95,7 +99,7 @@ namespace iTechArtPizzaDelivery.Core.Services.Shopping
             var pizzaSize = await _pizzaSizeRepository.GetDetailByIdAsync(request.PizzaSizesId) ??
                             throw new HttpStatusCodeException(400, "Pizza not found");
 
-            var order = await _orderRepository.GetDetailedByQueryAsync(new OrderQuery()
+            var order = await _orderRepository.GetDetailByQueryAsync(new OrderQuery()
             {
                 UserId = _identityService.Id,
                 Status = (short) Status.InProgress

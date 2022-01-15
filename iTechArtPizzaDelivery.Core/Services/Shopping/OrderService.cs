@@ -55,7 +55,7 @@ namespace iTechArtPizzaDelivery.Core.Services.Shopping
 
         public async Task<Order> GetUserDetailAsync()
         {
-            return await _orderRepository.GetDetailedByQueryAsync(new OrderQuery()
+            return await _orderRepository.GetDetailByQueryAsync(new OrderQuery()
             {
                 Status = (short)Status.InProgress,
                 UserId = _identityService.Id
@@ -65,7 +65,7 @@ namespace iTechArtPizzaDelivery.Core.Services.Shopping
         public async Task AttachPromocodeAsync(string code)
         {
             // Search order 'in progress' in current user data
-            var order = await _orderRepository.GetDetailedByQueryAsync(new OrderQuery()
+            var order = await _orderRepository.GetDetailByQueryAsync(new OrderQuery()
             {
                 Status = (short) Status.InProgress,
                 UserId = _identityService.Id
@@ -92,7 +92,7 @@ namespace iTechArtPizzaDelivery.Core.Services.Shopping
         public async Task AttachPaymentAsync(int paymentId)
         {
             // Search order 'in progress' in current user data
-            var order = await _orderRepository.GetDetailedByQueryAsync(new OrderQuery()
+            var order = await _orderRepository.GetDetailByQueryAsync(new OrderQuery()
             {
                 Status = (short)Status.InProgress,
                 UserId = _identityService.Id
@@ -111,7 +111,7 @@ namespace iTechArtPizzaDelivery.Core.Services.Shopping
         public async Task AttachDeliveryAsync(int deliveryId)
         {
             // Search order 'in progress' in current user data
-            var order = await _orderRepository.GetDetailedByQueryAsync(new OrderQuery()
+            var order = await _orderRepository.GetDetailByQueryAsync(new OrderQuery()
             {
                 Status = (short)Status.InProgress,
                 UserId = _identityService.Id
@@ -130,7 +130,7 @@ namespace iTechArtPizzaDelivery.Core.Services.Shopping
         public async Task ProcessOrderAsync()
         {
             // Search order 'in progress' in current user data
-            var order = await _orderRepository.GetDetailedByQueryAsync(new OrderQuery()
+            var order = await _orderRepository.GetDetailByQueryAsync(new OrderQuery()
             {
                 Status = (short) Status.InProgress,
                 UserId = _identityService.Id
