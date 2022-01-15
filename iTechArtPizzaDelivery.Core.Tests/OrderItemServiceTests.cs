@@ -17,7 +17,7 @@ using Xunit;
 
 namespace iTechArtPizzaDelivery.Core.Tests
 {
-    public class OrderItemTests
+    public class OrderItemServiceTests
     {
         private readonly Mock<IOrderItemRepository> _orderItemRepositoryMock = new();
         private readonly Mock<IOrderRepository> _orderRepositoryMock = new();
@@ -34,7 +34,7 @@ namespace iTechArtPizzaDelivery.Core.Tests
         }
 
         [Fact]
-        public async void InsertAsync_PizzaIsNull_ThrowException()
+        public async void InsertAsync_PizzaIsNull_ThrowHttpStatusCodeException()
         {
             #region Arrange
 
@@ -189,7 +189,7 @@ namespace iTechArtPizzaDelivery.Core.Tests
         }
 
         [Fact]
-        public async void UpdateAsync_OrderItemIsNull_ThrowException()
+        public async void UpdateAsync_OrderItemIsNull_ThrowHttpStatusCodeException()
         {
             #region Arrange
 
@@ -203,6 +203,75 @@ namespace iTechArtPizzaDelivery.Core.Tests
             #region Act
 
             var result = orderItemService.UpdateByIdAsync(1, null);
+
+            #endregion
+
+            #region Assert
+
+            await Assert.ThrowsAsync<HttpStatusCodeException>(() => result);
+
+            #endregion
+        }
+
+        [Fact]
+        public void DeleteByIdAsync_OrderItemExists_Deleting()
+        {
+            #region Arrange
+
+            var orderItem = new OrderItem()
+            {
+                PizzaSizeId = 1,
+                Quantity = 1
+            };
+
+            var orderItems = new List<OrderItem>()
+            {
+                orderItem
+            };
+
+            var order = new Order()
+            {
+                OrderItems = orderItems
+            };
+
+            _orderRepositoryMock.Setup(repo => repo.GetDetailByQueryAsync(
+                It.IsAny<OrderQuery>()).Result).Returns(order);
+
+            _orderItemRepositoryMock.Setup(repo => repo.GetByIdAsync(
+                It.IsAny<Int32>()).Result).Returns(orderItem);
+
+            var orderItemService = InitializeOrderItemService();
+
+            #endregion
+
+            #region Act
+
+            var result = orderItemService.DeleteByIdAsync(1);
+
+            #endregion
+
+            #region Assert
+
+            _orderItemRepositoryMock.Verify(repo => repo.DeleteByIdAsync(It.IsAny<Int32>()), Times.Once);
+
+            #endregion
+        }
+
+        [Fact]
+        public async void DeleteByIdAsync_OrderItemNotExists_ThrowHttpStatusCodeException()
+        {
+            #region Arrange
+
+            _orderItemRepositoryMock.Setup(repo => repo.GetByIdAsync(
+                It.IsAny<Int32>())).ReturnsAsync((OrderItem) null);
+
+            var orderItemService = InitializeOrderItemService();
+
+            #endregion
+
+            #region Act
+
+            var result = orderItemService.DeleteByIdAsync(1);
 
             #endregion
 
