@@ -46,7 +46,7 @@ namespace iTechArtPizzaDelivery.Core.Tests
             var order = new Order();
 
             _orderRepositoryMock.Setup(repo => repo.GetDetailByQueryAsync(
-                It.Is<OrderQuery>(oq => oq.Status == (short) Status.InProgress && oq.UserId == _identityServiceMock.Object.Id)).Result)
+                It.Is<OrderQuery>(oq => oq.Status == (short)Status.InProgress && oq.UserId == _identityServiceMock.Object.Id)).Result)
                 .Returns(order);
 
             var orderService = InitializeOrderService();
@@ -74,7 +74,7 @@ namespace iTechArtPizzaDelivery.Core.Tests
             _identityServiceMock.Setup(service => service.Id).Returns(1);
 
             _orderRepositoryMock.Setup(repo => repo.GetDetailByQueryAsync(
-                It.IsAny<OrderQuery>()).Result).Returns((Order) null);
+                It.IsAny<OrderQuery>()).Result).Returns((Order)null);
 
             var orderService = InitializeOrderService();
 

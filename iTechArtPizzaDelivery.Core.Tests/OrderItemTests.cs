@@ -102,13 +102,13 @@ namespace iTechArtPizzaDelivery.Core.Tests
             };
 
             _pizzaSizeRepositoryMock.Setup(repo => repo.GetDetailByIdAsync(
-                It.IsAny<Int32>())).ReturnsAsync(pizzaSize);
+                It.IsAny<Int32>()).Result).Returns(pizzaSize);
 
             _orderRepositoryMock.Setup(repo => repo.GetDetailByQueryAsync(
-                It.IsAny<OrderQuery>())).ReturnsAsync(order);
+                It.IsAny<OrderQuery>()).Result).Returns(order);
 
             _orderItemRepositoryMock.Setup(repo => repo.GetDetailByIdAsync(
-                It.IsAny<Int32>())).ReturnsAsync(orderItem);
+                It.IsAny<Int32>()).Result).Returns(orderItem);
 
             var orderItemService = InitializeOrderItemService();
 
@@ -127,6 +127,90 @@ namespace iTechArtPizzaDelivery.Core.Tests
             #endregion
         }
 
+        [Fact]
+        public void UpdateAsync_OrderItemSetQuantity_UpdatingOrderItem()
+        {
+            #region Arrange
 
+            var request = new OrderItemUpdateRequest()
+            {
+                Quantity = 2
+            };
+
+            var pizzaIngredients = new List<PizzaIngredient>()
+            {
+                new PizzaIngredient() { Ingredient = new Ingredient()}
+            };
+
+            var pizzaSize = new PizzaSize()
+            {
+                Id = 1,
+                PizzaIngredients = pizzaIngredients,
+            };
+
+            var orderItem = new OrderItem()
+            {
+                PizzaSizeId = 1,
+                PizzaSize = pizzaSize,
+                Quantity = 1
+            };
+
+            var orderItems = new List<OrderItem>()
+            {
+                orderItem
+            };
+
+            var order = new Order()
+            {
+                OrderItems = orderItems
+            };
+
+            _orderRepositoryMock.Setup(repo => repo.GetDetailByQueryAsync(
+                It.IsAny<OrderQuery>()).Result).Returns(order);
+
+            _orderItemRepositoryMock.Setup(repo => repo.GetDetailByIdAsync(
+                It.IsAny<Int32>()).Result).Returns(orderItem);
+
+            var orderItemService = InitializeOrderItemService();
+
+            #endregion
+
+            #region Act
+
+            var result = orderItemService.UpdateByIdAsync(pizzaSize.Id, request).Result;
+
+            #endregion
+
+            #region Assert
+
+            Assert.Equal(2, result.Quantity);
+
+            #endregion
+        }
+
+        [Fact]
+        public async void UpdateAsync_OrderItemIsNull_ThrowException()
+        {
+            #region Arrange
+
+            _orderItemRepositoryMock.Setup(repo => repo.GetDetailByIdAsync(
+                It.IsAny<Int32>())).ReturnsAsync((OrderItem) null);
+
+            var orderItemService = InitializeOrderItemService();
+
+            #endregion
+
+            #region Act
+
+            var result = orderItemService.UpdateByIdAsync(1, null);
+
+            #endregion
+
+            #region Assert
+
+            await Assert.ThrowsAsync<HttpStatusCodeException>(() => result);
+
+            #endregion
+        }
     }
 }
