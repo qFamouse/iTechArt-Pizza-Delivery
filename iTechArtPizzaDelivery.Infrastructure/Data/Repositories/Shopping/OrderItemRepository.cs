@@ -25,5 +25,18 @@ namespace iTechArtPizzaDelivery.Infrastructure.Data.Repositories.Shopping
                 .Where(oi => oi.Order.Id == id)
                 .ToListAsync();
         }
+
+        public async Task<OrderItem> GetDetailByIdAsync(int id)
+        {
+            return await DbContext.OrderItems
+                .Include(oi => oi.PizzaSize)
+                .ThenInclude(ps => ps.Pizza)
+                .Include(oi => oi.PizzaSize)
+                .ThenInclude(ps => ps.Size)
+                .Include(oi => oi.PizzaSize)
+                .ThenInclude(ps => ps.PizzaIngredients)
+                .ThenInclude(pi => pi.Ingredient)
+                .SingleOrDefaultAsync(oi => oi.Id == id);
+        }
     }
 }

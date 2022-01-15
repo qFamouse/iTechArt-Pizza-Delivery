@@ -12,7 +12,7 @@ namespace iTechArtPizzaDelivery.Core.Interfaces.Repositories
     {
         Task<Order> GetDetailByIdAsync(int id);
         Task<List<Order>> GetAllDetailedByQueryAsync(OrderQuery query);
-        Task<Order> GetDetailedByQueryAsync(OrderQuery query);
+        Task<Order> GetDetailByQueryAsync(OrderQuery query);
         Task<Order> GetByQueryAsync(OrderQuery query);
     }
 }

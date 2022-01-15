@@ -31,7 +31,7 @@ namespace iTechArtPizzaDelivery.Infrastructure.Data.Repositories.Shopping
                 .ToListAsync();
         }
 
-        public async Task<Order> GetDetailedByQueryAsync(OrderQuery query)
+        public async Task<Order> GetDetailByQueryAsync(OrderQuery query)
         {
             return await GetByQuery(query)
                 .Include(o => o.OrderItems)
