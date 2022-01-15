@@ -50,7 +50,7 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         [HttpGet("my_order")]
         public async Task<ActionResult> GetMyOrder()
         {
-            var order = await _orderService.GetUserDetailAsync();
+            var order = await _orderService.GetDetailByUserAsync();
             var orderView = _mapper.Map<OrderDetailView>(order);
             return Ok(orderView);
         }
