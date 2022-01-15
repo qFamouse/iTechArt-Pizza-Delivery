@@ -67,14 +67,14 @@ namespace iTechArtPizzaDelivery.Core.Tests
         }
 
         [Fact]
-        public void GetUserDetailAsync_OrderIsNull_ThrowException()
+        public async void GetUserDetailAsync_OrderIsNull_ThrowHttpStatusCodeException()
         {
             #region Arrange
 
             _identityServiceMock.Setup(service => service.Id).Returns(1);
 
             _orderRepositoryMock.Setup(repo => repo.GetDetailByQueryAsync(
-                It.IsAny<OrderQuery>()).Result).Returns((Order)null);
+                It.IsAny<OrderQuery>())).ReturnsAsync((Order)null);
 
             var orderService = InitializeOrderService();
 
@@ -88,7 +88,7 @@ namespace iTechArtPizzaDelivery.Core.Tests
 
             #region Assert
 
-            Assert.ThrowsAny<Exception>(() => result.Result);
+            await Assert.ThrowsAsync<HttpStatusCodeException>(() => result);
 
             #endregion
         }
