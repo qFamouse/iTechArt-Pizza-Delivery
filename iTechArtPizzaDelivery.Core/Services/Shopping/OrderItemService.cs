@@ -94,7 +94,7 @@ namespace iTechArtPizzaDelivery.Core.Services.Shopping
             return orderItem;
         }
 
-        public async Task<OrderItem> AddAsync(OrderItemInsertRequest request)
+        public async Task<OrderItem> InsertAsync(OrderItemInsertRequest request)
         {
             var pizzaSize = await _pizzaSizeRepository.GetDetailByIdAsync(request.PizzaSizesId) ??
                             throw new HttpStatusCodeException(400, "Pizza not found");

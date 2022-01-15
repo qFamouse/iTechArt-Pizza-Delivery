@@ -50,7 +50,7 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         [HttpPost]
         public async Task<ActionResult> InsertAsync([FromBody] OrderItemInsertRequest request)
         {
-            var orderItem = await _orderItemService.AddAsync(request);
+            var orderItem = await _orderItemService.InsertAsync(request);
             var orderItemView = _mapper.Map<OrderItemDetailView>(orderItem);
             return Ok(orderItemView);
         }

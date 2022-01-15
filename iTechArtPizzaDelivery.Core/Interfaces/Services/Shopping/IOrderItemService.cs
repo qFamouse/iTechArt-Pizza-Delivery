@@ -7,7 +7,7 @@ namespace iTechArtPizzaDelivery.Core.Interfaces.Services.Shopping
 {
     public interface IOrderItemService
     {
-        Task<OrderItem> AddAsync(OrderItemInsertRequest request);
+        Task<OrderItem> InsertAsync(OrderItemInsertRequest request);
         Task DeleteByIdAsync(int orderItemId);
         Task<OrderItem> UpdateByIdAsync(int orderItemId, OrderItemUpdateRequest request);
         
