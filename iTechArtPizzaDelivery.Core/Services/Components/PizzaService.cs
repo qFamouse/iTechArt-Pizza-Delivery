@@ -11,7 +11,9 @@ using iTechArtPizzaDelivery.Core.Interfaces.Repositories;
 using iTechArtPizzaDelivery.Core.Interfaces.Services.Components;
 using iTechArtPizzaDelivery.Core.Interfaces.Services.Validation;
 using iTechArtPizzaDelivery.Core.Requests.Pizza;
+using iTechArtPizzaDelivery.Core.Views;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Options;
 
 namespace iTechArtPizzaDelivery.Core.Services.Components
@@ -103,9 +105,27 @@ namespace iTechArtPizzaDelivery.Core.Services.Components
             return pizzaImage;
         }
 
-        public async Task<FileStream> DownloadImageAsync(int id)
+        public async Task<ImageView> DownloadImageAsync(int id)
         {
-            throw new NotImplementedException();
+            var pizzaImage = await _pizzaImageRepository.GetByIdAsync(id) ??
+                             throw  new HttpStatusCodeException(404, "Image not found");
+
+            // Get Path to image folder
+            var resourceDirectory = Directory.CreateDirectory(_resourceConfig.ApplicationDataPath);
+            var imageDirectory = resourceDirectory.CreateSubdirectory(_resourceConfig.PizzaImageName);
+
+            var imageName = pizzaImage.Filename;
+
+            var pathToImage = $"{imageDirectory}\\{imageName}";
+
+            // Get Content type
+            new FileExtensionContentTypeProvider().TryGetContentType(imageName, out string contentType);
+
+            return new ImageView()
+            {
+                Image = File.OpenRead(pathToImage),
+                ContentType = contentType
+            };
         }
     }
 }

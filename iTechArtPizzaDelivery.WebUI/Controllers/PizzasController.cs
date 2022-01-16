@@ -68,5 +68,12 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         {
             return Ok(await _pizzaService.UploadImageAsync(file));
         }
+
+        [HttpGet("images/{id}")]
+        public async Task<ActionResult> DownloadImageAsync(int id)
+        {
+            var imageView = await _pizzaService.DownloadImageAsync(id);
+            return File(imageView.Image, imageView.ContentType);
+        }
     }
 }
