@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using iTechArtPizzaDelivery.Infrastructure.Data;
 
 namespace iTechArtPizzaDelivery.Infrastructure.Migrations
 {
     [DbContext(typeof(PizzaDeliveryContext))]
-    partial class PizzaSizeContextModelSnapshot : ModelSnapshot
+    [Migration("20220116154422_AddFileEntity")]
+    partial class AddFileEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -167,6 +169,24 @@ namespace iTechArtPizzaDelivery.Infrastructure.Migrations
                     b.ToTable("Deliveries");
                 });
 
+            modelBuilder.Entity("iTechArtPizzaDelivery.Core.Entities.File", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<short>("FileType")
+                        .HasColumnType("smallint");
+
+                    b.Property<string>("Filename")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Files");
+                });
+
             modelBuilder.Entity("iTechArtPizzaDelivery.Core.Entities.Ingredient", b =>
                 {
                     b.Property<int>("Id")
@@ -291,32 +311,15 @@ namespace iTechArtPizzaDelivery.Infrastructure.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PizzaImageId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("PizzaImageId");
 
                     b.ToTable("Pizzas");
-                });
-
-            modelBuilder.Entity("iTechArtPizzaDelivery.Core.Entities.PizzaImage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Filename")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PizzaImages");
                 });
 
             modelBuilder.Entity("iTechArtPizzaDelivery.Core.Entities.PizzaIngredient", b =>
@@ -590,15 +593,6 @@ namespace iTechArtPizzaDelivery.Infrastructure.Migrations
                     b.Navigation("Order");
 
                     b.Navigation("PizzaSize");
-                });
-
-            modelBuilder.Entity("iTechArtPizzaDelivery.Core.Entities.Pizza", b =>
-                {
-                    b.HasOne("iTechArtPizzaDelivery.Core.Entities.PizzaImage", "PizzaImage")
-                        .WithMany()
-                        .HasForeignKey("PizzaImageId");
-
-                    b.Navigation("PizzaImage");
                 });
 
             modelBuilder.Entity("iTechArtPizzaDelivery.Core.Entities.PizzaIngredient", b =>
