@@ -62,5 +62,11 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
         {
             return Ok(await _pizzaService.UpdateByIdAsync(id, request));
         }
+
+        [HttpPost("images")]
+        public async Task<ActionResult> UploadImageAsync(IFormFile file)
+        {
+            return Ok(await _pizzaService.UploadImageAsync(file));
+        }
     }
 }

@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using iTechArtPizzaDelivery.Core.Configurations;
 using iTechArtPizzaDelivery.Core.Entities;
 using iTechArtPizzaDelivery.Core.Exceptions;
 using iTechArtPizzaDelivery.Core.Interfaces.Repositories;
 using iTechArtPizzaDelivery.Core.Interfaces.Services.Components;
 using iTechArtPizzaDelivery.Core.Interfaces.Services.Validation;
 using iTechArtPizzaDelivery.Core.Requests.Pizza;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
 
 namespace iTechArtPizzaDelivery.Core.Services.Components
 {
@@ -16,13 +21,19 @@ namespace iTechArtPizzaDelivery.Core.Services.Components
         private readonly IPizzaRepository _pizzaRepository;
         private readonly IPizzasValidationService _pizzasValidationService;
         private readonly IMapper _mapper;
+        private readonly ResourceConfiguration _resourceConfig;
+        private readonly IPizzaImageRepository _pizzaImageRepository;
+
         public PizzaService(IPizzaRepository pizzaRepository, IPizzasValidationService pizzasValidationService,
-            IMapper mapper)
+            IMapper mapper, IOptions<ResourceConfiguration> resourceConfig, IPizzaImageRepository pizzaImageRepository)
         {
             _pizzaRepository = pizzaRepository ?? throw new ArgumentNullException(nameof(pizzaRepository));
             _pizzasValidationService = pizzasValidationService ??
                                        throw new ArgumentNullException(nameof(pizzasValidationService));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _resourceConfig = resourceConfig.Value ?? throw new ArgumentNullException(nameof(resourceConfig));
+            _pizzaImageRepository =
+                pizzaImageRepository ?? throw new ArgumentNullException(nameof(pizzaImageRepository));
         }
 
         public async Task<List<Pizza>> GetAllAsync()
@@ -61,6 +72,50 @@ namespace iTechArtPizzaDelivery.Core.Services.Components
             await _pizzaRepository.Save();
 
             return pizza;
+        }
+
+        public async Task<PizzaImage> UploadImageAsync(IFormFile uploadedFile)
+        {
+            if (uploadedFile is null)
+            {
+                throw new HttpStatusCodeException(400, "Image is empty");
+            }
+
+            var uploadedFileExtension = Path.GetExtension(uploadedFile.FileName).ToLowerInvariant();
+            if (string.IsNullOrEmpty(uploadedFileExtension) || !_resourceConfig.AllowedImageContentTypes.Contains(uploadedFileExtension))
+            {
+                throw new HttpStatusCodeException(400, "Invalid image extension");
+            }
+
+            if (uploadedFile.Length > _resourceConfig.ImageSizeLimit)
+            {
+                throw new HttpStatusCodeException(400, "Image is too large");
+            }
+
+            var resourceDirectory = Directory.CreateDirectory(_resourceConfig.ApplicationDataPath);
+            var imageDirectory = resourceDirectory.CreateSubdirectory(_resourceConfig.PizzaImageName);
+
+            var imageName = $"pizza_{DateTime.Now.Ticks}{uploadedFileExtension}";
+
+            var pathToImage = $"{imageDirectory}\\{imageName}";
+
+            await using var fileStream = new FileStream(pathToImage, FileMode.Create);
+            await uploadedFile.CopyToAsync(fileStream);
+
+            var pizzaImage = new PizzaImage()
+            {
+                Filename = imageName
+            };
+
+            await _pizzaImageRepository.InsertAsync(pizzaImage);
+            await _pizzaImageRepository.Save();
+
+            return pizzaImage;
+        }
+
+        public async Task<FileStream> DownloadImageAsync(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

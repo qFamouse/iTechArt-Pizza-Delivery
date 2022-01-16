@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using iTechArtPizzaDelivery.Core.Entities;
 using iTechArtPizzaDelivery.Core.Requests.Pizza;
+using Microsoft.AspNetCore.Http;
 
 namespace iTechArtPizzaDelivery.Core.Interfaces.Services.Components
 {
@@ -12,5 +14,7 @@ namespace iTechArtPizzaDelivery.Core.Interfaces.Services.Components
         Task DeleteByIdAsync(int id);
         Task<Pizza> AddAsync(PizzaInsertRequest request);
         Task<Pizza> UpdateByIdAsync(int id, PizzaUpdateRequest request);
+        Task<PizzaImage> UploadImageAsync(IFormFile file);
+        Task<FileStream> DownloadImageAsync(int id);
     }
 }

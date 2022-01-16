@@ -18,6 +18,7 @@ using iTechArtPizzaDelivery.Core.Services.Construction;
 using iTechArtPizzaDelivery.Core.Services.Shopping;
 using iTechArtPizzaDelivery.Core.Services.Validation;
 using iTechArtPizzaDelivery.Infrastructure.Data;
+using iTechArtPizzaDelivery.Infrastructure.Data.Repositories;
 using iTechArtPizzaDelivery.Infrastructure.Data.Repositories.Account;
 using iTechArtPizzaDelivery.Infrastructure.Data.Repositories.Components;
 using iTechArtPizzaDelivery.Infrastructure.Data.Repositories.Construction;
@@ -78,6 +79,7 @@ namespace iTechArtPizzaDelivery.WebUI.Extensions
             services.AddScoped<IDeliveryRepository, DeliveryRepository>();
             services.AddScoped<IPaymentRepository, PaymentRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IPizzaImageRepository, PizzaImageRepository>();
         }
 
         public static void AddWebUiDependencies(this IServiceCollection services)

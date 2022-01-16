@@ -42,6 +42,7 @@ namespace iTechArtPizzaDelivery.WebUI
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<IdentityConfiguration>(Configuration.GetSection("Identity"));
+            services.Configure<ResourceConfiguration>(Configuration.GetSection("Resources"));
 
             services.AddAutoMappers();
 

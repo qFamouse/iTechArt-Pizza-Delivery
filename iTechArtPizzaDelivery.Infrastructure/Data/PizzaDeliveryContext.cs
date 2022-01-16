@@ -7,6 +7,7 @@ namespace iTechArtPizzaDelivery.Infrastructure.Data
 {
     public class PizzaDeliveryContext : IdentityDbContext<User, IdentityRole<int>, int>
     {
+        public DbSet<PizzaImage> PizzaImages { get; set; }
         public DbSet<PizzaSize> PizzasSizes { get; set; }
         public DbSet<Pizza> Pizzas { get; set; }
         public DbSet<Size> Sizes { get; set; }
