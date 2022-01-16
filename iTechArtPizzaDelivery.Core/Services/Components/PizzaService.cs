@@ -76,21 +76,10 @@ namespace iTechArtPizzaDelivery.Core.Services.Components
 
         public async Task<PizzaImage> UploadImageAsync(IFormFile uploadedFile)
         {
-            if (uploadedFile is null)
-            {
-                throw new HttpStatusCodeException(400, "Image is empty");
-            }
+            _pizzasValidationService.ImageValidation(uploadedFile);
 
+            // Get Path to image folder
             var uploadedFileExtension = Path.GetExtension(uploadedFile.FileName).ToLowerInvariant();
-            if (string.IsNullOrEmpty(uploadedFileExtension) || !_resourceConfig.AllowedImageContentTypes.Contains(uploadedFileExtension))
-            {
-                throw new HttpStatusCodeException(400, "Invalid image extension");
-            }
-
-            if (uploadedFile.Length > _resourceConfig.ImageSizeLimit)
-            {
-                throw new HttpStatusCodeException(400, "Image is too large");
-            }
 
             var resourceDirectory = Directory.CreateDirectory(_resourceConfig.ApplicationDataPath);
             var imageDirectory = resourceDirectory.CreateSubdirectory(_resourceConfig.PizzaImageName);
@@ -99,6 +88,7 @@ namespace iTechArtPizzaDelivery.Core.Services.Components
 
             var pathToImage = $"{imageDirectory}\\{imageName}";
 
+            // Save image
             await using var fileStream = new FileStream(pathToImage, FileMode.Create);
             await uploadedFile.CopyToAsync(fileStream);
 
