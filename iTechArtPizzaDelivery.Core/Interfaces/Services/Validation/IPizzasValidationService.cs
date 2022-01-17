@@ -10,6 +10,6 @@ namespace iTechArtPizzaDelivery.Core.Interfaces.Services.Validation
     public interface IPizzasValidationService
     {
         Task PizzaExistsAsync(int id);
-        void ImageValidation(IFormFile imageFile);
+        void ValidateImage(IFormFile imageFile);
     }
 }

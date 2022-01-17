@@ -82,7 +82,7 @@ namespace iTechArtPizzaDelivery.Core.Services.Components
 
         public async Task<PizzaImage> UploadImageAsync(IFormFile uploadedFile)
         {
-            _pizzasValidationService.ImageValidation(uploadedFile);
+            _pizzasValidationService.ValidateImage(uploadedFile);
 
             // Get Path to image folder
             var uploadedFileExtension = Path.GetExtension(uploadedFile.FileName).ToLowerInvariant();

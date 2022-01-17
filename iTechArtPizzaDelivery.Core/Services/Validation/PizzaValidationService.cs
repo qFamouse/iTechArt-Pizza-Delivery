@@ -25,7 +25,7 @@ namespace iTechArtPizzaDelivery.Core.Services.Validation
                 resourceConfiguration.Value ?? throw new ArgumentNullException(nameof(resourceConfiguration));
         }
 
-        public void ImageValidation(IFormFile imageFile)
+        public void ValidateImage(IFormFile imageFile)
         {
             if (imageFile is null)
             {
