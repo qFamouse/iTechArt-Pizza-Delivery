@@ -11,8 +11,7 @@ namespace iTechArtPizzaDelivery.Core.Configurations
         /// <summary>
         /// Returns path to the application resources
         /// </summary>
-        public string ApplicationDataPath => Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) +
-                                             "\\" + ResourceName;
+        public string ResourcePath { get; set; }
         /// <summary>
         /// Returns the name of the resource folder
         /// </summary>

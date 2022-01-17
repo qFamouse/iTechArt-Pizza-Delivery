@@ -89,7 +89,7 @@ namespace iTechArtPizzaDelivery.Core.Services.Components
             // Get Path to image folder
             var uploadedFileExtension = Path.GetExtension(uploadedFile.FileName).ToLowerInvariant();
 
-            var resourceDirectory = Directory.CreateDirectory(_resourceConfig.ApplicationDataPath);
+            var resourceDirectory = Directory.CreateDirectory(_resourceConfig.ResourcePath);
             var imageDirectory = resourceDirectory.CreateSubdirectory(_resourceConfig.PizzaImageName);
 
             var imageName = $"pizza_{DateTime.Now.Ticks}{uploadedFileExtension}";
@@ -130,7 +130,7 @@ namespace iTechArtPizzaDelivery.Core.Services.Components
                              throw  new HttpStatusCodeException(404, "Image not found");
 
             // Get Path to image folder
-            var resourceDirectory = Directory.CreateDirectory(_resourceConfig.ApplicationDataPath);
+            var resourceDirectory = Directory.CreateDirectory(_resourceConfig.ResourcePath);
             var imageDirectory = resourceDirectory.CreateSubdirectory(_resourceConfig.PizzaImageName);
 
             var imageName = pizzaImage.Filename;
@@ -153,16 +153,19 @@ namespace iTechArtPizzaDelivery.Core.Services.Components
 
             // Get Path to image folder
             var pizzaImage = await _pizzaImageRepository.GetByIdAsync(id);
-            var uploadedFileExtension = Path.GetExtension(pizzaImage.Filename).ToLowerInvariant();
-
-            var resourceDirectory = Directory.CreateDirectory(_resourceConfig.ApplicationDataPath);
+            var resourceDirectory = Directory.CreateDirectory(_resourceConfig.ResourcePath);
             var imageDirectory = resourceDirectory.CreateSubdirectory(_resourceConfig.PizzaImageName);
 
-            var imageName = $"pizza_{DateTime.Now.Ticks}{uploadedFileExtension}";
+            var imageName = pizzaImage.Filename;
 
             var pathToImage = $"{imageDirectory}\\{imageName}";
 
             // Delete image
+            if (!File.Exists(pathToImage))
+            {
+                throw new HttpStatusCodeException(404, "File was not found on the server");
+            }
+
             using (var transaction = await _unitOfWork.BeginTransactionAsync())
             {
                 try
