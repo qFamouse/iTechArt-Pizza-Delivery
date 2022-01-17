@@ -66,8 +66,30 @@ namespace iTechArtPizzaDelivery.Core.Services.Components
         public async Task DeleteByIdAsync(int id)
         {
             await _pizzasValidationService.PizzaExistsAsync(id);
-            await _pizzaRepository.DeleteByIdAsync(id);
-            await _pizzaRepository.Save();
+
+            using (var transaction = await _unitOfWork.BeginTransactionAsync())
+            {
+                try
+                {
+                    var pizzaImageId = (await _pizzaRepository.GetByIdAsync(id)).PizzaImageId;
+
+                    await _pizzaRepository.DeleteByIdAsync(id);
+                    await _pizzaRepository.Save();
+
+                    if (pizzaImageId != null)
+                    {
+                        await DeleteImage(pizzaImageId.Value);
+                    }
+
+                    await transaction.CommitAsync();
+                }
+                catch (Exception ex)
+                {
+                    await transaction.RollbackAsync();
+                    throw new HttpStatusCodeException(500, "Pizza can not be deleted");
+                }
+
+            }
         }
 
         public async Task<Pizza> UpdateByIdAsync(int id, PizzaUpdateRequest request)
