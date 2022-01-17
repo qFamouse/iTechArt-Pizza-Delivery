@@ -9,7 +9,7 @@ namespace iTechArtPizzaDelivery.Core.Requests.Pizza
 {
     public class PizzaInsertRequest
     {
-        public int PizzaImageId { get; set; }
+        public int? PizzaImageId { get; set; }
         [Required]
         [MaxLength(255)]
         public string Name { get; set; }
