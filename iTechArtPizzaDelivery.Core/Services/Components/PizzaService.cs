@@ -55,6 +55,8 @@ namespace iTechArtPizzaDelivery.Core.Services.Components
 
         public async Task<Pizza> AddAsync(PizzaInsertRequest request)
         {
+            await _pizzasValidationService.ImageExistsAsync(request.PizzaImageId);
+
             var pizza = _mapper.Map<Pizza>(request);
             await _pizzaRepository.InsertAsync(pizza);
             await _pizzaRepository.Save();
@@ -70,13 +72,13 @@ namespace iTechArtPizzaDelivery.Core.Services.Components
 
         public async Task<Pizza> UpdateByIdAsync(int id, PizzaUpdateRequest request)
         {
+            await _pizzasValidationService.ImageExistsAsync(request.PizzaImageId);
             await _pizzasValidationService.PizzaExistsAsync(id);
+
             var pizza = _mapper.Map<Pizza>(request);
             pizza.Id = id;
-
             _pizzaRepository.Update(pizza);
             await _pizzaRepository.Save();
-
             return pizza;
         }
 
@@ -115,6 +117,7 @@ namespace iTechArtPizzaDelivery.Core.Services.Components
                 catch (Exception ex)
                 {
                     await transaction.RollbackAsync();
+                    throw new HttpStatusCodeException(500, "Can't upload image");
                 }
             }
 
@@ -142,6 +145,41 @@ namespace iTechArtPizzaDelivery.Core.Services.Components
                 Image = File.OpenRead(pathToImage),
                 ContentType = contentType
             };
+        }
+
+        public async Task DeleteImage(int id)
+        {
+            await _pizzasValidationService.ImageExistsAsync(id);
+
+            // Get Path to image folder
+            var pizzaImage = await _pizzaImageRepository.GetByIdAsync(id);
+            var uploadedFileExtension = Path.GetExtension(pizzaImage.Filename).ToLowerInvariant();
+
+            var resourceDirectory = Directory.CreateDirectory(_resourceConfig.ApplicationDataPath);
+            var imageDirectory = resourceDirectory.CreateSubdirectory(_resourceConfig.PizzaImageName);
+
+            var imageName = $"pizza_{DateTime.Now.Ticks}{uploadedFileExtension}";
+
+            var pathToImage = $"{imageDirectory}\\{imageName}";
+
+            // Delete image
+            using (var transaction = await _unitOfWork.BeginTransactionAsync())
+            {
+                try
+                {
+                    await _pizzaImageRepository.DeleteByIdAsync(id);
+                    await _pizzaImageRepository.Save();
+
+                    File.Delete(pathToImage);
+
+                    await transaction.CommitAsync();
+                }
+                catch (Exception ex)
+                {
+                    await transaction.RollbackAsync();
+                    throw new HttpStatusCodeException(500, "Can't delete image");
+                }
+            }
         }
     }
 }

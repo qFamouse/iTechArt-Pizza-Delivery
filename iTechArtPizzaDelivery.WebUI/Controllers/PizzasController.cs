@@ -75,5 +75,12 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
             var imageView = await _pizzaService.DownloadImageAsync(id);
             return File(imageView.Image, imageView.ContentType);
         }
+
+        [HttpDelete("images/{id}")]
+        public async Task<ActionResult> DeleteImageAsync(int id)
+        {
+            await _pizzaService.DeleteImage(id);
+            return Ok();
+        }
     }
 }

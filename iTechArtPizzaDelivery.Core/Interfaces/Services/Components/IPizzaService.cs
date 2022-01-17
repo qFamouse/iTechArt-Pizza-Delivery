@@ -17,5 +17,6 @@ namespace iTechArtPizzaDelivery.Core.Interfaces.Services.Components
         Task<Pizza> UpdateByIdAsync(int id, PizzaUpdateRequest request);
         Task<PizzaImage> UploadImageAsync(IFormFile file);
         Task<ImageView> DownloadImageAsync(int id);
+        Task DeleteImage(int id);
     }
 }
