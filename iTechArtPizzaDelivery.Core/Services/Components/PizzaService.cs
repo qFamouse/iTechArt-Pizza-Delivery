@@ -7,6 +7,7 @@ using AutoMapper;
 using iTechArtPizzaDelivery.Core.Configurations;
 using iTechArtPizzaDelivery.Core.Entities;
 using iTechArtPizzaDelivery.Core.Exceptions;
+using iTechArtPizzaDelivery.Core.Interfaces;
 using iTechArtPizzaDelivery.Core.Interfaces.Repositories;
 using iTechArtPizzaDelivery.Core.Interfaces.Services.Components;
 using iTechArtPizzaDelivery.Core.Interfaces.Services.Validation;
@@ -25,9 +26,11 @@ namespace iTechArtPizzaDelivery.Core.Services.Components
         private readonly IMapper _mapper;
         private readonly ResourceConfiguration _resourceConfig;
         private readonly IPizzaImageRepository _pizzaImageRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
         public PizzaService(IPizzaRepository pizzaRepository, IPizzasValidationService pizzasValidationService,
-            IMapper mapper, IOptions<ResourceConfiguration> resourceConfig, IPizzaImageRepository pizzaImageRepository)
+            IMapper mapper, IOptions<ResourceConfiguration> resourceConfig, IPizzaImageRepository pizzaImageRepository,
+            IUnitOfWork unitOfWork)
         {
             _pizzaRepository = pizzaRepository ?? throw new ArgumentNullException(nameof(pizzaRepository));
             _pizzasValidationService = pizzasValidationService ??
@@ -36,6 +39,7 @@ namespace iTechArtPizzaDelivery.Core.Services.Components
             _resourceConfig = resourceConfig.Value ?? throw new ArgumentNullException(nameof(resourceConfig));
             _pizzaImageRepository =
                 pizzaImageRepository ?? throw new ArgumentNullException(nameof(pizzaImageRepository));
+            _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         }
 
         public async Task<List<Pizza>> GetAllAsync()
@@ -91,16 +95,28 @@ namespace iTechArtPizzaDelivery.Core.Services.Components
             var pathToImage = $"{imageDirectory}\\{imageName}";
 
             // Save image
-            await using var fileStream = new FileStream(pathToImage, FileMode.Create);
-            await uploadedFile.CopyToAsync(fileStream);
-
             var pizzaImage = new PizzaImage()
             {
                 Filename = imageName
             };
 
-            await _pizzaImageRepository.InsertAsync(pizzaImage);
-            await _pizzaImageRepository.Save();
+            using (var transaction = await _unitOfWork.BeginTransactionAsync())
+            {
+                try
+                {
+                    await _pizzaImageRepository.InsertAsync(pizzaImage);
+                    await _pizzaImageRepository.Save();
+                    
+                    await using var fileStream = new FileStream(pathToImage, FileMode.Create);
+                    await uploadedFile.CopyToAsync(fileStream);
+
+                    await transaction.CommitAsync();
+                }
+                catch (Exception ex)
+                {
+                    await transaction.RollbackAsync();
+                }
+            }
 
             return pizzaImage;
         }
