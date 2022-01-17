@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using iTechArtPizzaDelivery.Core.Interfaces;
 using iTechArtPizzaDelivery.Core.Interfaces.Repositories;
 using iTechArtPizzaDelivery.Core.Interfaces.Services;
 using iTechArtPizzaDelivery.Core.Interfaces.Services.Account;
@@ -80,6 +81,8 @@ namespace iTechArtPizzaDelivery.WebUI.Extensions
             services.AddScoped<IPaymentRepository, PaymentRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IPizzaImageRepository, PizzaImageRepository>();
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 
         public static void AddWebUiDependencies(this IServiceCollection services)
