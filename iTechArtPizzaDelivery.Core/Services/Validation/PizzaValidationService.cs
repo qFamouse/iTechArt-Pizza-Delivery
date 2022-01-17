@@ -16,11 +16,15 @@ namespace iTechArtPizzaDelivery.Core.Services.Validation
     public class PizzaValidationService : IPizzasValidationService
     {
         private readonly IPizzaRepository _pizzaRepository;
+        private readonly IPizzaImageRepository _pizzaImageRepository;
         private readonly ResourceConfiguration _resourceConfiguration;
 
-        public PizzaValidationService(IPizzaRepository pizzaRepository, IOptions<ResourceConfiguration> resourceConfiguration)
+        public PizzaValidationService(IPizzaRepository pizzaRepository, IPizzaImageRepository pizzaImageRepository,
+            IOptions<ResourceConfiguration> resourceConfiguration)
         {
             _pizzaRepository = pizzaRepository ?? throw new ArgumentNullException(nameof(pizzaRepository));
+            _pizzaImageRepository =
+                pizzaImageRepository ?? throw new ArgumentNullException(nameof(pizzaImageRepository));
             _resourceConfiguration =
                 resourceConfiguration.Value ?? throw new ArgumentNullException(nameof(resourceConfiguration));
         }
@@ -49,6 +53,19 @@ namespace iTechArtPizzaDelivery.Core.Services.Validation
             if (!await _pizzaRepository.IsExists(id))
             {
                 throw new HttpStatusCodeException(404, "Pizza not found");
+            }
+        }
+
+        public async Task ImageExistsAsync(int? id)
+        {
+            if (id is null)
+            {
+                return;
+            }
+
+            if (!await _pizzaImageRepository.IsExists(id.Value))
+            {
+                throw new HttpStatusCodeException(404, "Image is not found");
             }
         }
     }

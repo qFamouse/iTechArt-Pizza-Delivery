@@ -11,5 +11,6 @@ namespace iTechArtPizzaDelivery.Core.Interfaces.Services.Validation
     {
         Task PizzaExistsAsync(int id);
         void ValidateImage(IFormFile imageFile);
+        Task ImageExistsAsync(int? id);
     }
 }
