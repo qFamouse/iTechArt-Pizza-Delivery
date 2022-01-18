@@ -10,6 +10,6 @@ namespace iTechArtPizzaDelivery.Core.Interfaces.Repositories
 {
     public interface IPizzaRepository : IBaseRepository<Pizza>
     {
-
+        Task<List<Pizza>> GetAllByPageAsync(int pageNumber);
     }
 }

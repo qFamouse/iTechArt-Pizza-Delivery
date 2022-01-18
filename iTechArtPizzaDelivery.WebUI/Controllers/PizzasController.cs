@@ -11,6 +11,8 @@ using iTechArtPizzaDelivery.Core.Interfaces.Services.Components;
 using iTechArtPizzaDelivery.Core.Requests.Pizza;
 using iTechArtPizzaDelivery.Core.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.RazorPages.Infrastructure;
 
 namespace iTechArtPizzaDelivery.WebUI.Controllers
 {
@@ -29,9 +31,9 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
 
         [Authorize(Roles = "Administrator, Moderator")]
         [HttpGet]
-        public async Task<ActionResult> GetAllAsync()
+        public async Task<ActionResult> GetAllAsync([FromQuery(Name = "page")] int page)
         {
-            return Ok(await _pizzaService.GetAllAsync());
+            return page > 0 ? Ok(await _pizzaService.GetAllByPageAsync(page)) : Ok(await _pizzaService.GetAllAsync());
         }
 
         [Authorize(Roles = "Administrator, Moderator")]

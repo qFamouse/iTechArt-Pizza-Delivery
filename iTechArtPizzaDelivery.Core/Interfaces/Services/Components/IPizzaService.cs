@@ -8,6 +8,7 @@ namespace iTechArtPizzaDelivery.Core.Interfaces.Services.Components
     public interface IPizzaService
     {
         Task<List<Pizza>> GetAllAsync();
+        Task<List<Pizza>> GetAllByPageAsync(int pageNumber);
         Task<Pizza> GetByIdAsync(int id);
         Task DeleteByIdAsync(int id);
         Task<Pizza> AddAsync(PizzaInsertRequest request);

@@ -30,6 +30,11 @@ namespace iTechArtPizzaDelivery.Core.Services.Components
             return await _pizzaRepository.GetAllAsync();
         }
 
+        public Task<List<Pizza>> GetAllByPageAsync(int pageNumber)
+        {
+            return _pizzaRepository.GetAllByPageAsync(pageNumber);
+        }
+
         public async Task<Pizza> GetByIdAsync(int id)
         {
             return await _pizzaRepository.GetByIdAsync(id) ??
