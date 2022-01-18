@@ -32,10 +32,10 @@ namespace iTechArtPizzaDelivery.WebUI.Controllers
 
         [Authorize(Roles = "Administrator")]
         [HttpGet]
-        public async Task<ActionResult> GetAllAsync()
+        public async Task<ActionResult> GetAllAsync([FromQuery(Name = "page")] int page)
         {
-            var users = await _userService.GetAllAsync();
-            var usersView = _mapper.Map<List<User>, List<UserDetailView>> (users);
+            var users = page > 0 ? await _userService.GetAllByPageAsync(page) : await _userService.GetAllAsync();
+            var usersView = _mapper.Map<List<User>, List<UserView>> (users);
             return Ok(usersView);
         }
 

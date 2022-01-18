@@ -47,6 +47,10 @@ namespace iTechArtPizzaDelivery.Core.Services.Shopping
             return await _orderRepository.GetAllAsync();
         }
 
+        public Task<List<Order>> GetAllByPageAsync(int pageNumber)
+        {
+            return _orderRepository.GetAllByPageAsync(pageNumber);
+        }
         public async Task<Order> GetDetailByIdAsync(int id)
         {
             return await _orderRepository.GetDetailByIdAsync(id) ??

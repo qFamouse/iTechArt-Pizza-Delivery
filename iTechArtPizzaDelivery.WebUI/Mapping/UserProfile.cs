@@ -8,7 +8,7 @@ namespace iTechArtPizzaDelivery.WebUI.Mapping
     {
         public UserProfile()
         {
-            CreateMap<User, UserDetailView>();
+            CreateMap<User, UserView>();
         }
     }
 }
