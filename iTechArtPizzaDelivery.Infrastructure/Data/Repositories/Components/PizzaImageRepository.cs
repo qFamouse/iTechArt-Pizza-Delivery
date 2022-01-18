@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using iTechArtPizzaDelivery.Core.Entities;
 using iTechArtPizzaDelivery.Core.Interfaces.Repositories;
 
-namespace iTechArtPizzaDelivery.Infrastructure.Data.Repositories
+namespace iTechArtPizzaDelivery.Infrastructure.Data.Repositories.Components
 {
     public class PizzaImageRepository : BaseRepository<PizzaImage>, IPizzaImageRepository
     {
