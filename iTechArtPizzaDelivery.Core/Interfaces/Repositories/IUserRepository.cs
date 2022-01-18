@@ -9,6 +9,6 @@ namespace iTechArtPizzaDelivery.Core.Interfaces.Repositories
 {
     public interface IUserRepository : IBaseRepository<User>
     {
-
+        Task<List<User>> GetAllByPageAsync(int pageNumber);
     }
 }

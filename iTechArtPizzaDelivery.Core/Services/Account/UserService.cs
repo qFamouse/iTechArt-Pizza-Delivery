@@ -55,6 +55,11 @@ namespace iTechArtPizzaDelivery.Core.Services.Account
             return await _userRepository.GetAllAsync();
         }
 
+        public Task<List<User>> GetAllByPageAsync(int pageNumber)
+        {
+            return _userRepository.GetAllByPageAsync(pageNumber);
+        }
+
         public async Task<User> RegistrationAsync(UserRegistrationRequest request)
         {
             var user = _mapper.Map<User>(request);
