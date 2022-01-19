@@ -64,7 +64,7 @@ namespace iTechArtPizzaDelivery.WebUI.Extensions
             services.AddScoped<IDeliveryService, DeliveryService>();
             services.AddScoped<IPaymentService, PaymentService>();
             services.AddScoped<IUserService, UserService>();
-
+            services.AddScoped<IAnalyticalService, AnalyticalService>();
         }
 
         public static void AddInfrastructureDependencies(this IServiceCollection services)
@@ -81,6 +81,7 @@ namespace iTechArtPizzaDelivery.WebUI.Extensions
             services.AddScoped<IPaymentRepository, PaymentRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IPizzaImageRepository, PizzaImageRepository>();
+            services.AddScoped<IAnalyticalRepository, AnalyticalRepository>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
