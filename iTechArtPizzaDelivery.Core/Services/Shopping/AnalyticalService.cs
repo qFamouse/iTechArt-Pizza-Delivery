@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using iTechArtPizzaDelivery.Core.Entities;
 using iTechArtPizzaDelivery.Core.Exceptions;
 using iTechArtPizzaDelivery.Core.Interfaces.Repositories;
 using iTechArtPizzaDelivery.Core.Interfaces.Services.Shopping;
@@ -41,6 +42,11 @@ namespace iTechArtPizzaDelivery.Core.Services.Shopping
             bestPizzaView.PizzaSize = await _pizzaSizeRepository.GetDetailByIdAsync(bestPizzaView.PizzaSize.Id);
 
             return bestPizzaView;
+        }
+
+        public Task<List<User>> GetRegularCustomersAsync()
+        {
+            return _analyticalRepository.GetRegularCustomersAsync();
         }
     }
 }

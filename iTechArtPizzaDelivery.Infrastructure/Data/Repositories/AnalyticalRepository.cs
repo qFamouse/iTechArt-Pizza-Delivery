@@ -57,5 +57,24 @@ namespace iTechArtPizzaDelivery.Infrastructure.Data.Repositories
 
             return pizzaSizeView;
         }
+
+        public Task<List<User>> GetRegularCustomersAsync()
+        {
+            return _pizzaDeliveryContext.Users
+                .FromSqlRaw(@"WITH UsersWithOrders (UserId, TotalCosts)
+                              AS
+                              (
+                                SELECT o.UserId, SUM(o.Price) AS TotalCosts
+	                            FROM Orders o
+	                            WHERE (o.Status > 1)
+	                            GROUP BY o.UserId
+	                            HAVING (COUNT(o.UserId) > 2)
+                              )
+                              SELECT u.*
+                              FROM AspNetUsers u
+                              JOIN UsersWithOrders uwo ON (uwo.UserId = u.Id)
+                              WHERE uwo.TotalCosts > (SELECT AVG(o.price) FROM Orders o WHERE (o.Status > 1))")
+                .ToListAsync();
+        }
     }
 }
