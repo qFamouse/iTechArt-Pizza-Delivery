@@ -7,7 +7,7 @@ using iTechArtPizzaDelivery.Core.Views;
 
 namespace iTechArtPizzaDelivery.Core.Interfaces.Repositories
 {
-    public interface IBusinessRepository
+    public interface IAnalyticalRepository
     {
         Task<BestPizzaSizeView> GetBestSellingPizzaByMonth(int month);
     }

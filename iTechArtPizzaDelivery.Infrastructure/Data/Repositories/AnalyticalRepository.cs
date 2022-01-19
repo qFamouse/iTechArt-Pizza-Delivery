@@ -12,11 +12,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace iTechArtPizzaDelivery.Infrastructure.Data.Repositories
 {
-    public class BusinessRepository : IBusinessRepository
+    public class AnalyticalRepository : IAnalyticalRepository
     {
         private readonly PizzaDeliveryContext _pizzaDeliveryContext;
 
-        public BusinessRepository(PizzaDeliveryContext pizzaDeliveryContext)
+        public AnalyticalRepository(PizzaDeliveryContext pizzaDeliveryContext)
         {
             _pizzaDeliveryContext =
                 pizzaDeliveryContext ?? throw new ArgumentNullException(nameof(pizzaDeliveryContext));
