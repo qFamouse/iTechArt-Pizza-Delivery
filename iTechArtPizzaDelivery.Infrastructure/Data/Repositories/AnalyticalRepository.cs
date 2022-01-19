@@ -22,7 +22,7 @@ namespace iTechArtPizzaDelivery.Infrastructure.Data.Repositories
                 pizzaDeliveryContext ?? throw new ArgumentNullException(nameof(pizzaDeliveryContext));
         }
 
-        public async Task<BestPizzaSizeView> GetBestSellingPizzaByMonth(int month)
+        public async Task<BestPizzaSizeView> GetBestSellingPizzaByMonthAsync(int month)
         {
             BestPizzaSizeView pizzaSizeView = null;
 

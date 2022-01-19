@@ -9,6 +9,6 @@ namespace iTechArtPizzaDelivery.Core.Interfaces.Repositories
 {
     public interface IAnalyticalRepository
     {
-        Task<BestPizzaSizeView> GetBestSellingPizzaByMonth(int month);
+        Task<BestPizzaSizeView> GetBestSellingPizzaByMonthAsync(int month);
     }
 }
