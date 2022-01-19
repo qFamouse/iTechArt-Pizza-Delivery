@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Common;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using iTechArtPizzaDelivery.Core.Entities;
 using iTechArtPizzaDelivery.Core.Interfaces.Repositories;
 using iTechArtPizzaDelivery.Core.Views;
 using Microsoft.EntityFrameworkCore;
 
-namespace iTechArtPizzaDelivery.Infrastructure.Data.Repositories
+namespace iTechArtPizzaDelivery.Infrastructure.Data.Repositories.Shopping
 {
     public class AnalyticalRepository : IAnalyticalRepository
     {
