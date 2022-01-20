@@ -22,13 +22,13 @@ namespace iTechArtPizzaDelivery.Core.Services.Components
     public class PizzaService : IPizzaService
     {
         private readonly IPizzaRepository _pizzaRepository;
-        private readonly IPizzasValidationService _pizzasValidationService;
+        private readonly IPizzaValidationService _pizzasValidationService;
         private readonly IMapper _mapper;
         private readonly ResourceConfiguration _resourceConfig;
         private readonly IPizzaImageRepository _pizzaImageRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public PizzaService(IPizzaRepository pizzaRepository, IPizzasValidationService pizzasValidationService,
+        public PizzaService(IPizzaRepository pizzaRepository, IPizzaValidationService pizzasValidationService,
             IMapper mapper, IOptions<ResourceConfiguration> resourceConfig, IPizzaImageRepository pizzaImageRepository,
             IUnitOfWork unitOfWork)
         {

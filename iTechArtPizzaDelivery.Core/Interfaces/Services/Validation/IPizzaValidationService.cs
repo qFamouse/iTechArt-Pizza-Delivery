@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace iTechArtPizzaDelivery.Core.Interfaces.Services.Validation
 {
-    public interface IPizzasValidationService
+    public interface IPizzaValidationService
     {
         Task PizzaExistsAsync(int id);
         void ValidateImage(IFormFile imageFile);

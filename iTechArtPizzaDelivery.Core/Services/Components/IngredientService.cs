@@ -15,11 +15,11 @@ namespace iTechArtPizzaDelivery.Core.Services.Components
     public class IngredientService : IIngredientService
     {
         private readonly IIngredientRepository _ingredientRepository;
-        private readonly IIngredientsValidationService _ingredientsValidationService;
+        private readonly IIngredientValidationService _ingredientsValidationService;
         private readonly IMapper _mapper;
 
         public IngredientService(IIngredientRepository ingredientRepository,
-            IIngredientsValidationService ingredientsValidationService, IMapper mapper)
+            IIngredientValidationService ingredientsValidationService, IMapper mapper)
         {
             _ingredientRepository =
                 ingredientRepository ?? throw new ArgumentNullException(nameof(ingredientRepository));

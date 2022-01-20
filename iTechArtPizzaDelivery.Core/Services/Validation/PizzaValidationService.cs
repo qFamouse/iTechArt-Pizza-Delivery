@@ -13,7 +13,7 @@ using Microsoft.Extensions.Options;
 
 namespace iTechArtPizzaDelivery.Core.Services.Validation
 {
-    public class PizzaValidationService : IPizzasValidationService
+    public class PizzaValidationService : IPizzaValidationService
     {
         private readonly IPizzaRepository _pizzaRepository;
         private readonly IPizzaImageRepository _pizzaImageRepository;

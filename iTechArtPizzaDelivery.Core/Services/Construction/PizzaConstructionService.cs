@@ -17,17 +17,17 @@ namespace iTechArtPizzaDelivery.Core.Services.Construction
         private readonly IPizzaSizeRepository _pizzaSizeRepository;
         private readonly IPizzaIngredientRepository _pizzaIngredientRepository;
 
-        private readonly IPizzasValidationService _pizzasValidationService;
-        private readonly ISizesValidationService _sizesValidationService;
+        private readonly IPizzaValidationService _pizzasValidationService;
+        private readonly ISizeValidationService _sizesValidationService;
         private readonly IPizzaSizeValidationService _pizzaSizeValidationService;
-        private readonly IIngredientsValidationService _ingredientsValidationService;
+        private readonly IIngredientValidationService _ingredientsValidationService;
 
         private readonly IMapper _mapper;
 
         public PizzaConstructionService(IPizzaSizeRepository pizzaSizeRepository,
-            IPizzaIngredientRepository pizzaIngredientRepository, IPizzasValidationService pizzasValidationService,
-            ISizesValidationService sizesValidationService, IPizzaSizeValidationService pizzaSizeValidationService,
-            IIngredientsValidationService ingredientsValidationService, IMapper mapper)
+            IPizzaIngredientRepository pizzaIngredientRepository, IPizzaValidationService pizzasValidationService,
+            ISizeValidationService sizesValidationService, IPizzaSizeValidationService pizzaSizeValidationService,
+            IIngredientValidationService ingredientsValidationService, IMapper mapper)
         {
             _pizzaSizeRepository = pizzaSizeRepository ?? throw new ArgumentNullException(nameof(pizzaSizeRepository));
             _pizzaIngredientRepository = pizzaIngredientRepository ??

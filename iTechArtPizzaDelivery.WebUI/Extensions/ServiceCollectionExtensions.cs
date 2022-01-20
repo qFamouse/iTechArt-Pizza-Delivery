@@ -45,14 +45,14 @@ namespace iTechArtPizzaDelivery.WebUI.Extensions
         public static void AddCoreDependencies(this IServiceCollection services)
         {
             services.AddScoped<IDeliveryValidationService, DeliveryValidationService>();
-            services.AddScoped<IIngredientsValidationService, IngredientValidationService>();
+            services.AddScoped<IIngredientValidationService, IngredientValidationService>();
             services.AddScoped<IOrderItemValidationService, OrderItemValidationService>();
             services.AddScoped<IOrderValidationService, OrderValidationService>();
             services.AddScoped<IPaymentValidationService, PaymentValidationService>();
             services.AddScoped<IPizzaSizeValidationService, PizzaSizeValidationService>();
-            services.AddScoped<IPizzasValidationService, PizzaValidationService>();
+            services.AddScoped<IPizzaValidationService, PizzaValidationService>();
             services.AddScoped<IPromocodeValidationService, PromocodeValidationService>();
-            services.AddScoped<ISizesValidationService, SizeValidationService>();
+            services.AddScoped<ISizeValidationService, SizeValidationService>();
 
             services.AddScoped<IPizzaService, PizzaService>();
             services.AddScoped<ISizeService, SizeService>();

@@ -13,10 +13,10 @@ namespace iTechArtPizzaDelivery.Core.Services.Components
     public class SizeService : ISizeService
     {
         private readonly ISizeRepository _sizeRepository;
-        private readonly ISizesValidationService _sizesValidationService;
+        private readonly ISizeValidationService _sizesValidationService;
         private readonly IMapper _mapper;
 
-        public SizeService(ISizeRepository sizeRepository, ISizesValidationService sizesValidationService,
+        public SizeService(ISizeRepository sizeRepository, ISizeValidationService sizesValidationService,
             IMapper mapper)
         {
             _sizeRepository = sizeRepository ?? throw new ArgumentNullException(nameof(sizeRepository));

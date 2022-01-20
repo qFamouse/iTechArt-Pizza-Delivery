@@ -9,7 +9,7 @@ using iTechArtPizzaDelivery.Core.Interfaces.Services.Validation;
 
 namespace iTechArtPizzaDelivery.Core.Services.Validation
 {
-    public class SizeValidationService : ISizesValidationService
+    public class SizeValidationService : ISizeValidationService
     {
         private readonly ISizeRepository _sizeRepository;
 

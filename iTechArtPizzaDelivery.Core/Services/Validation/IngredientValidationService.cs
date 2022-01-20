@@ -9,7 +9,7 @@ using iTechArtPizzaDelivery.Core.Interfaces.Services.Validation;
 
 namespace iTechArtPizzaDelivery.Core.Services.Validation
 {
-    public class IngredientValidationService : IIngredientsValidationService
+    public class IngredientValidationService : IIngredientValidationService
     {
         private readonly IIngredientRepository _ingredientRepository;
 
