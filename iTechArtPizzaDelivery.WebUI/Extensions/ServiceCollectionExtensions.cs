@@ -65,6 +65,8 @@ namespace iTechArtPizzaDelivery.WebUI.Extensions
             services.AddScoped<IPaymentService, PaymentService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAnalyticalService, AnalyticalService>();
+            services.AddSingleton<IRabbitMqService, RabbitMqService>();
+            services.AddScoped<IMailerService, MailerService>();
         }
 
         public static void AddInfrastructureDependencies(this IServiceCollection services)

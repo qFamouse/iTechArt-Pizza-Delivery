@@ -28,26 +28,18 @@ namespace iTechArtPizzaDelivery.Core.Services.Account
         private readonly IMapper _mapper;
         private readonly IdentityConfiguration _identityConfiguration;
         private readonly IIdentityService _identityService;
+        private readonly IMailerService _mailerService;
 
-        public UserService(IUserRepository userRepository,
-            UserManager<User> userManager, IMapper mapper, 
-            IOptions<IdentityConfiguration> identityConfiguration,
-            IIdentityService identityService)
+        public UserService(IUserRepository userRepository, UserManager<User> userManager, IMapper mapper,
+            IOptions<IdentityConfiguration> identityConfiguration, IIdentityService identityService, IMailerService mailerService)
         {
-            _userRepository = userRepository ??
-                              throw new ArgumentNullException(nameof(userRepository), "Interface is null");
-
-            _userManager = userManager ??
-                           throw new ArgumentNullException(nameof(userManager), "UserManager is null");
-
-            _mapper = mapper ??
-                      throw new ArgumentNullException(nameof(mapper), "Mapper is null");
-
-            _identityConfiguration = identityConfiguration.Value ??
-                                     throw new ArgumentNullException(nameof(identityConfiguration), "Configuration is null");
-
-            _identityService = identityService ??
-                               throw new ArgumentNullException(nameof(identityService), "Interface is null");
+            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+            _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _identityConfiguration =
+                identityConfiguration.Value ?? throw new ArgumentNullException(nameof(identityConfiguration));
+            _identityService = identityService ?? throw new ArgumentNullException(nameof(identityService));
+            _mailerService = mailerService ?? throw new ArgumentNullException(nameof(mailerService));
         }
 
         public async Task<List<User>> GetAllAsync()
@@ -71,6 +63,8 @@ namespace iTechArtPizzaDelivery.Core.Services.Account
             }
 
             await _userManager.AddToRoleAsync(user, _identityConfiguration.UserRole);
+
+            SendMainAboutSuccessfulRegistration(request.Email);
 
             return user;
         }
@@ -119,7 +113,29 @@ namespace iTechArtPizzaDelivery.Core.Services.Account
         {
             var user = await _userManager.GetUserAsync(_identityService.ClaimsPrincipal);
             await _userManager.DeleteAsync(user);
-            var a = _identityService.IsAuthenticated;
+            SendMainAboutAccountDeletion(user.Email);
+        }
+
+        private void SendMainAboutSuccessfulRegistration(string email)
+        {
+            _mailerService.SendMail(new MailView()
+            {
+                Subject = "Successful registration :)",
+                Html = "This <i>message</i> was sent from <strong>ASP .NET CORE</strong> server.",
+                Text = "Thank you for registering",
+                To = new List<string>{email}
+            });
+        }
+
+        private void SendMainAboutAccountDeletion(string email)
+        {
+            _mailerService.SendMail(new MailView()
+            {
+                Subject = "Your account has been deleted :(",
+                Html = "This <i>message</i> was sent from <strong>ASP .NET CORE</strong> server.",
+                Text = "Come back again",
+                To = new List<string> { email }
+            });
         }
     }
 }

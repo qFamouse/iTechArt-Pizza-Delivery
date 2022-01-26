@@ -44,6 +44,7 @@ namespace iTechArtPizzaDelivery.WebUI
             services.Configure<IdentityConfiguration>(Configuration.GetSection("Identity"));
             services.Configure<PaginationConfiguration>(Configuration.GetSection("Pagination"));
             services.Configure<ResourceConfiguration>(Configuration.GetSection("Resources"));
+            services.Configure<RabbitMqConfiguration>(Configuration.GetSection("RabbitMq"));
 
             services.AddAutoMappers();
 
